@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %} 
+
+<!--- Iamge Banner -->
+<div class='cointainer-fluid'>
+	<div class='row'>
+
+		<div class='col col-12'>
+			<div class= "img-ban-1">
+				<div class= "ban-box">
+				   	<img id= "ban-image" class="ban-image" src= "{% static 'image/excavation/excavator in mud winter ottawa.jpg' %}" alt="excavator in mud winter ottawa">
+					<img id= "ban-image" class="ban-image" src="{% static 'image/sod/grading and laying green new sod in back lawn white fence ottawa.jpg' %}" alt="back lawn with new sod">
+				</div>
+				<div class= "ban-box">
+				  	<img id= "ban-image" class="ban-image" src="{% static 'image/banner/ban_3.jpg' %}" alt="excavator digging at side of house ottawa">
+				</div>
+				<div class= "ban-box">
+				  	<img id= "ban-image" class="ban-image" src="{% static 'image/banner/ban_4.jpg' %}" alt="bulldozer and backhoe grading for sod">
+					<img id= "ban-image" class="ban-image" src="{% static 'image/banner/ban_6.jpg' %}" alt="interlock steps walkway and garden wall">
+				</div>
+				<div class= "ban-box">
+				  	<img id= "ban-image" class="ban-image" src="{% static 'image/sod/large back yard after new sod and re-grading findlay creek ottawa.jpg' %}" alt="green lawn after re-sodding">
+					<img id= "ban-image" class="ban-image" src="{% static 'image/banner/ban7.jpg' %}" alt="bulldozer grading a field for sod Installation">
+				</div>
+			</div>
+		</div>
+
+		<div class='col col-12'>
+			<!--- Sayings Bar -->
+			<div class="carousel-1 slide" data-ride="carousel">
+			  <div class="carousel-items">
+			    <div class="carousel-item active">
+			        <h2 class="d-block" align="center">Excavation</h2>
+			    </div>
+			    <div class="carousel-item">
+			      	<h2 class="d-block" align="center">Interlock</h2>
+			    </div>
+			    <div class="carousel-item">
+			      	<h2 class="d-block" align="center">Asphalt Paving</h2>
+			    </div>
+			    <div class="carousel-item">
+			      	<h2 class="d-block" align="center">Concrete</h2>
+			    </div> 
+			    <div class="carousel-item">
+			      	<h2 class="d-block" align="center">Sod Installation</h2>
+			    </div>
+			    <div class="carousel-item">
+			      	<h2 class="d-block" align="center">Asphalt Repairs</h2>
+			    </div>
+			    <div class="carousel-item">
+			      	<h2 class="d-block" align="center">Parging</h2>
+			    </div>
+			    <div class="carousel-item">
+			      	<h2 class="d-block" align="center">Lawn Mowing</h2>
+			    </div>
+			  </div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class='cointainer-fluid'>
+	<div class='row p-4'>
+
+		<div class='col-xl-3 col-lg-6 col-md-6 p-2'>
+			<div class='home_page_services'>
+				<a href='/excavation'><h2>Excavation</h2></a>
+				<a href='/excavation' style='width:inherit;'><img class="" src="{% static 'image/excavation/excavator on rock pile ottawa.jpg' %}" alt="ottawa excavation services"></a>
+				<ul class='excavation_list'>
+					<li>Grading & Back Filling</li>
+					<li>Basement Excavation</li>
+					<li>Pool Excavation</li>
+					<li>Lot Clearing</li>
+				</ul>
+				<a href='/excavation'>
+					<button class="btn btn-danger my-2"> Learn More... </button>
+				</a>
+			</div>
+		</div>
+
+		<div class='col-xl-3 col-lg-6 col-md-6 p-2'>
+			<div class='home_page_services'>
+				<a href='/interlock'><h2>Interlock</h2></a>
+				<a href='/interlock' style='width:inherit;'><img class="" src="{% static 'image/interlock/front walkway interlock black pavers ottawa.jpg' %}" alt="interlock pathway to side door black brick"></a>
+				<ul class='excavation_list'>
+					<li>Expert Installers</li>
+					<li>Driveways, walkways, patios</li>
+					<li>Retaining Walls</li>
+					<li>Commercial & Residential</li>
+				</ul>
+				<a href='/interlock'>
+					<button class="btn btn-danger my-2"> Learn More... </button>
+				</a>
+			</div>
+		</div>
+
+		<div class='col-xl-3 col-lg-6 col-md-6 p-2'>
+			<div class='home_page_services'>
+				<a href='/asphalt-paving'><h2>Asphalt Paving</h2></a>
+				<a href='/asphalt-paving' style='width:inherit;'><img class="" src="{% static 'image/paving/ottawa-asphalt-driveway-paving.jpg' %}" alt="ottawa asphalt paving"></a>
+				<ul class='excavation_list'>
+					<li>15 Years Experience</li>
+					<li>Pro Pavers</li>
+					<li>Prompt Service</li>
+				</ul>
+				<a href='/asphalt-paving'>
+					<button class="btn btn-danger my-2"> Learn More... </button>
+				</a>
+			</div>
+		</div>
+
+		<div class='col-xl-3 col-lg-6 col-md-6 p-2'>
+			<div class='home_page_services'>
+				<a href='/concrete'><h2>Concrete</h2></a>
+				<a href='/concrete' style='width:inherit;'><img class="" src="{% static 'image/stamped-concrete/stamped_front_step.jpg' %}" alt="lawn mowing and property maintenance ottawa"></a>
+				<ul class='excavation_list'>
+					<li>Patios</li>
+					<li>Walkways</li>
+					<li>Driveways</li>
+					<li>Steps</li>
+				</ul>
+				<a href='/concrete'>
+					<button class="btn btn-danger my-2"> Learn More... </button>
+				</a>
+			</div>
+		</div>
+
+		<div class='col-xl-3 col-lg-6 col-md-6 p-2'>
+			<div class='home_page_services'>
+				<a href='/sod-installation'><h2>Sod Installation</h2></a>
+				<a href='/sod-installation' style='width:inherit;'><img class="" src="{% static 'image/sod/sod installation on front lawn ottawa.jpg' %}" alt="re-sodded front lawn in ottawa"></a>
+				<ul class='excavation_list'>
+					<li>Grass Removal & Disposal</li>
+					<li>High Quality Screened Top Soil</li>
+					<li>Improve Grading</li>
+					<li>Improve Water Management</li>
+					<li>High Quality Sod</li>
+					<li>Commercial & Residential</li>
+				</ul>
+				<a href='/sod-installation'>
+					<button class="btn btn-danger my-2"> Learn More... </button>
+				</a>
+			</div>
+		</div>
+
+		<div class='col-xl-3 col-lg-6 col-md-6 p-2'>
+			<div class='home_page_services'>
+				<a href='/asphalt-repairs'><h2>Asphalt Repairs</h2></a>
+				<a href='/asphalt-repairs' style='width:inherit;'><img class="" src="{% static 'image/paving/asphalt-ramp.jpg' %}" alt="lawn mowing and property maintenance ottawa"></a>
+				<ul class='excavation_list'>
+					<li>Ramps</li>
+					<li>Patches</li>
+					<li>Pot Holes</li>
+				</ul>
+				<a href='/asphalt-repairs'>
+					<button class="btn btn-danger my-2"> Learn More... </button>
+				</a>
+			</div>
+		</div>
+
+		<div class='col-xl-3 col-lg-6 col-md-6 p-2'>
+			<div class='home_page_services'>
+				<a href='/parging'><h2>Parging</h2></a>
+				<a href='/parging' style='width:inherit;'><img class="" src="{% static 'image/parging/white_parging.jpg' %}" alt="lawn mowing and property maintenance ottawa"></a>
+				<ul class='excavation_list'>
+					<li>15 Years Experience</li>
+					<li>Professional Concrete Finishers</li>
+					<li>Prompt Service</li>
+				</ul>
+				<a href='/parging'>
+					<button class="btn btn-danger my-2"> Learn More... </button>
+				</a>
+			</div>
+		</div>
+
+		<div class='col-xl-3 col-lg-6 col-md-6 p-2'>
+			<div class='home_page_services'>
+				<a href='/lawn-mowing'><h2>Lawn Mowing</h2></a>
+				<a href='/lawn-mowing' style='width:inherit;'><img class="" src="{% static 'image/maintenance/lawn cutting in back yard wing set ottawa.jpg' %}" alt="lawn mowing and property maintenance ottawa"></a>
+				<ul class='excavation_list'>
+					<li>Lawn Mowing</li>
+					<li>Spring / Fall Clean Up</li>
+					<li>Fertilizing</li>
+					<li>Over Seeding</li>
+					<li>Top Dressing</li>
+					<li>Hedge Trimming</li>
+				</ul>
+				<a href='/lawn-mowing'>
+					<button class="btn btn-danger my-2"> Learn More... </button>
+				</a>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}

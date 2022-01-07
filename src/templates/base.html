@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--- Head -->
+<head>
+	<!--- Required Meta Tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="{{ meta_description }}" />
+  	<meta name="keywords" content="{{ meta_keywords }}" />
+  	<meta name="robots" content="{{ meta_robots}}" />
+	
+	{% load static %}
+	<!--- CSS File Link -->
+	<link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<!--- Bootsrtap CSS -->
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- Google Icons -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<title>{% block title %} {{ meta_title }} {% endblock %}</title>
+</head>
+<body>
+	<div class='main-wrap'>
+	{% include 'navbar.html' %}
+
+	{% block content %}
+	{% endblock content %}
+
+	</div>
+
+	<!--- j Query -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<!--- Bootsrtap JS -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+	{% block javascript %}
+	{% endblock javascript %}
+
+</body>
+<footer>
+{% include 'footer.html' %}
+</footer>
+
+
+</html>

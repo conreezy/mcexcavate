@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "top_banner.html" %}
+{% load crispy_forms_tags %}
+{% load static %} 
+<div class='container'>
+	<div class='row my-3'>
+
+		<div class='col-12'>
+			<div class='container-fluid'>
+				<div class='row my-3'>
+					<div class='col-md-6'>
+						<h2 style='color:black; font-size: 30px;'>Asphalt Repairs</h2>
+						<ul class='mt-3'>
+							<li><p style='font-size: 22px;' class='mb-3'>Ramps</p></li>
+							<li><p style='font-size: 22px;' class='mb-3'>Patches</p></li>
+							<li><p style='font-size: 22px;' class='mb-3'>Pot Holes</p></li>
+							<li><p style='font-size: 22px;' class='mb-3'>Walkways</p></li>
+						</ul>
+						<a href='/contact'><button class="btn btn-danger mt-2 mb-5"> Book a Free Estimate!</button></a>
+					</div>
+					<div class='col-md-6'>
+						<img src= "{% static 'image/paving/asphalt-ramp.jpg' %}" alt="ottawa asphalt ramp" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p class='mt-2' style='font-size: 14px;font-style: italic;'>Asphalt ramp - Embrun</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='col-sm-12'>
+			<hr>
+			<h3>Ramps</h3>
+			<div class='container-fluid'>
+				<div class='row my-3'>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+					   		<img src= "{% static 'image/paving/a-repair-3.jpg' %}" alt="asphalt driveway cut out" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/a-repair-2.jpg' %}" alt="repaired asphalt ramp" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/ramp-2.jpg' %}" alt="asphalt driveway ramp into garage" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/ramp-3.jpg' %}" alt="asphalt garage ramp ottawa" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class='col-sm-12'>
+			<hr>
+			<h3>Patches</h3>
+			<div class='container-fluid'>
+				<div class='row my-3'>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+					   		<img src= "{% static 'image/paving/patch-4.jpg' %}" alt="cut out asphalt patch" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/patch-5.jpg' %}" alt="repaired asphalt patch" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/patch-9.jpg' %}" alt="parking lot asphalt patches" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/patch-1.jpg' %}" alt="asphalt driveway patch onto sidewalk" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class='col-sm-12'>
+			<hr>
+			<h3>Potholes</h3>
+			<div class='container-fluid'>
+				<div class='row my-3'>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+					   		<img src= "{% static 'image/paving/patch-8.jpg' %}" alt="potholes in parking lot" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/potholes-1.jpg' %}" alt="bad case of potholes" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/potholes-2.jpg' %}" alt="potholes repaired with hot asphalt patch" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/potholes-4.jpg' %}" alt="parking lots potholes filled with asphalt" style="width: inherit; box-shadow:5px 5px 20px grey;">
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+var price = document.getElementById("price").value;
+
+function changeLengthWidth(){
+	
+	var area = document.getElementById("area").value;
+	
+	function lengthWidth(area){			
+		return Math.sqrt(area);	
+	};
+
+	length_width = lengthWidth(area)
+
+	function writeLengthWidth(length_width){
+		document.getElementById("length").value = length_width.toFixed(2);
+		document.getElementById("width").value = length_width.toFixed(2);
+	};
+
+	writeLengthWidth(length_width)
+};
+
+function changeArea(){
+
+	var length = document.getElementById("length").value;
+	var width = document.getElementById("width").value;
+
+	function findArea(length, width){
+	return length * width
+	};
+
+	var area =  findArea(length, width);
+
+	function writeArea(area){
+		document.getElementById("area").value = area.toFixed(2);
+	};
+
+	writeArea(area);
+};
+
+function getPrice(){
+
+	var area = document.getElementById("area").value;
+ 	var sq_price = 2.5;
+
+	function price(area,sq_price){
+		return area * sq_price
+	};
+
+	var price = price(area,sq_price);
+
+	function writePrice(price){
+		document.getElementById("price").innerHTML = price;
+	};
+
+	// alert(price);
+
+	var submit_message = "Re-Sodding " + area + " sq feet on the Back lawn = $ " + price + ". \nThank you for using our pricing calculator. We have emailed you a copy of your price quote."
+	window.confirm(submit_message);
+	writePrice(price);
+};
+
+</script>
+{% endblock javascript %}

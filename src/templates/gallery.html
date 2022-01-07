@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "top_banner.html" %}
+{% load static %} 
+<div class='container'>
+	<div class='row my-3'>
+
+		<div class='col-sm-12'>
+			<hr>
+			<div class='container'>
+				<div class='row my-3'>
+					<div class='col-md-6 my-3'>
+						<h2 style='color:black;'>Excavating</h2>
+				   		<img src= "{% static 'image/banner/ban_1.jpg' %}" alt="kamatsu excavator grading along roadside ottawa" style="width: 500px">
+						<a href='/'>Excavation Photos...</a>
+					</div>
+					<div class='col-md-6 my-3'>
+						<h2 style='color:black;'Retaining Walls></h2>
+						<img src= "{% static 'image/banner/ban_1.jpg' %}" alt="front lawn buddhist temple re-sodding" style="width: 500px">
+						<a href='/'>Retaining Wall Photos...</a>
+					</div>
+					<div class='col-md-6 my-3'>
+						<h2 style='color:black;'>Interlock</h2>
+						<img src= "{% static 'image/banner/ban_1.jpg' %}" alt="re-sodded front lawn of single family home" style="width: 500px">
+						<a href='/'>Interlock Photos...</a>
+					</div>
+					<div class='col-md-6 my-3'>
+						<h2 style='color:black;'>Re-Sodding</h2>
+						<img src= "{% static 'image/banner/ban_1.jpg' %}" alt="re-sodded front lawn of single family home" style="width: 500px">
+						<a href='/'>Re-Sodding Photos...</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}

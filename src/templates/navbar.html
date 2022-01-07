@@ -1,0 +1,40 @@
+<div class="container">
+	<nav class="navbar navbar-expand-md navbar-light bd-light sticky-top">
+		{% load static %}
+		<div class='my-3'>
+		<a class="navbar-brand" href="/"><img src="{% static 'image/logos/mcexcavate-logo.png' %}" style='height:40px;'></a> 
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		</div>
+		<div class ="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expand="false">Our Services</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					  <a class="dropdown-item" href="/excavation">Excavation</a>
+					  <a class="dropdown-item" href="/interlock">Interlock</a>
+					  <a class="dropdown-item" href="/asphalt-paving">Asphalt Paving</a>
+					  <a class="dropdown-item" href="/concrete">Concrete</a>
+					  <a class="dropdown-item" href="/sod-installation">Sod Installation</a>
+			          <a class="dropdown-item" href="/lawn-mowing">Lawn Mowing</a>
+			          <a class="dropdown-item" href="/parging">Parging</a>
+			          <a class="dropdown-item" href="/asphalt-repairs">Asphalt Repairs</a>
+			        </div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/gallery">Gallery</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/careers">Careers</a>
+				</li>	
+				<li class="nav-item">
+					<a class="nav-link" href="/about">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/contact">Contact</a>
+				</li>		
+			</ul>
+		</div>
+	</nav>
+</div>

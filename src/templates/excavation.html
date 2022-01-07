@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "top_banner.html" %}
+{% load crispy_forms_tags %}
+{% load static %} 
+<div class='container'>
+	<div class='row my-3'>
+
+		<div class='col-sm-12'>
+			<div class='container-fluid'>
+				<div class='row my-3'>
+					<div class='col-md-4 p-2'>
+						<div class='home_page_services'>
+							<h2>Residential Services</h2>
+							<img class='my-3' src= "{% static 'image/banner/ban_1.jpg' %}" alt="large komatsu excavator along road side ottawa" style="width: inherit; box-shadow:5px 5px 10px grey;">
+							<ul class='excavation_list'>
+								<li>Grading & Back Filling</li>
+								<li>Septic System Installation</li>
+								<li>Basement Excavation</li>
+								<li>Pool Excavation</li>
+								<li>Lot Clearing</li>
+							</ul>
+							<a href='/contact'><button class="btn btn-danger my-2"> Book a Free Estimate! </button></a>
+						</div>
+					</div>
+					<div class='col-md-4 p-2'>
+						<div class='home_page_services'>
+							<h2>Commercial Services</h2>
+							<img class='my-3' src= "{% static 'image/banner/ban7.jpg' %}" alt="john deere bulldozer grading ottawa" style="width: inherit; box-shadow:5px 5px 10px grey;">
+							<ul class='excavation_list'>
+								<li>Excavator Rentals</li>
+								<li>Skid Steer Rentals</li>
+								<li>Water & Sewer</li>
+								<li>Demolition</li>
+								<li>Foundation Excavation</li>
+							</ul>
+							<a href='/contact'><button class="btn btn-danger my-2"> Book a Free Estimate! </button></a>
+						</div>
+					</div>
+					<div class='col-md-4 p-2'>
+						<div class='home_page_services'>
+							<h2>Government Clients</h2>
+							<img class='my-3' src= "{% static 'image/banner/ban_1.jpg' %}" alt="excavator digging basement ottawa" style="width: inherit; box-shadow:5px 5px 10px grey;">
+							<ul class='excavation_list'>
+								<li>Dump Truck Rentals</li>
+								<li>Excavation</li>
+								<li>Grading</li>
+								<li>Site Preperation</li>
+								<li>Demolition</li>
+							</ul>
+							<a href='/contact'><button class="btn btn-danger my-2"> Book a Free Estimate! </button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='col-12'>
+			<hr>
+			<h2 style='color:black; font-size: 28px;' class='pt-5'>Our Equipment</h2>
+			<div class='container-fluid'>
+				<div class='row excavation_row'>
+					<div class='col-md-6'>
+						<h3>KOMATSU 78</h3>
+						<ul class='mt-3 excavation_list'>
+							<li><p class='mb-1'>Quantity: 1</p></li>
+							<li><p class='mb-1'>0.45 cubic yard bucket capacity</p></li>
+							<li><p class=''>6,945 – 7,535 kg operating weight</p></li>
+							<li><p class=''>57 hp</p></li>
+						</ul>
+						<a href="/"><p style='font-size: 20px; padding-bottom:40px;'>See full specifications...</p></a>
+					</div>
+					<div class='col-md-6'>
+						<img src= "{% static 'image/excavation/Komatsu_78-EX18.jpg' %}" alt="KOMATSU 78 excavator digger attachment" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+					</div>
+				</div>
+				<div class='row excavation_row'>
+					<div class='col-md-6'>
+						<h3>CASE TRACK</h3>
+						<ul class='mt-3'>
+							<li><p style='font-size: 20px;' class='mb-1'>Quantity: 2</p></li>
+							<li><p style='font-size: 20px;' class='mb-1'>10,200 lb operating weight</p></li>
+							<li><p style='font-size: 20px;' class=''>0.68 cubic yard bucket capacity</p></li>
+							<li><p style='font-size: 20px;' class=''>78 in bucket width</p></li>
+							<li><p style='font-size: 20px;' class=''>84 hp</p></li>
+						</ul>
+						<a href="/"><p style='font-size: 20px; padding-bottom:40px;'>See full specifications...</p></a>
+					</div>
+					<div class='col-md-6'>
+						<img src= "{% static 'image/excavation/case skid steer loader ottawa.jpg' %}" alt="CASE TV380 skid steer loader bucket attachment" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+var price = document.getElementById("price").value;
+
+function changeLengthWidth(){
+	
+	var area = document.getElementById("area").value;
+	
+	function lengthWidth(area){			
+		return Math.sqrt(area);	
+	};
+
+	length_width = lengthWidth(area)
+
+	function writeLengthWidth(length_width){
+		document.getElementById("length").value = length_width.toFixed(2);
+		document.getElementById("width").value = length_width.toFixed(2);
+	};
+
+	writeLengthWidth(length_width)
+};
+
+function changeArea(){
+
+	var length = document.getElementById("length").value;
+	var width = document.getElementById("width").value;
+
+	function findArea(length, width){
+	return length * width
+	};
+
+	var area =  findArea(length, width);
+
+	function writeArea(area){
+		document.getElementById("area").value = area.toFixed(2);
+	};
+
+	writeArea(area);
+};
+
+function getPrice(){
+
+	var area = document.getElementById("area").value;
+ 	var sq_price = 2.5;
+
+	function price(area,sq_price){
+		return area * sq_price
+	};
+
+	var price = price(area,sq_price);
+
+	function writePrice(price){
+		document.getElementById("price").innerHTML = price;
+	};
+
+	// alert(price);
+
+	var submit_message = "Re-Sodding " + area + " sq feet on the Back lawn = $ " + price + ". \nThank you for using our pricing calculator. We have emailed you a copy of your price quote."
+	window.confirm(submit_message);
+	writePrice(price);
+};
+
+</script>
+{% endblock javascript %}

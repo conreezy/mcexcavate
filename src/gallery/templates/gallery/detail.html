@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "top_banner.html" %}
+{% load crispy_forms_tags %}
+{% load static %} 
+
+<div class='container-fluid'>
+	<div class='row my-2'>
+
+		<div class='col-12' style='position: sticky;'>
+			<a href='/gallery'><p style='text-align:center;
+									     font-size:25px;
+									     padding:5px 0px 10px 5px;'>
+
+									 BACK TO GALLERIES</p></a>
+		</div>
+
+		{% for image in gallery %}
+		<div class='col col-xl-3 col-lg-4 col-md-3 col-sm-6 p-2'>
+			<img src="{{ image.images.url }}" style='height: auto;' class="d-block w-100" alt="{{ image.alt }}">
+		</div>
+		{% endfor %}
+
+	</div>
+</div>
+
+{% endblock %}

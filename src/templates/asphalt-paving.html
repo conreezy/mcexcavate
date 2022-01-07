@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "top_banner.html" %}
+{% load crispy_forms_tags %}
+{% load static %} 
+<div class='container'>
+	<div class='row my-3'>
+
+		<div class='col-12'>
+			<div class='container-fluid'>
+				<div class='row my-3'>
+					<div class='col-md-6'>
+						<h2 style='color:black; font-size: 30px;'>Asphalt Driveway Paving</h2>
+						<ul class='mt-3'>
+							<li><p style='font-size: 22px;' class='mb-3'>Free, Prompt, Written Estimate</p></li>
+							<li><p style='font-size: 22px;' class='mb-3'>Driveways, Roadways</p></li>
+							<li><p style='font-size: 22px;' class='mb-3'>Parking Lots</p></li>
+							<li><p style='font-size: 22px;' class='mb-3'>Commercial, Residential</p></li>
+						</ul>
+						<a href='/contact'><button class="btn btn-danger mt-2 mb-5"> Book a Free Estimate!</button></a>
+					</div>
+					<div class='col-md-6'>
+						<img src= "{% static 'image/paving/ottawa-asphalt-driveway-paving.jpg' %}" alt="ottawa stamped conrete front walkway and step" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p class='mt-2' style='font-size: 14px;font-style: italic;'>Asphalt driveway - Alta Vista</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='col-sm-12'>
+			<hr>
+			<h3>Testimonials</h3>
+			<div class='container-fluid'>
+				<div class='row my-3'>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+					   		<img src= "{% static 'image/paving/glebe-asphalt-driveway-paving.jpg' %}" alt="asphalt driveway paved in the glebe ottawa" style="width: inherit; box-shadow:5px 5px 20px grey;">
+							<p class='mt-3'>"The new driveway looks great. Work was completed promptly and to good standards.The job site was left clean and tidy.  I would do business with McExcavate again."</p>
+							<br> 
+							<p><b>- H. Finney, Barrhaven</b></p>
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/kanata-asphalt-driveway-paving.jpg' %}" alt="asphalt driveway with interlock border" style="width: inherit; box-shadow:5px 5px 20px grey;">
+							<p class='mt-3'>"We were totally impressed with the fantastic job that McExcavate did for us.  They were punctual, efficient, knowledgeable and most of all the driveway and interlock look absolutely beautiful.  Many of our neighbours decided to get theirs done as well after seeing our wonderful result.
+							Thanks McExcavate."</p>
+							<br> 
+							<p><b>- M. O'Dell, Kanata</b></p>
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/manotick-asphalt-driveway-paving.jpg' %}" alt="long asphalt driveway paving in Manotick, Ontario" style="width: inherit; box-shadow:5px 5px 20px grey;">
+							<p class='mt-3'>“Great service. The men worked hard and were quick to do it. Driveway looks good. Thank you to Conor and his crew.  Very pleased with the job.”</p>
+							<br> 
+							<p><b>- J. Song, Manotick</b></p>
+						</div>
+					</div>
+
+					<div class='col-md-6 p-2'>
+						<div class='home_page_services'>
+							<img src= "{% static 'image/paving/nepean-asphalt-driveway-paving.jpg' %}" alt="" style="width: inherit; box-shadow:5px 5px 20px grey;">
+							<p class='mt-3'>“We had our driveway done two weeks ago by McExcavate. These guys did a great job. The crew was very nice and courteous. I would recommend.”</p>
+							<br> 
+							<p><b>- P. Todd, Cumberland</b></p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+var price = document.getElementById("price").value;
+
+function changeLengthWidth(){
+	
+	var area = document.getElementById("area").value;
+	
+	function lengthWidth(area){			
+		return Math.sqrt(area);	
+	};
+
+	length_width = lengthWidth(area)
+
+	function writeLengthWidth(length_width){
+		document.getElementById("length").value = length_width.toFixed(2);
+		document.getElementById("width").value = length_width.toFixed(2);
+	};
+
+	writeLengthWidth(length_width)
+};
+
+function changeArea(){
+
+	var length = document.getElementById("length").value;
+	var width = document.getElementById("width").value;
+
+	function findArea(length, width){
+	return length * width
+	};
+
+	var area =  findArea(length, width);
+
+	function writeArea(area){
+		document.getElementById("area").value = area.toFixed(2);
+	};
+
+	writeArea(area);
+};
+
+function getPrice(){
+
+	var area = document.getElementById("area").value;
+ 	var sq_price = 2.5;
+
+	function price(area,sq_price){
+		return area * sq_price
+	};
+
+	var price = price(area,sq_price);
+
+	function writePrice(price){
+		document.getElementById("price").innerHTML = price;
+	};
+
+	// alert(price);
+
+	var submit_message = "Re-Sodding " + area + " sq feet on the Back lawn = $ " + price + ". \nThank you for using our pricing calculator. We have emailed you a copy of your price quote."
+	window.confirm(submit_message);
+	writePrice(price);
+};
+
+</script>
+{% endblock javascript %}

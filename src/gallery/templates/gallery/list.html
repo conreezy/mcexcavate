@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "top_banner.html" %}
+{% load static %} 
+<div class='container'>
+	<div class='row my-3'>
+
+		<div class='col-sm-12'>
+			<div class='container'>
+
+				<div class='row my-3'>
+					{% for gallery in galleries %}
+					<div class='col-md-6 my-3'>
+						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
+				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
+				   			<img src= "{{ gallery.image.url }}" alt="re-sodded front lawn of single family home" style="width: inherit">
+				   		</a>
+						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
+					</div>
+					{% endfor %}
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}
