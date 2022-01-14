@@ -1,3 +1,7 @@
+@font-face {
+  font-family: GothamLight;
+  src: url(fonts/Gotham-Light.ttf);
+}
 .footer {
   background-color: #000000;
   color: #ffffff;
@@ -23,7 +27,7 @@ padding:0px 15px 0px 15px;
 }
 
 .fdiv1{
-
+padding-top: 15px;
 }
 
 .footer .socials{
@@ -34,6 +38,11 @@ padding:40px 25% 40px 25%;
 
 .footer .socials div{
 width: 33%;	
+}
+
+.galleon{
+font-family: GothamLight;
+font-size:16px;
 }
 
 @media only screen and (max-width: 1400px) {
