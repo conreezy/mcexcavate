@@ -1,0 +1,68 @@
+.footer {
+  background-color: #000000;
+  color: #ffffff;
+  padding-top: 2rem;
+}
+.footer-hr{
+  background-color: #adadad;
+}
+.footer a{
+  color: #ffffff;
+}
+.footer a:hover{
+  color: #ffffff;
+}
+
+.footer h5{
+color:white;
+}
+
+.fdiv{
+width:33%;
+padding:0px 15px 0px 15px;
+}
+
+.fdiv1{
+
+}
+
+.footer .socials{
+width:100%;
+display: flex;
+padding:40px 25% 40px 25%;
+}
+
+.footer .socials div{
+width: 33%;	
+}
+
+@media only screen and (max-width: 1400px) {
+
+}
+
+@media only screen and (max-width: 1200px) {
+.footer .socials{
+padding:40px 10% 40px 10%;
+}
+}
+
+@media only screen and (max-width: 992px) {
+.fdiv{
+width:100%;
+}
+.footer .socials{
+padding:40px 25% 40px 25%;
+}
+}
+
+@media only screen and (max-width: 768px) {
+.footer .socials{
+padding:40px 15% 40px 15%;
+}
+}
+
+@media only screen and (max-width: 576px) {
+.footer .socials{
+padding:40px 10% 40px 10%;
+}
+}

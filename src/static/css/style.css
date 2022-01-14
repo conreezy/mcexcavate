@@ -175,24 +175,7 @@ padding: 2.5px;
  margin: 20px 0px 20px 0px;
 }
 
-.footer {
-  background-color: #000000;
-  color: #ffffff;
-  padding-top: 2rem;
-}
-.footer-hr{
-  background-color: #adadad;
-}
-.footer a{
-  color: #ffffff;
-}
-.footer a:hover{
-  color: #ffffff;
-}
 
-.footer h5{
-color:white;
-}
 
 /* Fixed sidenav, full height */
 .sidenav {
