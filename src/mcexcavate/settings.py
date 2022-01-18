@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'dc578pv-t)gq+k)yw+rd^2(pd)pji*x5til*kzdjb1@byr3+)h'
 EMAIL_HOST_USER = 'mcexcavate.ottawa@gmail.com'
-EMAIL_HOST_PASSWORD = 'Topley3818#'
+EMAIL_HOST_PASSWORD = 'OttawaSting11'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

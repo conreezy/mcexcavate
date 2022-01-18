@@ -13,7 +13,7 @@ from .forms import ContactForm, SodPriceForm
 def home_page(request):
     title = "McExcavate"
     meta_title = "McExcavate Inc. | Ottawa Excavation & Construction"
-    meta_description = "McExcavate has been providing Ottawa with residential and commercial excavation services since 2008."
+    meta_description = "Excavation Ottawa. McExcavate has been providing Ottawa with residential and commercial excavation services since 2008."
     meta_keywords = ""
     meta_robots = "index, follow"
 
@@ -57,7 +57,7 @@ def interlock_page(request):
 def re_sodding_page(request):
     title = "SOD INSTALLATION OTTAWA"
     meta_title = "Sod Installation Ottawa | McExcavate Inc."
-    meta_description = "Mcexcavate provides sod installation in Ottawa. We use high quality screeened top soil and make sure the lawn is perfectly graded."
+    meta_description = "Sod Installation Ottawa. Mcexcavate has been re-sodding lawns in Ottawa since 2013. We use high quality screeened top soil and make sure the lawn is perfectly graded."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
     meta_robots = "index, follow"
     price = 0 
