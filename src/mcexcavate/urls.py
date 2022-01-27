@@ -40,8 +40,8 @@ urlpatterns = [
     # -- Services
     path('excavation/', excavation_page, name='excavation'),
     path('interlock/', interlock_page, name='interlock'),
-    path('sod-installation/', re_sodding_page, name='re-sodding'),
-    path('lawn-mowing/', maintenance_page, name='maintenance'),
+    path('sod-installation/', re_sodding_page, name='sod-installation'),
+    path('lawn-mowing/', maintenance_page, name='lawn-mowing'),
     path('concrete/', concrete_page, name='concrete'),
     path('parging/', parging_page, name='parging'),
     path('asphalt-paving/', asphalt_page, name='asphalt-paving'),
