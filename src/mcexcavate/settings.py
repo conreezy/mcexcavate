@@ -1,14 +1,18 @@
 import os
 import json
 
- with open('/etc/config.json') as config_file:
-     config = json.load(config_file)
+#with open('/etc/config.json') as config_file:
+#     config = json.load(config_file)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = config["SECRET_KEY"]
+#SECRET_KEY = config["SECRET_KEY"]
+
+SECRET_KEY = 'dc578pv-t)gq+k)yw+rd^2(pd)pji*x5til*kzdjb1@byr3+)h'
+EMAIL_HOST_USER = 'mcexcavate.ottawa@gmail.com'
+EMAIL_HOST_PASSWORD = 'OttawaSting11'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -19,8 +23,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
+#EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
+#EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
 
 ALLOWED_HOSTS = ['172.105.23.156', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
 
