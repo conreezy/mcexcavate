@@ -5,7 +5,7 @@ from django.forms import ClearableFileInput
 class GalleryForm(forms.ModelForm):
     title   = forms.CharField(widget=forms.TextInput(attrs={'label':'Address', 'placeholder': 'Address'}))
     slug    = forms.SlugField(widget=forms.TextInput(attrs={'placeholder': 'Slug'}))
-    meta_title = forms.CharField(widget=forms.TextInput(attrs={'label':'Address', 'placeholder': 'Address'}))
+    meta_title = forms.CharField(widget=forms.TextInput(attrs={'label':'Meta Title', 'placeholder': 'Meta Title'}))
     description = forms.CharField(max_length=160, 
                                       widget=forms.Textarea(attrs={'placeholder': 'Text that will be displayed on Google search results under the title. 160 characters max.'}))
     meta_keywords = forms.CharField(max_length=200, 

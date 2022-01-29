@@ -25,6 +25,9 @@ color:white;
 width:33%;
 padding:0px 15px 0px 15px;
 }
+.linkdiv a:hover{
+color:#6193e2;
+}
 
 .fdiv1{
 padding-top: 15px;
