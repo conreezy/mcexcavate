@@ -47,29 +47,35 @@ font-size: 28px;
 font-style: bold;
 padding:0px 10px 0px 10px;
 }
-
+.gal_img_col{
+width:25%;
+padding:10px;
+}
 .gal_image{
 width: 100%;
 }
 
 
 @media only screen and (max-width: 1400px) {
-
 }
 
 @media only screen and (max-width: 1200px) {
-
-
+.gal_img_col{
+width:33%;
+}
 }
 
 @media only screen and (max-width: 992px) {
-
+.gal_img_col{
+width:50%;
+}
 }
 
 @media only screen and (max-width: 768px) {
-
 }
 
 @media only screen and (max-width: 576px) {
-
+.gal_img_col{
+width:100%;
+}
 }
