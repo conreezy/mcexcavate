@@ -3,6 +3,7 @@ from .models import Gallery, GalleryImages
 from .forms import GalleryForm, GalleryImagesForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 @login_required
 def gallery_create_view(request):
@@ -53,19 +54,25 @@ def gallery_list_view(request):
 def gallery_detail_view(request, slug):
     obj = get_object_or_404(Gallery, slug=slug)
     gallery = list(GalleryImages.objects.filter(gallery=obj)) 
+    paginator = Paginator(gallery, 8)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    title = "OTTAWA " + (obj.title).upper()
     meta_title = obj.meta_title
     meta_keywords = obj.meta_keywords
     meta_description = obj.description
     meta_robots = "index, follow"
-
-    title = "OTTAWA " + (obj.title).upper()
+    
     template_name = "gallery/detail.html"
     context = {"title": title, 
                "gallery":gallery,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
-               "meta_title":meta_title,}
+               "meta_title":meta_title,
+               "page_obj":page_obj,}
     return render(request, template_name, context)
 
 @login_required

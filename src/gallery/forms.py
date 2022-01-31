@@ -3,7 +3,7 @@ from .models import Gallery, GalleryImages
 from django.forms import ClearableFileInput
 
 class GalleryForm(forms.ModelForm):
-    title   = forms.CharField(widget=forms.TextInput(attrs={'label':'Address', 'placeholder': 'Address'}))
+    title   = forms.CharField(widget=forms.TextInput(attrs={'label':'Page Title', 'placeholder': 'Page Title'}))
     slug    = forms.SlugField(widget=forms.TextInput(attrs={'placeholder': 'Slug'}))
     meta_title = forms.CharField(widget=forms.TextInput(attrs={'label':'Meta Title', 'placeholder': 'Meta Title'}))
     description = forms.CharField(max_length=160, 
