@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my app
-    'gallery'
+    'gallery',
+    'project'
 ]
 
 SITE_ID = 1

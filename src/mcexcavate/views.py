@@ -1,3 +1,4 @@
+from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import get_template
@@ -7,7 +8,8 @@ from django.core.mail import send_mail
 import requests
 from requests import Request, Session
 import json
-from .forms import ContactForm, SodPriceForm
+from project.models import SodEstimate, PavingEstimate
+from .forms import ContactForm, SodPriceForm, PavingPriceForm
 # from houses.models import HouseSale
 
 def home_page(request):
@@ -93,7 +95,11 @@ def re_sodding_page(request):
         else:
             price = 9999999
 
-        price = '${:,.2f}'.format(price)
+        sod_estimate = SodEstimate.objects.create(**form.cleaned_data)
+        sod_estimate.price = price
+        sod_estimate.save()
+
+        price = '${:,.2f}'.format(price)       
 
         # send the confirmation email 
         subject = f"McExcavate | Re-Sodding Price Quote"
@@ -106,7 +112,7 @@ def re_sodding_page(request):
                      \n613-608-7722"
         from_address = settings.EMAIL_HOST_USER
         to_address = email
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        #send_mail(subject, message, from_address, [to_address], fail_silently=False)
 
         messages.success(request, f"{ price } to re-sod { area } square feet in your { yard } yard.")
 
@@ -118,7 +124,8 @@ def re_sodding_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "price":price}
+               "price":price,
+               }
     return render(request, template_name, context)
 
 def maintenance_page(request):
@@ -160,12 +167,60 @@ def asphalt_page(request):
                      asphalt ottawa, ottawa asphalt,"
     meta_robots = "index, follow"
 
+    price = 0
+
+    form = PavingPriceForm(request.POST or None)
+    if form.is_valid():
+        print(form.cleaned_data)
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        pave_type = form.cleaned_data.get('pave_type').lower()
+        length = int(form.cleaned_data.get('length'))
+        width = int(form.cleaned_data.get('width'))
+        area = int(form.cleaned_data.get('area'))
+
+        if pave_type == "remove old asphalt & pave":
+          print("peel and pave")
+          if area < 333:
+            price = 1998
+          elif area >= 333:
+            price = area * 6 
+        elif pave_type == "pave only":
+          print("pave")
+          if area < 333:
+            price = 1998
+          elif area >= 333:
+            price = area * 4.75 
+
+        asphalt_estimate = PavingEstimate.objects.create(**form.cleaned_data)
+        asphalt_estimate.price = price
+        asphalt_estimate.save()
+
+        price = '${:,.2f}'.format(price)       
+
+        # send the confirmation email 
+        subject = f"McExcavate | Re-Sodding Price Quote"
+        message =  f"Hello {name_}, \
+                     \n\nThank you for using our pricing calculator. \
+                     \n\nPaving an area of {area} square feet ({length}' x {width}') in your yard will cost aproximately {price} (accurate to within 10% - 15%). \
+                     \n\nFor more information or to book an an in person estimate contact us today. \
+                     \n\nMcExcavate \
+                     \nOttawa, ON \
+                     \n613-608-7722"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = email
+        #send_mail(subject, message, from_address, [to_address], fail_silently=False)
+
+        messages.success(request, f"It would cost aproximately { price } to pave your { area } square foot driveway.")
+
     template_name = "asphalt-paving.html"
     context = {"title": title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
-               "meta_title":meta_title}
+               "meta_title":meta_title,
+               'form':form,
+               "price":price}
     return render(request, template_name, context)
 
 def asphalt_repairs_page(request):
@@ -269,3 +324,47 @@ def contact_page(request):
         # "meta_keywords":meta_keywords,
         # "meta_title":meta_title}    
     return render(request, template_name, context)
+
+    # def dashboard_view(request):
+    # query = request.GET.get('q')
+    # qs = SodEstimate.objects.all()
+    # if query is not None:
+    #     lookups = Q(name__icontations=query)
+    #     qs = SodEstimate.objects.filter(lookups)
+    # context = {
+    #     "sod_estimates":qs
+    # }
+    # template_name = "dashboard.html"
+    # return render(request, template_name, context)
+
+    #fetched_invoice = btcpay_client.get_invoice('3yX6wNsTsa3UjDLYJNw13E')
+
+class DashboardView(TemplateView):
+    template_name = "dashboard.html"
+    
+    def get_sod_estimates_name(self, *args,**kwargs):
+        return SodEstimate.objects.filter(name__icontations=query)
+
+    def get_sod_estimates_address(self, query):
+        return SodEstimate.objects.filter(name__icontations=query)
+    
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+
+        title = "DASHBOARD"
+        meta_title = 'Dashboard | McExcavate Inc.'
+        meta_description = "Manage everything here."
+        meta_keywords = "dashboard"
+        meta_robots = "noindex, nofollow"
+
+        sod_estimates = SodEstimate.objects.all()
+
+        context = {"title": title,
+                  "meta_description":meta_description,
+                  "meta_robots":meta_robots,
+                  "meta_keywords":meta_keywords,
+                  "meta_title":meta_title,
+                  "sod_estimates":sod_estimates,
+                  } 
+
+        return context

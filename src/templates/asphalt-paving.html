@@ -29,6 +29,56 @@
 		<div class='col-12'>
 			<hr>
 			<h3>Free Estimate</h3>
+			<div class='container-fluid'>
+				<div class='row my-3'>
+					<div class='col-12'>
+						<div class='home_page_services' style='overflow: hidden;'>
+						<p class='mb-3'><b>GET A PRICE RIGHT NOW.</b></p>
+						{% if messages %}
+						    {% for message in messages %}
+						    <div class='alert alert-{{ message.tags }}' style='width:inherit;'>
+						      {{ message }}
+						    </div>
+						    {% endfor %}
+					    {% endif %}
+						<p>Enter your driveway dimensions for an approximate price estimate.</p>
+						<p class='mb-3'>Price is based on paving with 2" of 'HL3 Fine' asphalt.</p>
+						<form id='asphalt_form' method='POST' action=".">{% csrf_token %}
+							<div class='form-row'>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.name|as_crispy_field }}
+								</div>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.email|as_crispy_field }}
+								</div>
+ 							</div>
+ 							<div class='form-row'>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.address|as_crispy_field }}
+								</div>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.pave_type|as_crispy_field }}
+								</div>
+ 							</div>
+ 							<div class='form-row'>
+								<div class='form-group col-4 mb-0'>
+									{{ form.length|as_crispy_field }}
+								</div>
+								<div class='form-group col-4 mb-0'>
+									{{ form.width|as_crispy_field }}
+								</div>
+								<div class='form-group col-4 mb-0'>
+									{{ form.area|as_crispy_field }}
+								</div>
+ 							</div>
+ 							<div class='pt-3'>
+					      		<button id='' style='float:right;' type="submit" class="btn btn-danger mt-2">Show Me The Price Now</button>
+					      	</div>
+				      	</form>
+				      	</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div class='col-12'>
@@ -150,11 +200,6 @@
 			</div>
 		</div>
 
-		<div class='col-12'>
-			<hr>
-			<h3>Our Equipment</h3>
-		</div>
-
 		<div class='col-sm-12'>
 			<hr>
 			<h3>Testimonials</h3>
@@ -202,6 +247,62 @@
 			</div>
 		</div>
 
+		<div class='col-12'>
+			<hr>
+			<h3>Our Equipment</h3>
+			<div class='container-fluid'>
+				<div class='row'>
+					<div class='col-md-4 p-2'>
+						<img src= "{% static 'image/paving/camo-dump-truck.jpg' %}" alt="army green dump truck" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p>Dump Truck</p>
+					</div>
+					<div class='col-md-4 p-2'>
+						
+						<img src= "{% static 'image/paving/cat-skid-steer.jpg' %}" alt="caterpiller skid steer" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p>Skid Steer</p>
+					</div>
+					<div class='col-md-4 p-2'>
+						
+						<img src= "{% static 'image/paving/cat-paver.jpg' %}" alt="caterpiller asphalt paver" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p>Paver</p>
+					</div>
+					<div class='col-md-4 p-2'>
+						
+						<img src= "{% static 'image/paving/cat-roller.jpg' %}" alt="caterpiller asphalt roller" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p>Roller</p>
+					</div>
+					<div class='col-md-4 p-2'>
+						
+						<img src= "{% static 'image/paving/wacker-packer.png' %}" alt="wacker neuson deisel plate" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p>Compactors</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='col-12'>
+			<hr>
+			<h3>What is Asphalt?</h3>
+			 
+
+			<p>"Asphalt cement,<i> black or brown petroleum-like material that has a consistency varying from viscous liquid to glassy solid. It is obtained either as a residue from the distillation of petroleum or from natural deposits. Asphalt consists of compounds of hydrogen and carbon with minor proportions of nitrogen, sulfur, and oxygen."</i> <a href='https://www.britannica.com/science/asphalt-material'>- britannica.com</a> <br>
+			<br>
+			<p>Hot mix asphalt (HMA) is used to pave roads, parking lots and driveways it "consists of a combination of aggregate uniformly mixed and coated with asphalt cement. To dry the aggregates and to obtain sufficient fluidity of asphalt cement for proper mixing and workability, both the aggregate and asphalt must be heated prior to mixing—hence the term “hot mix.” Aggregates and asphalt are combined in a mixing facility in which all of the constituent materials are heated, proportioned and mixed to produce the desired paving mixture."	<a href='https://mcasphalt.com/processes/hot-mix-asphalt/'>- mcasphalt.com</a>
+
+			</p>
+
+		</div>
+
+		<div class='col-12'>
+			<hr>
+			<h3>Types of Asphalt</h3>
+		</div>
+
+		<div class='col-12'>
+			<hr>
+			<h3>Types of Asphalt Damage</h3>
+		</div>
+
 	</div>
 </div>
 
@@ -211,17 +312,15 @@
 <script>
 
 
-var facebook_link = document.getElementById("facebook_link");
-
-facebook_link.href="https://www.facebook.com/Asphalt-Driveway-Paving-Ottawa-112110021369939/";
-
-
+// Change the facebook link in the footer to link to the asphalt page
+function changeFaceBookLink(){
+	var facebook_link = document.getElementById("facebook_link");
+	facebook_link.href="https://www.facebook.com/Asphalt-Driveway-Paving-Ottawa-112110021369939/";
+};
 changeFaceBookLink()
 
-var price = document.getElementById("price").value;
-
+// change length & width when area is entered in form
 function changeLengthWidth(){
-	
 	var area = document.getElementById("area").value;
 	
 	function lengthWidth(area){			
@@ -238,8 +337,8 @@ function changeLengthWidth(){
 	writeLengthWidth(length_width)
 };
 
+// change area when length or width is entered in form
 function changeArea(){
-
 	var length = document.getElementById("length").value;
 	var width = document.getElementById("width").value;
 
@@ -256,27 +355,30 @@ function changeArea(){
 	writeArea(area);
 };
 
-function getPrice(){
-
+// display price quote when form is submitted
+document.getElementById("asphalt_form").addEventListener("submit", function(event){
+	event.preventDefault();
 	var area = document.getElementById("area").value;
- 	var sq_price = 2.5;
+	var pave_type = document.getElementById("pave_type").value;
+	var price = 0
 
-	function price(area,sq_price){
-		return area * sq_price
-	};
-
-	var price = price(area,sq_price);
-
-	function writePrice(price){
-		document.getElementById("price").innerHTML = price;
-	};
-
-	// alert(price);
-
-	var submit_message = "Re-Sodding " + area + " sq feet on the Back lawn = $ " + price + ". \nThank you for using our pricing calculator. We have emailed you a copy of your price quote."
-	window.confirm(submit_message);
-	writePrice(price);
-};
+	if (pave_type == "Remove old asphalt & pave"){
+		if (area < 333){
+	    	price = 1998;
+	    } else if (area >= 333){
+	    	price = area * 6 ;
+		}
+	} else if (pave_type == "Pave only"){
+		if (area < 333){
+	    	price = 1998;
+	    } else if (area >= 333){
+	    	price = area * 4.75 ;
+	    }
+	}
+  	var submit_message = "It would cost aproximately $" + price + " to pave your " + area + " square foot driveway. \nThank you for using our pricing calculator. \nWe have emailed you a copy of your price quote."
+  	window.confirm(submit_message);
+  	document.getElementById("asphalt_form").submit();
+});
 
 </script>
 {% endblock javascript %}

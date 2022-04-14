@@ -22,6 +22,7 @@ from .views import (
     careers_page,
     about_page,
     contact_page,
+    DashboardView,
 )
 
 from .sitemaps import GallerySitemap, StaticViewSitemap
@@ -50,6 +51,8 @@ urlpatterns = [
     path('careers/', careers_page, name='careers'),
     path('about/', about_page, name='about'),
     path('contact/', contact_page, name='contact'),
+
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     
     path('admin/', admin.site.urls),
 

@@ -46,4 +46,28 @@ class SodPriceForm(forms.Form):
     area    = forms.FloatField(label='Total Area', widget=forms.TextInput(attrs={'placeholder': 'Total Area', 
                                                                                    'oninput': 'changeLengthWidth()',
                                                                                    'id':'area'}))
+
+PAVE_CHOICES = (
+    ('Remove old asphalt & pave', 'Remove old asphalt & pave'),
+    ('Pave only', 'Pave only')
+)
+
+class PavingPriceForm(forms.Form):
+    name    = forms.CharField(label='Name', widget=forms.TextInput(attrs={'placeholder': 'Name'}))
+    email   = forms.EmailField(label='Email', widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+    address = forms.CharField(label='Address', widget=forms.TextInput(attrs={'placeholder': 'Address'}))
+    pave_type = forms.ChoiceField(label='Pave Type', 
+                                  choices=PAVE_CHOICES, 
+                                  widget=forms.Select(attrs={'placeholder': 'Remove old asphalt & pave',
+                                                             'id':'pave_type'}))
+    length  = forms.FloatField(label='Length', widget=forms.TextInput(attrs={'placeholder': 'Length', 
+                                                                               'oninput': 'changeArea()',
+                                                                               'id':'length'}))
+    width   = forms.FloatField(label='Width', widget=forms.TextInput(attrs={'placeholder': 'Width', 
+                                                                              'oninput': 'changeArea()',
+                                                                              'id':'width'}))
+
+    area    = forms.FloatField(label='Total Area', widget=forms.TextInput(attrs={'placeholder': 'Total Area', 
+                                                                                   'oninput': 'changeLengthWidth()',
+                                                                                   'id':'area'}))
     
