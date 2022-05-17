@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Gallery, GalleryImages
-from .forms import GalleryForm, GalleryImagesForm
+from .forms import GalleryForm, GalleryImagesForm, GalleryEditForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -72,16 +72,32 @@ def gallery_detail_view(request, slug):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "page_obj":page_obj,}
+               "page_obj":page_obj,
+               "slug":slug}
     return render(request, template_name, context)
 
 @login_required
-def gallery_edit_view(request):
+def gallery_edit_view(request, slug):
     title = "Edit This Gallery"
     meta_robots = "noindex, nofollow"
+    form = GalleryEditForm(request.POST or None, request.FILES or None)
+
+    if request.method == 'POST':
+        form = GalleryEditForm(request.POST or None, request.FILES or None)
+        images = request.FILES.getlist('images') #field name in model
+        if form.is_valid():
+            for img in images:
+                image_instance = GalleryImages(images=img, gallery=form.cleaned_data.get('gallery'))
+                image_instance.save()
+            form = GalleryEditForm()
+    else:
+        form = GalleryEditForm()
 
     template_name = 'gallery/edit.html'
-    context = {"title": title, "meta_robots":meta_robots}
+    context = {"title": title, 
+               "meta_robots":meta_robots,
+               "form":form,
+               "slug":slug}
     return render(request, template_name, context)
 
 @login_required

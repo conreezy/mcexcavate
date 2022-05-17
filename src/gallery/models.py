@@ -2,12 +2,12 @@ from django.db import models
 
 # Create your models here.
 class Gallery(models.Model):
-    title   = models.CharField(max_length=50, blank=True, null=True)
-    image   = models.FileField(upload_to='image/gallery/', blank=True, null=True)
-    slug    = models.SlugField(unique=True, blank=True, null=True) 
-    description = models.TextField(null=True, blank=True)
-    meta_title  = models.CharField(max_length=55, blank=True, null=True)
-    meta_keywords  = models.CharField(max_length=160, blank=True, null=True) 
+    title   = models.CharField(max_length=50, blank=False, null=False)
+    image   = models.FileField(upload_to='image/gallery/', blank=False, null=False)
+    slug    = models.SlugField(unique=True, blank=False, null=False) 
+    description = models.TextField(null=False, blank=False)
+    meta_title  = models.CharField(max_length=55, blank=False, null=False)
+    meta_keywords  = models.CharField(max_length=160, blank=False, null=False) 
 
     def get_absolute_url(self):
         return f"/gallery/{self.slug}"

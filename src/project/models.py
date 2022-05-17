@@ -85,6 +85,7 @@ class Project(models.Model):
     hst			   = models.FloatField(max_length=100, blank=True)
     total_price    = models.FloatField(max_length=100, blank=True)
     deposit		   = models.FloatField(max_length=100, blank=True)
+    
     payment1       = models.FloatField(max_length=100, blank=True)
     payment2       = models.FloatField(max_length=100, blank=True)
     payment3       = models.FloatField(max_length=100, blank=True)

@@ -24,6 +24,13 @@
 			</div>
 		</div>
 
+		{% if user.is_staff %}
+		<div class='col-12'>
+			<p style='text-align: center;'><a href='/gallery-new'> + Add New Gallery</a></p>
+		</div>
+		{% endif %}
+
+
 	</div>
 </div>
 

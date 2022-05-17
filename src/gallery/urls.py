@@ -10,6 +10,6 @@ from .views import (
 urlpatterns = [
     path('', gallery_list_view),
     path('<str:slug>', gallery_detail_view),
-    path('<str:slug>/edit/', gallery_edit_view),
+    path('<str:slug>/add-photo/', gallery_edit_view),
     path('<str:slug>/delete/', gallery_delete_view),
 ]
