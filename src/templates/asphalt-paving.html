@@ -8,7 +8,6 @@
 
 		<div class='col-12'>
 			<h2 style='color:black; font-size:30px; margin-bottom: 20px;'>Asphalt Driveway Paving</h2>
-			<h3>Free Estimate</h3>
 			<div class='container-fluid'>
 				<div class='row my-3'>
 					<div class='col-12'>
@@ -40,6 +39,9 @@
 									{{ form.pave_type|as_crispy_field }}
 								</div>
  							</div>
+ 							<div class='form-row mb-2'>
+ 								<p>Size of Driveway:</p>
+ 							</div>
  							<div class='form-row'>
 								<div class='form-group col-4 mb-0'>
 									{{ form.length|as_crispy_field }}
@@ -52,7 +54,7 @@
 								</div>
  							</div>
  							<div class='pt-3'>
-					      		<button id='' style='float:right;' type="submit" class="btn btn-danger mt-2">Show Me The Price Now</button>
+					      		<button id='' style='float:right;' type="submit" class="btn btn-danger mt-2">Show Me The Price Now!</button>
 					      	</div>
 				      	</form>
 				      	</div>
@@ -67,13 +69,13 @@
 				<div class='row my-3'>
 					<div class='col-md-6'>
 						
-						<ul class='mt-3'>
+						<ul >
 							<li><p style='font-size: 22px;' class='mb-3'>Top of the line equipment.</p></li>
 							<li><p style='font-size: 22px;' class='mb-3'>Experienced operators.</p></li>
 							<li><p style='font-size: 22px;' class='mb-3'>Driveways, roadways, parking lots.</p></li>
 							<li><p style='font-size: 22px;' class='mb-3'>15 years in business.</p></li>
 						</ul>
-						<a href='/contact'><button class="btn btn-danger mt-2 mb-5"> Book In Person Estimate!</button></a>
+						<a href='/contact'><button class="btn btn-danger mt-2 mb-5"> Book a Free In Person Estimate!</button></a>
 					</div>
 					<div class='col-md-6'>
 						<img src= "{% static 'image/paving/ottawa-asphalt-driveway-paving.jpg' %}" alt="ottawa new asphalt driveway in Barrhaven" style="width: inherit; box-shadow: 5px 5px 20px grey;">

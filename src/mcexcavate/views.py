@@ -202,7 +202,7 @@ def asphalt_page(request):
         subject = f"McExcavate | Asphalt Paving Price Quote"
         message =  f"Hello {name_}, \
                      \n\nThank you for using our pricing calculator. \
-                     \n\nIt would cost aproximately {price} to pave your {area} square foot driveway. (accurate to within 10% - 15%)\
+                     \n\nIt would cost aproximately {price} to pave your {area} square foot driveway. (accurate to within 10% - 15%) \
                      \n\nFor more information or to book an an in person estimate contact us today. \
                      \n\nMcExcavate \
                      \nOttawa, ON \
