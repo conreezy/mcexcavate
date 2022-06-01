@@ -58,8 +58,7 @@ class PavingPriceForm(forms.Form):
     address = forms.CharField(label='Address', widget=forms.TextInput(attrs={'placeholder': 'Address'}))
     pave_type = forms.ChoiceField(label='Pave Type', 
                                   choices=PAVE_CHOICES, 
-                                  widget=forms.Select(attrs={'placeholder': 'Remove old asphalt & pave',
-                                                             'id':'pave_type'}))
+                                  widget=forms.Select(attrs={'id':'pave_type'}))
     length  = forms.FloatField(label='Length', widget=forms.TextInput(attrs={'placeholder': 'Length', 
                                                                                'oninput': 'changeArea()',
                                                                                'id':'length'}))

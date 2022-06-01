@@ -59,7 +59,7 @@ def interlock_page(request):
 def re_sodding_page(request):
     title = "SOD INSTALLATION OTTAWA"
     meta_title = "Sod Installation Ottawa | McExcavate Inc."
-    meta_description = "Sod Installation Ottawa. Mcexcavate has been re-sodding lawns in Ottawa since 2013. We use high quality screeened top soil and make sure the lawn is perfectly graded."
+    meta_description = "Sod Installation Ottawa. McExcavate has been re-sodding lawns in Ottawa since 2013. We use high quality screeened top soil and make sure the lawn is perfectly graded."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
     meta_robots = "index, follow"
     price = 0 
@@ -146,7 +146,7 @@ def maintenance_page(request):
 def concrete_page(request):
     title = "STAMPED CONCRETE OTTAWA"
     meta_title = 'Stamped Concrete Ottawa | McExcavate Inc.'
-    meta_description = "McExcavate provides stamped concrete installation to commercial, residential and government clients. One of Ottawa's leading stamped concrete companies since 2013."
+    meta_description = "McExcavate provides stamped concrete in Ottawa to commercial, residential and government clients. One of Ottawa's leading stamped concrete companies since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
 
@@ -161,7 +161,7 @@ def concrete_page(request):
 def asphalt_page(request):
     title = "ASPHALT DRIVEWAY PAVING OTTAWA"
     meta_title = 'Asphalt Driveway Paving Ottawa | McExcavate Inc.'
-    meta_description = "McExcavate provides asphalt driveway paving to Ottawa, residential and commercial clients. We have been one of Ottawa's leading asphalt paving companies since 2013."
+    meta_description = "McExcavate provides asphalt driveway paving in Ottawa to residential and commercial clients. We have been one of Ottawa's leading asphalt paving companies since 2013."
     meta_keywords = "driveway paving ottawa, ottawa driveway paving, asphalt driveway paving ottawa, ottawa asphalt driveway paving,\
                      ottawa asphalt driveways, asphalt driveways ottawa, ottawa paving, paving ottawa, driveway paving,\
                      asphalt ottawa, ottawa asphalt,"
