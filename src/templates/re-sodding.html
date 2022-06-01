@@ -35,6 +35,15 @@
 					<div class='col-12'>
 						<div class='home_page_services' style='overflow: hidden;'>
 						<p class='mb-3'><b>GET A PRICE RIGHT NOW.</b></p>
+						<div class=''>
+							{% if messages %}
+							{% for message in messages %}
+							<div class='alert alert-{{ message.tags }}' style='width:inherit;'>
+							    {{ message }}
+							</div>
+							{% endfor %}
+						    {% endif %}
+				      	</div>
 						<p class='mb-3'>Use this calculator to get an approximate price by entering the dimensions or total square footage of the area you're looking to re-sod.</p>
 						<form id='' method='POST' action=".">{% csrf_token %}
 							<div class='form-row'>
@@ -65,13 +74,6 @@
 								</div>
  							</div>
  							<div class='pt-3'>
- 								{% if messages %}
-								    {% for message in messages %}
-								    <div class='alert alert-{{ message.tags }}' style='width:inherit;'>
-								      {{ message }}
-								    </div>
-								    {% endfor %}
-							    {% endif %}
 					      		<button id='' style='float:right;' type="submit" onclick='getPrice()' class="btn btn-danger mt-2">Show Me The Price Now!</button>
 					      	</div>
 				      	</form>

@@ -113,6 +113,7 @@ def re_sodding_page(request):
         from_address = settings.EMAIL_HOST_USER
         to_address = email
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        send_mail(subject, message, from_address, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
 
         messages.success(request, f"{ price } to re-sod { area } square feet in your { yard } yard.")
 
@@ -202,7 +203,7 @@ def asphalt_page(request):
         subject = f"McExcavate | Asphalt Paving Price Quote"
         message =  f"Hello {name_}, \
                      \n\nThank you for using our pricing calculator. \
-                     \n\nIt would cost aproximately {price} to pave your {area} square foot driveway. (accurate to within 10% - 15%) \
+                     \n\n{price} to pave your {area} square foot driveway. (accurate to within 10% - 15%) \
                      \n\nFor more information or to book an an in person estimate contact us today. \
                      \n\nMcExcavate \
                      \nOttawa, ON \
@@ -210,6 +211,7 @@ def asphalt_page(request):
         from_address = settings.EMAIL_HOST_USER
         to_address = email
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        send_mail(subject, message, from_address, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
 
         messages.success(request, f"It would cost aproximately { price } to pave your { area } square foot driveway.")
 
