@@ -95,11 +95,13 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000000;
-  color: white;
+  background-color: white;
   height: 60px;
   align-items: center;
   margin: auto;
+}
+.top-banner h1{
+  color: black;
 }
 .top-banner-2 {
   display: flex;
@@ -183,7 +185,6 @@ padding: 2.5px;
 
 .small_photo_box p{
  color:black;
-
 }
 
 .small_photo_box img{
