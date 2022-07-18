@@ -1,7 +1,7 @@
 .concrete_calculator{
   box-shadow: 3px 3px 15px grey;
-  padding: 0px 20px 20px 20px;
-  margin: 10px 0px 10px 0px;
+  padding: 10px 20px 20px 20px;
+  margin: 25px 0px 10px 0px;
   width:inherit;
 }
 .concrete_calculator h4{
@@ -20,7 +20,7 @@ margin-top: 25px;
 /* Project */
 .crete_project{
 margin: 0px 0px 0px 0px;
-padding: 15px 0px 0px 0px;
+padding: 5px 0px 0px 0px;
 }
 
 .crete_project p{
@@ -108,5 +108,6 @@ visibility: hidden;
 
 /* Price */
 .crete_price{
-
+display: none;
+visibility: hidden;
 }
