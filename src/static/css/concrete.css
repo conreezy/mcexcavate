@@ -1,0 +1,103 @@
+.concrete_calculator{
+  box-shadow: 3px 3px 15px grey;
+  padding: 0px 20px 20px 20px;
+  margin: 10px 0px 10px 0px;
+  width:inherit;
+}
+.concrete_calculator h4{
+font-size: 18px;
+font-style: bold;
+margin: 0px;
+}
+
+.crete_calc_tgle_bttn{
+}
+
+.crete_calc_bttn_1{
+margin-top: 15px;
+}
+
+/* Project */
+.crete_project{
+margin: 0px 0px 0px 0px;
+padding: 15px 0px 0px 0px;
+}
+
+.crete_project p{
+font-style: oblique;
+padding: 0px 0px 0px 0px;
+}
+
+/* Shape & Size */
+.crete_shape{
+}
+.crete_shape p{
+margin: 10px 0px 0px 0px !important; 
+}
+.crete_shape label{
+margin: 10px 0px 0px 0px;
+}
+.crete_shape select{
+margin: 5px 0px 20px 0px;
+}
+.crete_shape select option{
+}
+.crete_shape input{
+margin: 5px 0px 0px 0px;
+}
+.crete_shape button{
+display: inline-block;
+margin: 10px 0px 0px 0px;
+}
+
+/* Finish */
+.crete_finish{
+display: none;
+visibility: hidden;
+}
+.crete_finish p{
+margin: 10px 0px 0px 0px !important; 
+}
+
+.calc_finish_options{
+  box-shadow: 3px 3px 15px grey;
+  padding: 3px 20px 10px 20px;
+  margin: 0px 0px 0px 0px;
+  width:inherit;
+  cursor: pointer;
+}
+.calc_finish_options:hover{
+  background-color: #DC3545;
+}
+
+.calc_finish_options:hover p{
+  color: white;
+}
+
+.calc_finish_options p{
+  padding: 5px 0px 5px 0px !important;
+  margin: 0px 0px 0px 0px !important;
+  color:black;
+}
+
+.calc_finish_options img{
+ width:inherit;
+ margin: 0px 0px 10px 0px;
+}
+
+/* Stamp */
+.crete_stamp{
+display: none;
+visibility: hidden;
+}
+
+/* Color */
+.crete_color{
+display: none;
+visibility: hidden;
+}
+
+/* Price */
+.crete_price{
+
+}

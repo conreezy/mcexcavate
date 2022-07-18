@@ -26,7 +26,7 @@ EMAIL_PORT = 587
 #EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
 #EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
 
-ALLOWED_HOSTS = ['170.187.181.63', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
+ALLOWED_HOSTS = ['170.187.194.201', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
 
 # Application definition
 

@@ -11,7 +11,7 @@ window.addEventListener("resize", function(event){
   // console.log("top nav variable added");
   var innerwidth = window.innerWidth;
   // console.log("width:" + innerwidth);
-  var top_nav_display = window.getComputedStyle(top_nav_mobile).display;
+  var top_nav_display = window.getComputedStyle(top_nav_mobile).display;cd 
   // console.log("display:" + top_nav_display);
 
   if (innerwidth > 768 && top_nav_display === "block") {
