@@ -25,6 +25,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class='col-12'>
 			<hr>
 			<h3>Concrete Pricing Calculator</h3>
@@ -32,8 +33,13 @@
 				
 				<div class='crete_project'>
 					<div class='col-12'>
-						<p>Your Project:</p>
-						<p>Price:</p>
+						<p class='project_detail_list'>Your Project:</p>
+						<p class='project_detail_list' id='proj_crete_shape'></p>
+						<p class='project_detail_list' id='proj_crete_size'></p>
+						<p class='project_detail_list' id='proj_crete_finish'></p>
+						<p class='project_detail_list' id='proj_crete_stamp'></p>
+						<p class='project_detail_list' id='proj_crete_color'></p>
+						<p id='proj_crete_price'>Price:</p>
 						<hr>
 					</div>
 				</div>
@@ -48,12 +54,18 @@
 						</select><br>
 
 						<h4>Size:</h4>
-						<label for="crete_length" id='crete_length_label'>Length:</label><br>
-						<input type="text" name="crete_length" id='crete_length_input'><br>
-						<label for="crete_width" id='crete_width_label'>Width:</label><br>
-						<input type="text" name="crete_width" id='crete_width_input'><br>
-						<label for="crete_diameter" id='crete_diameter_label'>Diameter:</label><br>
-						<input type="text" name="crete_diameter" id='crete_diameter_input'><br>
+						<div class='crete_length_labelninput' id='crete_length_labelninput'>
+							<label for="crete_length" class='crete_length_label' id='crete_length_label'>Length:</label><br>
+							<input type="text" name="crete_length" class='crete_length_input' id='crete_length_input'><br>
+						</div>
+						<div class='crete_width_labelninput' id='crete_width_labelninput'>
+							<label for="crete_width" class='crete_width_label' id='crete_width_label'>Width:</label><br>
+							<input type="text" name="crete_width" class='crete_width_input' id='crete_width_input'>
+						</div>
+						<div class='crete_diameter_labelninput' id='crete_diameter_labelninput'>
+							<label for="crete_diameter" class='crete_diameter_label' id='crete_diameter_label'>Diameter:</label>
+							<input type="text" name="crete_diameter" class='crete_diameter_input' id='crete_diameter_input'>
+						</div>
 						<p>Total Area:</p>
 						<button class="btn btn-danger crete_calc_bttn_1" id="crete_shape_next"> Next --></button>
 					</div>
@@ -182,6 +194,7 @@
 
 			</div>
 		</div>
+		
 		<div class='col-12'>
 			<hr>
 			<h3>Concrete Finish Options</h3>

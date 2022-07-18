@@ -8,31 +8,28 @@ document.getElementById("crete_shape_next").addEventListener("click", function(e
   crete_finish.style.visibility = "visible";
 });
 
-// Shape Select
+//  Shape Select onChange
 document.getElementById("crete_shape_select").addEventListener("change", function(event) {
-  var crete_length_label = document.getElementById("crete_length_label");
-  var crete_length_input = document.getElementById("crete_length_input");
-  var crete_width_label = document.getElementById("crete_width_label");
-  var crete_width_input = document.getElementById("crete_width_input");
-  var crete_diameter_label = document.getElementById("crete_diameter_label");
-  var crete_diameter_input = document.getElementById("crete_diameter_input");
   var crete_shape_select = document.getElementById("crete_shape_select");
-  var selected_crete_shape = crete_shape_select.value
-
-  if (selected_crete_shape === "Cirlce") {
-    crete_length_label.style.display = "none";
-    crete_length_label.style.visibility =  "hidden";
-    crete_length_input.style.display = "none";
-    crete_length_input.style.visibility =  "hidden";
-    crete_width_label.style.display = "none";
-    crete_width_label.style.visibility =  "hidden";
-    crete_width_input.style.display = "none";
-    crete_width_input.style.visibility =  "hidden";
-} else {
-    crete_diameter_label.style.display = "block";
-    crete_diameter_input.style.visibility =  "visible";
-}
-  
+  var selected_shape = crete_shape_select.value
+  var crete_length_labelninput = document.getElementById("crete_length_labelninput");
+  var crete_width_labelninput = document.getElementById("crete_width_labelninput");
+  var crete_diameter_labelninput = document.getElementById("crete_diameter_labelninput");
+  if (selected_shape === "Circle") {
+    crete_length_labelninput.style.display = "none";
+    crete_length_labelninput.style.visibility =  "hidden";
+    crete_width_labelninput.style.display = "none";
+    crete_width_labelninput.style.visibility =  "hidden";
+    crete_diameter_labelninput.style.display = "block";
+    crete_diameter_labelninput.style.visibility = "visible";
+  } else {
+    crete_length_labelninput.style.display = "block";
+    crete_length_labelninput.style.visibility =  "visible";
+    crete_width_labelninput.style.display = "block";
+    crete_width_labelninput.style.visibility =  "visible";
+    crete_diameter_labelninput.style.display = "none";
+    crete_diameter_labelninput.style.visibility = "hidden";
+  }
 });
 
 
@@ -85,6 +82,8 @@ document.getElementById("crete_color_previous").addEventListener("click", functi
   crete_stamp.style.display = "block";
   crete_stamp.style.visibility = "visible";
 });
+
+
 
 
 

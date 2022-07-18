@@ -14,7 +14,7 @@ margin: 0px;
 }
 
 .crete_calc_bttn_1{
-margin-top: 15px;
+margin-top: 25px;
 }
 
 /* Project */
@@ -26,6 +26,11 @@ padding: 15px 0px 0px 0px;
 .crete_project p{
 font-style: oblique;
 padding: 0px 0px 0px 0px;
+}
+
+.project_detail_list{
+display: inline-block;
+margin: 0;
 }
 
 /* Shape & Size */
@@ -47,8 +52,12 @@ margin: 5px 0px 0px 0px;
 }
 .crete_shape button{
 display: inline-block;
-margin: 10px 0px 0px 0px;
 }
+.crete_diameter_labelninput{
+display: none;
+visibility: hidden;
+}
+
 
 /* Finish */
 .crete_finish{
