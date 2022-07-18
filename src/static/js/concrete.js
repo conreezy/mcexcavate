@@ -132,6 +132,10 @@ document.getElementById("broom_finish").addEventListener("click", function(event
   var crete_price = document.getElementById("crete_price");
   crete_price.style.display = "block";
   crete_price.style.visibility =  "visible";
+  // Show price details
+  var broom_price_details = document.getElementById("broom_price_details");
+  broom_price_details.style.display = "block";
+  broom_price_details.style.visibility =  "visible";
   // add finish choice to proj
   document.getElementById("proj_crete_finish").innerHTML = ", Broom, ";
   // calculate and add price to proj
@@ -149,6 +153,10 @@ document.getElementById("smooth_finish").addEventListener("click", function(even
   var crete_price = document.getElementById("crete_price");
   crete_price.style.display = "block";
   crete_price.style.visibility =  "visible";
+  // Show price details
+  var smooth_price_details = document.getElementById("smooth_price_details");
+  smooth_price_details.style.display = "block";
+  smooth_price_details.style.visibility =  "visible";
   // add finish choice to proj
   document.getElementById("proj_crete_finish").innerHTML = ", Smooth, ";
   // calculate and add price to proj
@@ -222,6 +230,10 @@ document.getElementById("color_option_1").addEventListener("click", function(eve
   var crete_price = document.getElementById("crete_price");
   crete_price.style.display = "block";
   crete_price.style.visibility =  "visible";
+  // Show price details
+  var stamped_price_details = document.getElementById("stamped_price_details");
+  stamped_price_details.style.display = "block";
+  stamped_price_details.style.visibility =  "visible";
   // add stamp choice to proj
   document.getElementById("proj_crete_color").innerHTML = color1;
   // calculate and add price to proj
@@ -239,6 +251,10 @@ document.getElementById("color_option_2").addEventListener("click", function(eve
   var crete_price = document.getElementById("crete_price");
   crete_price.style.display = "block";
   crete_price.style.visibility =  "visible";
+  // Show price details
+  var stamped_price_details = document.getElementById("stamped_price_details");
+  stamped_price_details.style.display = "block";
+  stamped_price_details.style.visibility =  "visible";
   // add stamp choice to proj
   document.getElementById("proj_crete_color").innerHTML = color2;
   // calculate and add price to proj
@@ -256,6 +272,10 @@ document.getElementById("color_option_3").addEventListener("click", function(eve
   var crete_price = document.getElementById("crete_price");
   crete_price.style.display = "block";
   crete_price.style.visibility =  "visible";
+  // Show price details
+  var stamped_price_details = document.getElementById("stamped_price_details");
+  stamped_price_details.style.display = "block";
+  stamped_price_details.style.visibility =  "visible";
   // add stamp choice to proj
   document.getElementById("proj_crete_color").innerHTML = color3;
   // calculate and add price to proj
@@ -273,6 +293,10 @@ document.getElementById("color_option_4").addEventListener("click", function(eve
   var crete_price = document.getElementById("crete_price");
   crete_price.style.display = "block";
   crete_price.style.visibility =  "visible";
+  // Show price details
+  var stamped_price_details = document.getElementById("stamped_price_details");
+  stamped_price_details.style.display = "block";
+  stamped_price_details.style.visibility =  "visible";
   // add stamp choice to proj
   document.getElementById("proj_crete_color").innerHTML = color4;
   // calculate and add price to proj
