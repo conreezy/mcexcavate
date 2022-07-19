@@ -60,7 +60,7 @@ document.getElementById("crete_length_input").addEventListener("input", function
   // add shape to proj area at top
   var crete_shape_select = document.getElementById("crete_shape_select");
   var selected_shape = crete_shape_select.value
-  document.getElementById("proj_crete_shape").innerHTML = selected_shape + ", ";
+  document.getElementById("proj_crete_shape").innerHTML = selected_shape + " | ";
 });
 //  Calculate area on width input
 document.getElementById("crete_width_input").addEventListener("input", function(event) {
@@ -74,7 +74,7 @@ document.getElementById("crete_width_input").addEventListener("input", function(
   // add shape to proj area at top
   var crete_shape_select = document.getElementById("crete_shape_select");
   var selected_shape = crete_shape_select.value
-  document.getElementById("proj_crete_shape").innerHTML = selected_shape + ", ";
+  document.getElementById("proj_crete_shape").innerHTML = selected_shape + " | ";
 });
 //  Calculate area on diameter input
 document.getElementById("crete_diameter_input").addEventListener("input", function(event) {
@@ -86,7 +86,7 @@ document.getElementById("crete_diameter_input").addEventListener("input", functi
   // add shape to proj area at top
   var crete_shape_select = document.getElementById("crete_shape_select");
   var selected_shape = crete_shape_select.value
-  document.getElementById("proj_crete_shape").innerHTML = selected_shape + ", ";
+  document.getElementById("proj_crete_shape").innerHTML = selected_shape + " | ";
 });
 
 //  Shape Next Button
@@ -119,7 +119,7 @@ document.getElementById("stamped_finish").addEventListener("click", function(eve
   crete_stamp.style.display = "block";
   crete_stamp.style.visibility = "visible";
   // add finish choice to proj
-  document.getElementById("proj_crete_finish").innerHTML = ", Stamped, ";
+  document.getElementById("proj_crete_finish").innerHTML = " | Stamped";
 });
 
 // Broom Finish Button
@@ -137,7 +137,7 @@ document.getElementById("broom_finish").addEventListener("click", function(event
   broom_price_details.style.display = "block";
   broom_price_details.style.visibility =  "visible";
   // add finish choice to proj
-  document.getElementById("proj_crete_finish").innerHTML = ", Broom, ";
+  document.getElementById("proj_crete_finish").innerHTML = " | Broom";
   // calculate and add price to proj
   var square_feet = document.getElementById("proj_crete_size").innerHTML;
   document.getElementById("proj_crete_price").innerHTML = "Price: $" + (square_feet * broom_finish_price).toFixed(2);
@@ -158,7 +158,7 @@ document.getElementById("smooth_finish").addEventListener("click", function(even
   smooth_price_details.style.display = "block";
   smooth_price_details.style.visibility =  "visible";
   // add finish choice to proj
-  document.getElementById("proj_crete_finish").innerHTML = ", Smooth, ";
+  document.getElementById("proj_crete_finish").innerHTML = " | Smooth";
   // calculate and add price to proj
   var square_feet = document.getElementById("proj_crete_size").innerHTML;
   document.getElementById("proj_crete_price").innerHTML = "Price: $" + (square_feet * smooth_finish_price).toFixed(2);
@@ -183,7 +183,7 @@ document.getElementById("stamp_option_1").addEventListener("click", function(eve
   crete_color.style.display = "block";
   crete_color.style.visibility = "visible";
   // add stamp choice to proj
-  document.getElementById("proj_crete_stamp").innerHTML = stamp1 +", ";
+  document.getElementById("proj_crete_stamp").innerHTML = " | " + stamp1;
 });
 
 //  Stamp Option 2 Button
@@ -195,7 +195,7 @@ document.getElementById("stamp_option_2").addEventListener("click", function(eve
   crete_color.style.display = "block";
   crete_color.style.visibility = "visible";
   // add stamp choice to proj
-  document.getElementById("proj_crete_stamp").innerHTML = stamp2 +", ";
+  document.getElementById("proj_crete_stamp").innerHTML = " | " + stamp2;
 });
 
 //  Stamp Option 3 Button
@@ -207,7 +207,7 @@ document.getElementById("stamp_option_3").addEventListener("click", function(eve
   crete_color.style.display = "block";
   crete_color.style.visibility = "visible";
   // add stamp choice to proj
-  document.getElementById("proj_crete_stamp").innerHTML = stamp3 +", ";
+  document.getElementById("proj_crete_stamp").innerHTML = " | " + stamp3;
 });
 
 //  Color Previous Button
@@ -235,7 +235,7 @@ document.getElementById("color_option_1").addEventListener("click", function(eve
   stamped_price_details.style.display = "block";
   stamped_price_details.style.visibility =  "visible";
   // add stamp choice to proj
-  document.getElementById("proj_crete_color").innerHTML = color1;
+  document.getElementById("proj_crete_color").innerHTML = " | " + color1;
   // calculate and add price to proj
   var square_feet = document.getElementById("proj_crete_size").innerHTML;
   document.getElementById("proj_crete_price").innerHTML = "Price: $" + (square_feet * stamped_finish_price).toFixed(2);
@@ -256,7 +256,7 @@ document.getElementById("color_option_2").addEventListener("click", function(eve
   stamped_price_details.style.display = "block";
   stamped_price_details.style.visibility =  "visible";
   // add stamp choice to proj
-  document.getElementById("proj_crete_color").innerHTML = color2;
+  document.getElementById("proj_crete_color").innerHTML = " | " + color2;
   // calculate and add price to proj
   var square_feet = document.getElementById("proj_crete_size").innerHTML;
   document.getElementById("proj_crete_price").innerHTML = "Price: $" + (square_feet * stamped_finish_price).toFixed(2);
@@ -277,7 +277,7 @@ document.getElementById("color_option_3").addEventListener("click", function(eve
   stamped_price_details.style.display = "block";
   stamped_price_details.style.visibility =  "visible";
   // add stamp choice to proj
-  document.getElementById("proj_crete_color").innerHTML = color3;
+  document.getElementById("proj_crete_color").innerHTML = " | " + color3;
   // calculate and add price to proj
   var square_feet = document.getElementById("proj_crete_size").innerHTML;
   document.getElementById("proj_crete_price").innerHTML = "Price: $" + (square_feet * stamped_finish_price).toFixed(2);
@@ -298,11 +298,44 @@ document.getElementById("color_option_4").addEventListener("click", function(eve
   stamped_price_details.style.display = "block";
   stamped_price_details.style.visibility =  "visible";
   // add stamp choice to proj
-  document.getElementById("proj_crete_color").innerHTML = color4;
+  document.getElementById("proj_crete_color").innerHTML = " | " + color4;
   // calculate and add price to proj
   var square_feet = document.getElementById("proj_crete_size").innerHTML;
   document.getElementById("proj_crete_price").innerHTML = "Price: $" + (square_feet * stamped_finish_price).toFixed(2);
 });
 
+//  Reset Calculator Button
+document.getElementById("reset_calculator").addEventListener("click", function(event) {
+  // hide price page
+  var crete_price = document.getElementById("crete_price");
+  crete_price.style.display = "none";
+  crete_price.style.visibility =  "hidden";
+  // Hide all price detail sections
+  var broom_price_details = document.getElementById("broom_price_details");
+  broom_price_details.style.display = "none";
+  broom_price_details.style.visibility =  "hidden";
+  var smooth_price_details = document.getElementById("smooth_price_details");
+  smooth_price_details.style.display = "none";
+  smooth_price_details.style.visibility =  "hidden";
+  var stamped_price_details = document.getElementById("stamped_price_details");
+  stamped_price_details.style.display = "none";
+  stamped_price_details.style.visibility =  "hidden";
+  // Show shape & size page
+  var crete_shape = document.getElementById("crete_shape");
+  crete_shape.style.display = "block";
+  crete_shape.style.visibility =  "visible";
+  // clear all proj detail
+  document.getElementById("proj_crete_shape").innerHTML = "";
+  document.getElementById("proj_crete_size").innerHTML = "";
+  document.getElementById("proj_crete_finish").innerHTML = "";
+  document.getElementById("proj_crete_stamp").innerHTML = "";
+  document.getElementById("proj_crete_color").innerHTML = "";
+  document.getElementById("proj_crete_price").innerHTML = "Price:";
+  document.getElementById("crete_total_area").innerHTML = "Total Area:";
 
+  // clear size inputs
+  document.getElementById("crete_length_input").value = "";
+  document.getElementById("crete_width_input").value = "";
+  document.getElementById("crete_diameter_input").value = "";
+});
 
