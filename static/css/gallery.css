@@ -1,0 +1,81 @@
+.gallery_col{
+width:100%;
+/*position: sticky;*/
+}
+.gallery_col svg{
+fill:#007BFF;
+height: 30px;
+padding-right: 20px;
+}
+
+.gallery_col svg:hover{
+fill:#591a8c;
+}
+
+.gallery_col p{
+text-align: center;
+font-size:25px;
+color:#007BFF;
+}
+
+.gallery_col p:hover{
+color:#591a8c;
+}
+
+.pagination{
+width:100%;
+text-align:center;
+justify-content: center;
+padding:5px 0px 5px 0px;
+}
+
+.pagination a{
+padding:10px 10px 10px 10px;
+}
+
+.pagination svg{
+fill:#DC3545;
+height: 30px;
+}
+
+.pagination svg:hover{
+fill:#891e27;
+}
+
+.current{
+font-size: 28px;
+font-style: bold;
+padding:0px 10px 0px 10px;
+}
+.gal_img_col{
+width:25%;
+padding:10px;
+}
+.gal_image{
+width: 100%;
+}
+
+
+@media only screen and (max-width: 1400px) {
+}
+
+@media only screen and (max-width: 1200px) {
+.gal_img_col{
+width:33%;
+}
+}
+
+@media only screen and (max-width: 992px) {
+.gal_img_col{
+width:50%;
+}
+}
+
+@media only screen and (max-width: 768px) {
+}
+
+@media only screen and (max-width: 576px) {
+.gal_img_col{
+width:100%;
+}
+}

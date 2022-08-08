@@ -1,5 +1,37 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
+@font-face {
+  font-family: GothamBold;
+  src: url(fonts/Gotham-Bold-Regular.ttf);
+}
+@font-face {
+  font-family: GothamLight;
+  src: url(fonts/Gotham-Light.ttf);
+}
+@font-face {
+  font-family: GothamBlack;
+  src: url(fonts/Gotham-Pro-Black.ttf);
+}
+
+@font-face {
+  font-family: mr-eaves-xl-modern-bold;
+  font-weight: 800;
+  font-style: normal;
+  src: url(fonts/MrEavesXLModOT-Heavy.ttf);
+}
+@font-face {
+  font-family: mr-eaves-xl-modern-medium;
+  font-weight: 400;
+  font-style: normal;
+  src: url(fonts/MrEavesXLModOT-Reg.ttf);
+}
+@font-face {
+  font-family: mr-eaves-xl-modern-light;
+  font-weight: 200;
+  font-style: normal;
+  src: url(fonts/MrEavesXLModOT-Light.ttf);
+}
+
 .main-wrap{
   margin: 0;
   overflow: hidden;
@@ -53,7 +85,7 @@ html h1 {
   font-style: normal;
   font-variant: normal;
   font-weight: bold;
-  color: #ffffff;
+  color: black;
 }
 p { 
   margin: 0 !important; 
@@ -63,11 +95,13 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000000;
-  color: white;
+  background-color: white;
   height: 60px;
   align-items: center;
   margin: auto;
+}
+.top-banner h1{
+  color: black;
 }
 .top-banner-2 {
   display: flex;
@@ -151,7 +185,6 @@ padding: 2.5px;
 
 .small_photo_box p{
  color:black;
-
 }
 
 .small_photo_box img{
@@ -174,25 +207,11 @@ padding: 2.5px;
  width:inherit;
  margin: 20px 0px 20px 0px;
 }
-
-.footer {
-  background-color: #000000;
-  color: #ffffff;
-  padding-top: 2rem;
-}
-.footer-hr{
-  background-color: #adadad;
-}
-.footer a{
-  color: #ffffff;
-}
-.footer a:hover{
-  color: #ffffff;
+/* Service Pages */
+.service_row{
+margin: 40px 0px 0px 0px;
 }
 
-.footer h5{
-color:white;
-}
 
 /* Fixed sidenav, full height */
 .sidenav {

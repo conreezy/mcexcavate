@@ -1,20 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-{% include "top_banner.html" %}
 {% load crispy_forms_tags %}
 {% load static %} 
 <div class='container'>
-	<div class='row my-3'>
+	<div class='row service_row'>
 		<div class='col-12'>
 			<div class='container-fluid'>
-				<div class='row my-3'>
+				<div class='row'>
 					<div class='col-md-6'>
-						<ul class=''>
-							<li><p style='font-size: 22px;' class='mb-3'>Free, prompt, written estimate.</p></li>
-							<li><p style='font-size: 22px;' class='mb-3'>Properly graded lawn and perfectly laid sod.</p></li>
-							<li><p style='font-size: 22px;' class=''>Watering instructions.</p></li>
-						</ul>
-						<a href='/contact'><button class="btn btn-danger mt-2 mb-5"> Contact Us! </button></a>
+						<h1 class='m-0 mb-2' style='color:black;'>{{title}}</h1>
+						<p style='font-size: 20px;' class='mb-3'>Hire us to re-sod your lawn because we have laid over one million square feet of sod and our experienced crews use top quality tools and specialized equipment. We use the highest quality, fresh, locally harvested Kentucky bluegrass and top quality screened residential top soil to help ensure your lawn stays thick and green over the long term. </p>
+						<a href='/contact'><button class="btn btn-danger mt-2 mb-5">Book an Estimate! </button></a>
 					</div>
 					<div class='col-md-6'>
 						<img src= "{% static 'image/sod/riverside south re-gradding and sodding.jpg' %}" alt="ottawa back lawn after re-gradding and re-sodding" style="width: inherit; box-shadow: 5px 5px 20px grey;">
@@ -26,12 +22,11 @@
 
 		<div class='col-12'>
 			<hr>
-			<h2 class='mt-3' style='color:black;'>Pricing</h2>
 			<div class='container-fluid'>
 				<div class='row my-3'>
 					<div class='col-12'>
 						<div class='home_page_services' style='overflow: hidden;'>
-						<p class='mb-3'><b>GET A PRICE RIGHT NOW.</b></p>
+						<h3 class="mb-3">Sod Installation Price Calculator</h3></p>
 						<div class=''>
 							{% if messages %}
 							{% for message in messages %}
