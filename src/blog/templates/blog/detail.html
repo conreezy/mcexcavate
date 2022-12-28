@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% include "blog/blog-breadcrumbs.html" %}
+<div class='container-fluid'>
+	<div class='row'>
+		<div class='col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12' style='padding:0px;'>
+			<div class='container-fluid'>
+				<div class='row mx-auto blog_box'>
+					<div class='col-12'>
+						<a href="{{ blog_post.get_absolute_url }}">
+							<h1 class='mt-2' style='font-size:20px; font-family:GothamBold; color:black; padding:10px 10px 10px 10px;'>{{ blog_post.title }}</h1>
+						</a>
+						<p style='font-size:16px; font-family:GothamLight; color:black; padding: 0px 10px 0px 10px;'>{{ blog_post.user }}</p>
+						<p style='font-size:16px; font-family:GothamLight; color:black; padding: 0px 10px 0px 10px;'>{{ blog_post.publish_date }}</p>
+						{% if not blog_post.publish_date %}
+						<h2>Draft</h2>
+						{% endif %}
+					</div>
+					<div class='col-12' style='overflow:hidden;'>
+						{% if blog_post.image %}
+							<a href="{{ blog_post.get_absolute_url }}">
+								<img src="{{ blog_post.image.url }}" alt='' style='padding:25px 10px 25px 10px; width:100%; text-align:center;'/>
+							</a>
+						{% endif %}
+					</div>
+					<div class='col-12'>
+						{% if blog_post.content %}
+							<p style='padding:0px 25px 25px 10px;'>{{ blog_post.content }}</p>
+						{% endif %}
+					</div>
+					<div class='col-12'>
+					{% if request.user.is_authenticated %}
+						{% if request.user.is_staff %}
+							<a href="{{ blog_post.get_edit_url }}" class='btn btn-primary' style='margin:10px 10px 20px 10px'> Edit </a>
+							<a href="{{ blog_post.get_delete_url }}" class='btn btn-primary' style='margin:10px 10px 20px 10px'> Delete </a>
+						{% endif %}
+					{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 mx-auto' style='padding:0px ;'>
+			<div class='container-fluid'>
+				{% for blog_post in object_list %}			
+				<div class='row mx-auto small_blog_box'>
+					<div class='col-3' style='margin-right:auto; width:100%; overflow:hidden;'>
+						{% if blog_post.image %}
+							<a href="{{ blog_post.get_absolute_url }}">
+								<img src="{{ blog_post.image.url }}" style='padding:20px 0px 20px 5px; margin-right:auto; height:125px; overflow:hidden;'/>
+							</a>
+						{% endif %}
+					</div>
+					<div class='col-9'>
+						<a href="{{ blog_post.get_absolute_url }}">
+							<p class='mt-2' style='font-size:16px; font-family:GothamBold; color:black; padding:5px 0px 0px 0px; margin-right:auto;'>{{ blog_post.title }}</p>
+							<p>{{ blog_post.publish_date }}</p>
+							<p>Author: {{ blog_post.user.username }}</p>
+							<p class='pt-1'><a href='{{ blog_post.get_absolute_url }}'> Read More...</a> </p>
+						</a>
+						{% if not blog_post.publish_date %}
+						<h2>Draft</h2>
+						{% endif %}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 
     # my app
     'gallery',
-    'project'
+    'project',
+    'blog'
 ]
 
 SITE_ID = 1

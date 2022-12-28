@@ -5,7 +5,7 @@ from django.urls import path, re_path, include
 
 from gallery.views import (
     gallery_create_view,
-    )
+)
 
 from .views import (
     home_page,
@@ -25,18 +25,20 @@ from .views import (
     DashboardView,
 )
 
+from blog.views import (
+    blog_post_create_view,
+    #blog_sitemap,
+)
+
 from .sitemaps import GallerySitemap, StaticViewSitemap
 
 sitemaps = {
     "static":StaticViewSitemap,
-    "galleries":GallerySitemap   
+    "galleries":GallerySitemap 
 }
 
 urlpatterns = [
     path('', home_page, name='home'),
-
-    path('gallery-new/', gallery_create_view),
-    path('gallery/', include('gallery.urls')),
 
     # -- Services
     path('excavation/', excavation_page, name='excavation'),
@@ -47,16 +49,26 @@ urlpatterns = [
     path('parging/', parging_page, name='parging'),
     path('asphalt-paving/', asphalt_page, name='asphalt-paving'),
     path('asphalt-repairs/', asphalt_repairs_page, name='asphalt-repairs'),
+
+    # -- Gallery 
+    path('gallery-new/', gallery_create_view),
+    path('gallery/', include('gallery.urls')),
     
-    # 
+    # -- Blog
+    path('blog-new/', blog_post_create_view),
+    path('blog/', include('blog.urls')),
+
+    # -- Other pages
     path('careers/', careers_page, name='careers'),
     path('about/', about_page, name='about'),
     path('contact/', contact_page, name='contact'),
 
+    # -- Admin pages
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     
     path('admin/', admin.site.urls),
 
+    # -- Sitemap
     path('sitemap.xml', sitemap, {"sitemaps":sitemaps})
 ]
 

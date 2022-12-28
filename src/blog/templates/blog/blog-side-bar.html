@@ -1,0 +1,31 @@
+<div class='container-fluid'>
+	<div class='row'>
+		<div class='col-12'>
+			<div class='container-fluid'>
+
+				{% for blog_post in object_list %}
+				<div class='row small_blog_box mb-2'>
+					<div class='col-5 mr-1'>
+						{% if blog_post.image %}
+							<a href="{{ blog_post.get_absolute_url }}">
+								<img src="{{ blog_post.image.url }}" class='my-2 pt-1' style='max-width:100px; max-height:90px;'/>
+							</a>
+						{% endif %}
+					</div>
+					<div class='col-7 ml-1'>
+						<a href="{{ blog_post.get_absolute_url }}">
+							<p class='card-title mt-2' style='font-size:15px; font-family:GothamLight; color:black;'>{{ blog_post.title }}</p>
+						</a>
+						{% if not blog_post.publish_date %}
+						<h2>Draft</h2>
+						{% endif %}
+					</div>
+				</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
