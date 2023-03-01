@@ -26,50 +26,223 @@
 
 		<div class='col-12'>
 			<hr>
-			<div class='container-fluid'>
-				<div class='row my-3'>
-					<div class='col-12'>
-						<div class='home_page_services' style='overflow: hidden;'>
-						<h3 class="mb-3">Contact Us</h3></p>
-						<div class=''>
-							{% if messages %}
-							{% for message in messages %}
-							<div class='alert alert-{{ message.tags }}' style='width:inherit;'>
-							    {{ message }}
-							</div>
-							{% endfor %}
-						    {% endif %}
-				      	</div>
-						<p class='mb-3'>Provide your contact details and we will get back to you quickly to provide more information.</p>
-						<form id='concrete_contact_form' method='POST' action=".">{% csrf_token %}
-							<div class='form-row'>
-								<div class='form-group col-md-6 mb-0'>
-									{{ form.name|as_crispy_field }}
-								</div>
-								<div class='form-group col-md-6 mb-0'>
-									{{ form.email|as_crispy_field }}
-								</div>
- 							</div>
- 							<div class='form-row'>
-								<div class='form-group col-12 mb-0'>
-									{{ form.address|as_crispy_field }}
-								</div>
-								<div class='form-group col-12 mb-0'>
-									{{ form.service|as_crispy_field }}
-								</div>
- 							</div>
- 							<div class='form-row'>
-								<div class='form-group col-12 mb-0'>
-									{{ form.content|as_crispy_field }}
-								</div>
- 							</div>
- 							<div class='pt-3'>
-					      		<button id='' style='float:right;' type="submit" onclick='getPrice()' class="btn btn-danger mt-2">Sumbit!</button>
-					      	</div>
-				      	</form>
-				      	</div>
+			<div class='container-fluid concrete_calculator' id="concrete_calculator">
+				<h3>Concrete Price Calculator</h3>
+				<!-- calc project overview -->
+				<div class='crete_project'>
+					<div class='col-12 p-0'>
+						<p class='project_detail_list'>Your Project:</p>
+						<p class='project_detail_list' id='proj_crete_shape'></p>
+						<p class='project_detail_list' id='proj_crete_size'></p>
+						<p class='project_detail_list' id='proj_crete_finish'></p>
+						<p class='project_detail_list' id='proj_crete_stamp'></p>
+						<p class='project_detail_list' id='proj_crete_color'></p>
+						<p id='proj_crete_price'>Price:</p>
+						<hr>
 					</div>
 				</div>
+				<!-- calc Shape & Size -->
+				<div class='crete_shape' id="crete_shape">
+					<div class='col-12 p-0'>
+						<h4>Shape:</h4>
+						<label for="crete_shape">Shape:</label>
+						<select name="crete_shape" id="crete_shape_select">
+						  <option value="Square/Rectangle">Square/Rectangle</option>
+						  <option value="Circle">Circle</option>
+						</select>
+
+						<h4>Size:</h4>
+						<div class='crete_length_labelninput' id='crete_length_labelninput'>
+							<label for="crete_length" class='crete_length_label' id='crete_length_label'>Length:</label>
+							<input type="text" name="crete_length" class='crete_length_input' id='crete_length_input'>
+						</div>
+						<div class='crete_width_labelninput' id='crete_width_labelninput'>
+							<label for="crete_width" class='crete_width_label' id='crete_width_label'>Width:</label>
+							<input type="text" name="crete_width" class='crete_width_input' id='crete_width_input'>
+						</div>
+						<div class='crete_diameter_labelninput' id='crete_diameter_labelninput'>
+							<label for="crete_diameter" class='crete_diameter_label' id='crete_diameter_label'>Diameter:</label>
+							<input type="text" name="crete_diameter" class='crete_diameter_input' id='crete_diameter_input'>
+						</div>
+						<p id='crete_total_area'>Total Area:</p>
+						<button class="btn btn-danger crete_calc_bttn_1" id="crete_shape_next"> Next --></button>
+					</div>
+				</div>
+				<!-- calc Finish -->
+				<div class='crete_finish' id="crete_finish">
+					<div class='col-12 p-0'>
+						<h4>Finish:</h4>
+						<p>Select your desired finish type from the options below...</p>
+						<div class='container-fluid'>
+							<div class='row'>
+
+								<div class='col-md-4 p-2'>
+									<div class='calc_finish_options' id="stamped_finish">
+										<p><b>Stamped</b></p>
+										<img src= "{% static 'image/stamped-concrete/stampedexample.jpg' %}" alt="stamped concrete finish example">
+										<br> 
+									</div>
+								</div>
+
+								<div class='col-md-4 p-2'>
+									<div class='calc_finish_options' id="broom_finish">
+										<p><b>Broom</b></p>
+								   		<img src= "{% static 'image/stamped-concrete/broomfinish.jpg' %}" alt="broom finish concrete sidewalk example">
+										<br> 
+									</div>
+								</div>
+
+								<div class='col-md-4 p-2'>
+									<div class='calc_finish_options' id="smooth_finish">
+										<p><b>Smooth</b></p>
+										<img src= "{% static 'image/stamped-concrete/smoothfinish.jpg' %}" alt="smooth concrete finish example">
+										<br> 
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<button class="btn btn-danger crete_calc_bttn_1" id="crete_finish_previous"><-- Previous</button>
+						<!-- <button class="btn btn-danger crete_calc_bttn_1" id="crete_finish_next"> Next </button> -->
+					</div>
+				</div>
+				<!-- calc Stamp -->
+				<div class='crete_stamp' id='crete_stamp'>
+					<div class='col-12 p-0'>
+						<h4>Stamp Pattern:</h4>
+						<p>Select your desired stamp pattern from the options below...</p>
+						<div class='container-fluid'>
+							<div class='row'>
+
+								<div class='col-md-4 p-2'>
+									<div class='calc_finish_options' id='stamp_option_1'>
+										<p><b>Seamless Italian Slate</b></p>
+										<img src= "{% static 'image/stamped-concrete/Seamless-Italian-Slate.jpg' %}" alt="stamped concrete patio wood stamp">
+										<br> 
+									</div>
+								</div>
+
+								<div class='col-md-4 p-2'>
+									<div class='calc_finish_options' id='stamp_option_2'>
+										<p><b>Castle Stone</b></p>
+								   		<img src= "{% static 'image/stamped-concrete/Castle-Stone.png' %}" alt="stamped concrete walkway and steps">
+										<br> 
+									</div>
+								</div>
+
+								<div class='col-md-4 p-2'>
+									<div class='calc_finish_options' id='stamp_option_3'>
+										<p><b>Boardwalk</b></p>
+										<img src= "{% static 'image/stamped-concrete/Boardwalk-with-knots.jpg' %}" alt="stamped concrete patio and steps ottawa">
+										<br> 
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<button class="btn btn-danger crete_calc_bttn_1" id="crete_stamp_previous"><-- Previous</button>
+					</div>
+				</div>
+				<!-- calc Color -->
+				<div class='crete_color' id='crete_color'>
+					<div class='col-12 p-0'>
+						<h4>Concrete Colour:</h4>
+						<p>Select your desired colour from the options below...</p>
+						<div class='container-fluid'>
+							<div class='row'>
+
+								<div class='col-md-3 col-sm-6 p-2'>
+									<div class='calc_finish_options' id='color_option_1'>
+										<p><b>Brown</b></p>
+										<img src= "{% static 'image/stamped-concrete/Seamless-Italian-Slate.jpg' %}" alt="stamped concrete patio wood stamp">
+										<br> 
+									</div>
+								</div>
+
+								<div class='col-md-3 col-sm-6 p-2'>
+									<div class='calc_finish_options' id='color_option_2'>
+										<p><b>Red</b></p>
+								   		<img src= "{% static 'image/stamped-concrete/Castle-Stone.png' %}" alt="stamped concrete walkway and steps">
+										<br> 
+									</div>
+								</div>
+
+								<div class='col-md-3 col-sm-6 p-2'>
+									<div class='calc_finish_options' id='color_option_3'>
+										<p><b>Grey</b></p>
+										<img src= "{% static 'image/stamped-concrete/Boardwalk-with-knots.jpg' %}" alt="stamped concrete patio and steps ottawa">
+										<br> 
+									</div>
+								</div>
+
+								<div class='col-md-3 col-sm-6 p-2'>
+									<div class='calc_finish_options' id='color_option_4'>
+										<p><b>Black</b></p>
+										<img src= "{% static 'image/stamped-concrete/Boardwalk-with-knots.jpg' %}" alt="stamped concrete patio and steps ottawa">
+										<br> 
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<button class="btn btn-danger crete_calc_bttn_1" id="crete_color_previous"><-- Previous</button>
+					</div>
+				</div>
+				<!-- calc Price -->
+				<div class='crete_price' id='crete_price'>
+					<div class='col-12 p-0'>
+						
+						<div class="stamped_price_details" id="stamped_price_details">
+							<h4>This Includes:</h4>
+							<p>4" thick concrete.</p>
+							<p>1 color added to the concrete and 1 release color for the surface.</p>
+							<p>1 stamp pattern that we have available.</p>
+							<p>Forming, pouring, and stamping.</p>
+							<p>Wire mesh reinforcement and fiber mesh reinforcement.</p>
+							<p>Concrete sealer.</p>
+							<p>Sawed joints.</p>
+							<br>
+							<h4>Not Included:</h4>
+							<p>Excavation or base prep.</p>
+							<p>Borders and/or other special requests.</p>
+							<p>Styrofoam under the slab.</p>
+							<p>Rebar mat.</p>
+							<br>
+							<p><i>Note: If a pump truck or power wheel barrow is needed to pour the concrete, there will be an extra charge. </i></p>
+						</div>
+						<div class="broom_price_details" id="broom_price_details">
+							<h4>This Includes:</h4>
+							<p>4" thick concrete.</p>
+							<p>Forming, pouring, and broom finish.</p>
+							<p>Wire mesh reinforcement and fiber mesh reinforcement.</p>
+							<p>Sawed or hand tooled joints.</p>
+							<br>
+							<h4>Not Included:</h4>
+							<p>Excavation or base prep.</p>
+							<p>Styrofoam under the slab.</p>
+							<p>Rebar mat.</p>
+							<br>
+							<p><i>Note: If a pump truck or power wheel barrow is needed to pour the concrete, there will be an extra charge. </i></p>
+						</div>
+						<div class="smooth_price_details" id="smooth_price_details">
+							<h4>This Includes</h4>
+							<p>4" thick concrete.</p>
+							<p>Forming, pouring, and smooth finish.</p>
+							<p>Wire mesh reinforcement and fiber mesh reinforcement.</p>
+							<p>Sawed or hand tooled joints.</p>
+							<br>
+							<h4>Not Included:</h4>
+							<p>Excavation or base prep.</p>
+							<p>Styrofoam under the slab.</p>
+							<p>Rebar mat.</p>
+							<br>
+							<p><i>Note: If a pump truck or power wheel barrow is needed to pour the concrete, there will be an extra charge. </i></p>
+						</div>
+						<button class="btn btn-danger crete_calc_bttn_1" id="reset_calculator">Reset Calculator</button>
+						<a href='/contact'><button class="btn btn-danger crete_calc_bttn_1" id="crete_stamp_next"> Book an Estimate!</button></a>
+					</div>
+				</div>
+
 			</div>
 		</div>
 
@@ -367,72 +540,65 @@
 {% block javascript %}
 <script>
 
-// ---- Prevent form submit then add / update values
-document.getElementById("concrete_contact_form").addEventListener("submit", function(event){
-  event.preventDefault();
-  document.getElementById('form_service').value="Concrete"
-  document.getElementById("concrete_contact_form").submit();
-});
+var price = document.getElementById("price").value;
 
-// var price = document.getElementById("price").value;
-
-// function changeLengthWidth(){
+function changeLengthWidth(){
 	
-// 	var area = document.getElementById("area").value;
+	var area = document.getElementById("area").value;
 	
-// 	function lengthWidth(area){			
-// 		return Math.sqrt(area);	
-// 	};
+	function lengthWidth(area){			
+		return Math.sqrt(area);	
+	};
 
-// 	length_width = lengthWidth(area)
+	length_width = lengthWidth(area)
 
-// 	function writeLengthWidth(length_width){
-// 		document.getElementById("length").value = length_width.toFixed(2);
-// 		document.getElementById("width").value = length_width.toFixed(2);
-// 	};
+	function writeLengthWidth(length_width){
+		document.getElementById("length").value = length_width.toFixed(2);
+		document.getElementById("width").value = length_width.toFixed(2);
+	};
 
-// 	writeLengthWidth(length_width)
-// };
+	writeLengthWidth(length_width)
+};
 
-// function changeArea(){
+function changeArea(){
 
-// 	var length = document.getElementById("length").value;
-// 	var width = document.getElementById("width").value;
+	var length = document.getElementById("length").value;
+	var width = document.getElementById("width").value;
 
-// 	function findArea(length, width){
-// 	return length * width
-// 	};
+	function findArea(length, width){
+	return length * width
+	};
 
-// 	var area =  findArea(length, width);
+	var area =  findArea(length, width);
 
-// 	function writeArea(area){
-// 		document.getElementById("area").value = area.toFixed(2);
-// 	};
+	function writeArea(area){
+		document.getElementById("area").value = area.toFixed(2);
+	};
 
-// 	writeArea(area);
-// };
+	writeArea(area);
+};
 
-// function getPrice(){
+function getPrice(){
 
-// 	var area = document.getElementById("area").value;
-//  	var sq_price = 2.5;
+	var area = document.getElementById("area").value;
+ 	var sq_price = 2.5;
 
-// 	function price(area,sq_price){
-// 		return area * sq_price
-// 	};
+	function price(area,sq_price){
+		return area * sq_price
+	};
 
-// 	var price = price(area,sq_price);
+	var price = price(area,sq_price);
 
-// 	function writePrice(price){
-// 		document.getElementById("price").innerHTML = price;
-// 	};
+	function writePrice(price){
+		document.getElementById("price").innerHTML = price;
+	};
 
-// 	// alert(price);
+	// alert(price);
 
-// 	var submit_message = "Re-Sodding " + area + " sq feet on the Back lawn = $ " + price + ". \nThank you for using our pricing calculator. We have emailed you a copy of your price quote."
-// 	window.confirm(submit_message);
-// 	writePrice(price);
-// };
+	var submit_message = "Re-Sodding " + area + " sq feet on the Back lawn = $ " + price + ". \nThank you for using our pricing calculator. We have emailed you a copy of your price quote."
+	window.confirm(submit_message);
+	writePrice(price);
+};
 
 </script>
 {% endblock javascript %}

@@ -37,7 +37,7 @@
 						    {% endif %}
 				      	</div>
 						<p class='mb-3'>Provide your contact details and we will get back to you quickly to provide more information.</p>
-						<form id='sod_contact_form' method='POST' action=".">{% csrf_token %}
+						<form id='' method='POST' action=".">{% csrf_token %}
 							<div class='form-row'>
 								<div class='form-group col-md-6 mb-0'>
 									{{ form.name|as_crispy_field }}
@@ -47,15 +47,12 @@
 								</div>
  							</div>
  							<div class='form-row'>
-								<div class='form-group col-12 mb-0'>
+								<div class='form-group col-md-6 mb-0'>
 									{{ form.address|as_crispy_field }}
-								</div>
-								<div class='form-group col-12 mb-0'>
-									{{ form.service|as_crispy_field }}
 								</div>
  							</div>
  							<div class='form-row'>
-								<div class='form-group col-12 mb-0'>
+								<div class='form-group col-4 mb-0'>
 									{{ form.content|as_crispy_field }}
 								</div>
  							</div>
@@ -68,6 +65,61 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- <div class='col-12'>
+			<hr>
+			<div class='container-fluid'>
+				<div class='row my-3'>
+					<div class='col-12'>
+						<div class='home_page_services' style='overflow: hidden;'>
+						<h3 class="mb-3">Sod Installation Price Calculator</h3></p>
+						<div class=''>
+							{% if messages %}
+							{% for message in messages %}
+							<div class='alert alert-{{ message.tags }}' style='width:inherit;'>
+							    {{ message }}
+							</div>
+							{% endfor %}
+						    {% endif %}
+				      	</div>
+						<p class='mb-3'>Use this calculator to get an approximate price by entering the dimensions or total square footage of the area you're looking to re-sod.</p>
+						<form id='' method='POST' action=".">{% csrf_token %}
+							<div class='form-row'>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.name|as_crispy_field }}
+								</div>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.email|as_crispy_field }}
+								</div>
+ 							</div>
+ 							<div class='form-row'>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.address|as_crispy_field }}
+								</div>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.yard|as_crispy_field }}
+								</div>
+ 							</div>
+ 							<div class='form-row'>
+								<div class='form-group col-4 mb-0'>
+									{{ form.length|as_crispy_field }}
+								</div>
+								<div class='form-group col-4 mb-0'>
+									{{ form.width|as_crispy_field }}
+								</div>
+								<div class='form-group col-4 mb-0'>
+									{{ form.area|as_crispy_field }}
+								</div>
+ 							</div>
+ 							<div class='pt-3'>
+					      		<button id='' style='float:right;' type="submit" onclick='getPrice()' class="btn btn-danger mt-2">Show Me The Price Now!</button>
+					      	</div>
+				      	</form>
+				      	</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
 
 		<div class='col-sm-12'>
 			<hr>
@@ -251,48 +303,41 @@
 {% block javascript %}
 <script>
 
-// ---- Prevent form submit then add / update values
-document.getElementById("sod_contact_form").addEventListener("submit", function(event){
-  event.preventDefault();
-  document.getElementById('form_service').value="Re-Sodding";
-  document.getElementById("sod_contact_form").submit();
-});
-
-// function changeLengthWidth(){
+function changeLengthWidth(){
 	
-// 	var area = document.getElementById("area").value;
+	var area = document.getElementById("area").value;
 	
-// 	function lengthWidth(area){			
-// 		return Math.sqrt(area);	
-// 	};
+	function lengthWidth(area){			
+		return Math.sqrt(area);	
+	};
 
-// 	length_width = lengthWidth(area)
+	length_width = lengthWidth(area)
 
-// 	function writeLengthWidth(length_width){
-// 		document.getElementById("length").value = length_width.toFixed(0);
-// 		document.getElementById("width").value = length_width.toFixed(0);
-// 	};
+	function writeLengthWidth(length_width){
+		document.getElementById("length").value = length_width.toFixed(0);
+		document.getElementById("width").value = length_width.toFixed(0);
+	};
 
-// 	writeLengthWidth(length_width)
-// };
+	writeLengthWidth(length_width)
+};
 
-// function changeArea(){
+function changeArea(){
 
-// 	var length = document.getElementById("length").value;
-// 	var width = document.getElementById("width").value;
+	var length = document.getElementById("length").value;
+	var width = document.getElementById("width").value;
 
-// 	function findArea(length, width){
-// 	return length * width
-// 	};
+	function findArea(length, width){
+	return length * width
+	};
 
-// 	var area =  findArea(length, width);
+	var area =  findArea(length, width);
 
-// 	function writeArea(area){
-// 		document.getElementById("area").value = area.toFixed(0);
-// 	};
+	function writeArea(area){
+		document.getElementById("area").value = area.toFixed(0);
+	};
 
-// 	writeArea(area);
-// };
+	writeArea(area);
+};
 
 </script>
 {% endblock javascript %}

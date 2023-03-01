@@ -62,60 +62,83 @@ def re_sodding_page(request):
     meta_description = "Sod Installation Ottawa. McExcavate has been re-sodding lawns in Ottawa since 2013. We use high quality screeened top soil and make sure the lawn is perfectly graded."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
     meta_robots = "index, follow"
-    price = 0 
+    # price = 0 
 
-    form = SodPriceForm(request.POST or None)
+    # form = SodPriceForm(request.POST or None)
+    # if form.is_valid():
+    #     print(form.cleaned_data)
+    #     name_ = form.cleaned_data.get('name')
+    #     email = form.cleaned_data.get('email')
+    #     yard = form.cleaned_data.get('yard').lower()
+    #     length = int(form.cleaned_data.get('length'))
+    #     width = int(form.cleaned_data.get('width'))
+    #     area = int(form.cleaned_data.get('area'))
+        
+    #     if yard == "front" and area < 750:
+    #         price = 1687.50
+    #     elif yard == "back" and area < 750:
+    #         price = 1940.63
+    #     elif yard == "front & back" and area < 750:
+    #         price = 1814.06
+    #     elif yard == "front" and area < 3000:
+    #         price = area * 2.25
+    #     elif yard == "back" and area < 3000:
+    #         price = area * 2.59
+    #     elif yard == "front & back" and area < 3000:
+    #         price = area * 2.42
+    #     elif yard == "front" and area >= 3000:
+    #         price = area * 2
+    #     elif yard == "back" and area >= 3000:
+    #         price = area * 2.3
+    #     elif yard == "front & back" and area >= 3000:
+    #         price = area * 2.15
+    #     else:
+    #         price = 9999999
+
+    #     sod_estimate = SodEstimate.objects.create(**form.cleaned_data)
+    #     sod_estimate.price = price
+    #     sod_estimate.save()
+
+    #     price = '${:,.2f}'.format(price)       
+
+    #     # send the confirmation email 
+    #     subject = f"McExcavate | Re-Sodding Price Quote"
+    #     message =  f"Hello {name_}, \
+    #                  \n\nThank you for using our pricing calculator. \
+    #                  \n\nRe-Sodding an area of {area} square feet ({length}' x {width}') in your {yard} yard will cost aproximately {price} (accurate to within 10% - 15%). \
+    #                  \n\nFor more information or to book an an in person estimate contact us today. \
+    #                  \n\nMcExcavate \
+    #                  \nOttawa, ON \
+    #                  \n613-608-7722"
+    #     from_address = settings.EMAIL_HOST_USER
+    #     to_address = email
+    #     send_mail(subject, message, from_address, [to_address], fail_silently=False)
+    #     send_mail(subject, message, from_address, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
+
+    #     messages.success(request, f"{ price } to re-sod { area } square feet in your { yard } yard.")
+
+    form = ContactForm(request.POST or None)
     if form.is_valid():
         print(form.cleaned_data)
         name_ = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
-        yard = form.cleaned_data.get('yard').lower()
-        length = int(form.cleaned_data.get('length'))
-        width = int(form.cleaned_data.get('width'))
-        area = int(form.cleaned_data.get('area'))
-        
-        if yard == "front" and area < 750:
-            price = 1687.50
-        elif yard == "back" and area < 750:
-            price = 1940.63
-        elif yard == "front & back" and area < 750:
-            price = 1814.06
-        elif yard == "front" and area < 3000:
-            price = area * 2.25
-        elif yard == "back" and area < 3000:
-            price = area * 2.59
-        elif yard == "front & back" and area < 3000:
-            price = area * 2.42
-        elif yard == "front" and area >= 3000:
-            price = area * 2
-        elif yard == "back" and area >= 3000:
-            price = area * 2.3
-        elif yard == "front & back" and area >= 3000:
-            price = area * 2.15
-        else:
-            price = 9999999
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
 
-        sod_estimate = SodEstimate.objects.create(**form.cleaned_data)
-        sod_estimate.price = price
-        sod_estimate.save()
-
-        price = '${:,.2f}'.format(price)       
-
-        # send the confirmation email 
-        subject = f"McExcavate | Re-Sodding Price Quote"
-        message =  f"Hello {name_}, \
-                     \n\nThank you for using our pricing calculator. \
-                     \n\nRe-Sodding an area of {area} square feet ({length}' x {width}') in your {yard} yard will cost aproximately {price} (accurate to within 10% - 15%). \
-                     \n\nFor more information or to book an an in person estimate contact us today. \
-                     \n\nMcExcavate \
-                     \nOttawa, ON \
-                     \n613-608-7722"
+        # send the contact form to mcexcavate email 
+        subject = f"Sod Lead | McExcavate Contact Form"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMessage: {content}"
         from_address = settings.EMAIL_HOST_USER
-        to_address = email
+        to_address = "mcexcavate.ottawa@gmail.com"
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        send_mail(subject, message, from_address, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
 
-        messages.success(request, f"{ price } to re-sod { area } square feet in your { yard } yard.")
+        form = ContactForm()
 
     template_name = "re-sodding.html"
     context = {
@@ -125,7 +148,6 @@ def re_sodding_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "price":price,
                }
     return render(request, template_name, context)
 
@@ -151,8 +173,32 @@ def concrete_page(request):
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
 
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        print(form.cleaned_data)
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | McExcavate Contact Form"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ContactForm()
+
     template_name = "concrete.html"
     context = {"title": title,
+               "form": form,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
