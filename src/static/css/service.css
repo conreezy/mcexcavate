@@ -1,0 +1,32 @@
+/* Service Pages */
+.service_top_row{
+margin: 30px 0px 0px 0px;
+}
+
+.service_top_row h1{
+color: black;
+margin:0px 0px 10px 0px;
+}
+
+.service_top_row p{
+font-size: 18px;
+font-style: italic;
+color: black;
+margin:0px 0px 15px 0px;
+padding: 10px 0px 0px 0px;
+}
+
+.service_top_row img{
+width: inherit; 
+box-shadow: 5px 5px 20px grey;
+}
+
+.service_img_caption{
+margin:10px 0px 0px 0px;
+font-size: 14px;
+font-style: italic;
+}
+
+.service_page_button{
+margin:15px 0px 20px 0px;
+}

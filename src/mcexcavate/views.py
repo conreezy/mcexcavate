@@ -9,7 +9,7 @@ import requests
 from requests import Request, Session
 import json
 from project.models import SodEstimate, PavingEstimate
-from .forms import ContactForm, SodPriceForm, PavingPriceForm
+from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm, PavingPriceForm
 # from houses.models import HouseSale
 
 def home_page(request):
@@ -117,9 +117,8 @@ def re_sodding_page(request):
 
     #     messages.success(request, f"{ price } to re-sod { area } square feet in your { yard } yard.")
 
-    form = ContactForm(request.POST or None)
+    form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
-        print(form.cleaned_data)
         name_ = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
         address = form.cleaned_data.get('address')
@@ -127,7 +126,7 @@ def re_sodding_page(request):
         content = form.cleaned_data.get('content')
 
         # send the contact form to mcexcavate email 
-        subject = f"Sod Lead | McExcavate Contact Form"
+        subject = f"Sod Lead | Re-Sodding Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nAddress: {address} \
@@ -138,7 +137,7 @@ def re_sodding_page(request):
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
         messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
 
-        form = ContactForm()
+        form = ServicePageContactForm()
 
     template_name = "re-sodding.html"
     context = {
@@ -173,9 +172,8 @@ def concrete_page(request):
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
 
-    form = ContactForm(request.POST or None)
+    form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
-        print(form.cleaned_data)
         name_ = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
         address = form.cleaned_data.get('address')
@@ -183,7 +181,7 @@ def concrete_page(request):
         content = form.cleaned_data.get('content')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | McExcavate Contact Form"
+        subject = f"Concrete Lead | Concrete Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nAddress: {address} \
@@ -194,7 +192,7 @@ def concrete_page(request):
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
         messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
 
-        form = ContactForm()
+        form = ServicePageContactForm()
 
     template_name = "concrete.html"
     context = {"title": title,
@@ -334,13 +332,12 @@ def about_page(request):
 def contact_page(request):
     title = "CONTACT US"
     meta_title = 'Contact Us | McExcavate Inc. | Ottawa'
-    meta_description = "Contact Us by phone, email or send a message through our website."
+    meta_description = "Contact Us by phone, email or send a message through one of our forms."
     meta_keywords = ""
     meta_robots = "index, follow"
 
-    form = ContactForm(request.POST or None)
+    form = ContactPageContactForm(request.POST or None)
     if form.is_valid():
-        print(form.cleaned_data)
         name = form.cleaned_data.get("name")
         email = form.cleaned_data.get("email")
         address = form.cleaned_data.get("address")
@@ -348,29 +345,28 @@ def contact_page(request):
         content = form.cleaned_data.get("content")
 
         # send the confirmation email  
-        subject = f'McExcavate Contact Request: {service}'
-        message =  f'McExcavate Contact Request: \
-                     \n\n name: {name} \
+        subject = f'{service} Lead | Contact Page'
+        message =  f'name: {name} \
                      \n\n email: {email} \
                      \n\n address: {address} \
                      \n\n service: {service} \
                      \n\n content: {content}'
         from_address = settings.EMAIL_HOST_USER
-        to_address = "conormcveigh88@gmail.com"
+        to_address = "mcexcavate.ottawa@gmail.com"
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
 
-        messages.success(request, f"Thank you for contacting us { name }. We will get back to you quickly with more information about our {service} service.")
+        messages.success(request, f"Thank you for contacting us { name }. We will get back to you quickly about your {service} project.")
 
-        form = ContactForm()
+        form = ContactPageContactForm()
 
     template_name = "contact.html"
     context = {
         "title": title, 
-        "form": form,}
-        # "meta_description":meta_description,
-        # "meta_robots":meta_robots,
-        # "meta_keywords":meta_keywords,
-        # "meta_title":meta_title}    
+        "form": form,
+        "meta_description":meta_description,
+        "meta_robots":meta_robots,
+        "meta_keywords":meta_keywords,
+        "meta_title":meta_title}    
     return render(request, template_name, context)
 
     # def dashboard_view(request):
