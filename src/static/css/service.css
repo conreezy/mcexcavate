@@ -16,6 +16,10 @@ margin:0px 0px 15px 0px;
 padding: 10px 0px 0px 0px;
 }
 
+.service_top_row ul{
+margin:15px 0px 0px 0px;
+}
+
 .service_top_row img{
 width: inherit; 
 box-shadow: 5px 5px 20px grey;
