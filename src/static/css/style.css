@@ -239,7 +239,6 @@ padding: 2.5px;
 .sidenav a:hover, .dropdown-btn:hover {
   background-color: #000;
   color: #fff;
-
 }
 
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
@@ -258,7 +257,6 @@ padding: 2.5px;
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-
 .listing-bg-image {
   background-color: #cccccc; /* Used if the image is unavailable */
   height: 800px; /* You must set a specified height */

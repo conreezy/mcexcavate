@@ -1,6 +1,7 @@
 /* Service Pages */
 .service_top_row{
-margin: 30px 0px 0px 0px;
+margin: 25px 0px 0px 0px;
+padding: 0px 5px 0px 5px !important;
 }
 
 .service_top_row h1{
@@ -13,7 +14,7 @@ font-size: 18px;
 font-style: italic;
 color: black;
 margin:0px 0px 15px 0px;
-padding: 10px 0px 0px 0px;
+padding: 0px 0px 0px 0px;
 }
 
 .service_top_row ul{
@@ -23,6 +24,7 @@ margin:15px 0px 0px 0px;
 .service_top_row img{
 width: inherit; 
 box-shadow: 5px 5px 20px grey;
+margin:0px 0px 5px 0px;
 }
 
 .service_img_caption{
@@ -34,3 +36,16 @@ font-style: italic;
 .service_page_button{
 margin:15px 0px 20px 0px;
 }
+
+.services_contact_form_row{
+padding:0x ;
+}
+
+.services_contact_form{
+  box-shadow: 3px 3px 15px grey;
+  padding: 20px 20px 20px 20px;
+  margin: 10px 0px 10px 0px;
+  overflow: hidden;
+  width:inherit;
+}
+
