@@ -59,7 +59,7 @@ def interlock_page(request):
 def re_sodding_page(request):
     title = "SOD INSTALLATION OTTAWA"
     meta_title = "Sod Installation Ottawa | McExcavate Inc."
-    meta_description = "Sod Installation Ottawa. McExcavate has been re-sodding lawns in Ottawa since 2013. We use high quality screeened top soil and make sure the lawn is perfectly graded."
+    meta_description = "We provide sod installation services in Ottawa. McExcavate has been re-sodding lawns in Ottawa since 2013. We use high quality screeened top soil and make sure the new lawn is perfectly graded."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
     meta_robots = "index, follow"
     # price = 0 
@@ -153,7 +153,7 @@ def re_sodding_page(request):
 def maintenance_page(request):
     title = "LAWN MOWING OTTAWA"
     meta_title = 'Lawn Mowing Ottawa | McExcavate Inc.'
-    meta_description = "McExcavate provides Ottawa lawn mowing services to commercial, residential and government clients. One of Ottawa's leading lawn maintenance companies since 2013."
+    meta_description = "McExcavate provides lawn mowing services in Ottawa to residential and commercial clients. Weekly lawn cutting and season long lawn maintenance and lawn care."
     meta_keywords = "ottawa lawn mowing, lawn mowing ottawa, lawn maintenance ottawa, ottawa lawn maintenance, grass mowing, ottawa grass mowing, over-seeding, fertilizing, aeration, hedge trimming, top dressing"
     meta_robots = "index, follow"
 
@@ -168,7 +168,7 @@ def maintenance_page(request):
 def concrete_page(request):
     title = "STAMPED CONCRETE OTTAWA"
     meta_title = 'Stamped Concrete Ottawa | McExcavate Inc.'
-    meta_description = "McExcavate provides stamped concrete in Ottawa to commercial, residential and government clients. One of Ottawa's leading stamped concrete companies since 2013."
+    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
 
