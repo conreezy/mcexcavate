@@ -15,7 +15,7 @@ from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm,
 def home_page(request):
     title = "McExcavate"
     meta_title = "McExcavate Inc. | Ottawa Excavation & Construction"
-    meta_description = "Excavation Ottawa. McExcavate has been providing Ottawa with residential and commercial excavation services since 2008."
+    meta_description = "McExcavate is an Ottawa based construction company specializing in Concrete, Interlock, Sod Installation and Excavation since 2008."
     meta_keywords = ""
     meta_robots = "index, follow"
 
@@ -30,7 +30,7 @@ def home_page(request):
 def excavation_page(request):
     title = "EXCAVATION OTTAWA"
     meta_title = 'Ottawa Excavation Services | McExcavate Inc.'
-    meta_description = "McExcavate provides Ottawa Excavation services to commercial, residential and government clients. One of Ottawa's leading excavation companies since 2013."
+    meta_description = "McExcavate provides Ottawa Excavation services to commercial, residential and government clients. One of Ottawa's leading excavation companies since 2008."
     meta_keywords = "ottawa excavation, excavation ottawa, excavating ottawa, ottawa excavating, excavation services, ottawa excavation services, excavation, excavating"
     meta_robots = "index, follow"
 
@@ -59,7 +59,7 @@ def interlock_page(request):
 def re_sodding_page(request):
     title = "SOD INSTALLATION OTTAWA"
     meta_title = "Sod Installation Ottawa | McExcavate Inc."
-    meta_description = "We provide sod installation services in Ottawa. McExcavate has been re-sodding lawns in Ottawa since 2013. We use high quality screeened top soil and make sure the new lawn is perfectly graded."
+    meta_description = "We provide sod installation services in Ottawa. McExcavate has been re-sodding lawns in Ottawa since 2008. We use high quality screeened top soil and make sure the new lawn is perfectly graded."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
     meta_robots = "index, follow"
     # price = 0 
@@ -168,7 +168,7 @@ def maintenance_page(request):
 def concrete_page(request):
     title = "STAMPED CONCRETE OTTAWA"
     meta_title = 'Stamped Concrete Ottawa | McExcavate Inc.'
-    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
+    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2008."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
 
@@ -206,7 +206,7 @@ def concrete_page(request):
 def asphalt_page(request):
     title = "ASPHALT DRIVEWAY PAVING OTTAWA"
     meta_title = 'Asphalt Driveway Paving Ottawa | McExcavate Inc.'
-    meta_description = "McExcavate provides asphalt driveway paving in Ottawa to residential and commercial clients. We have been one of Ottawa's leading asphalt paving companies since 2013."
+    meta_description = "McExcavate provides asphalt driveway paving in Ottawa to residential and commercial clients. We have been one of Ottawa's leading asphalt paving companies since 2008."
     meta_keywords = "driveway paving ottawa, ottawa driveway paving, asphalt driveway paving ottawa, ottawa asphalt driveway paving,\
                      ottawa asphalt driveways, asphalt driveways ottawa, ottawa paving, paving ottawa, driveway paving,\
                      asphalt ottawa, ottawa asphalt,"
@@ -287,7 +287,7 @@ def asphalt_repairs_page(request):
 def parging_page(request):
     title = "PARGING OTTAWA"
     meta_title = 'Parging Ottawa | McExcavate Inc.'
-    meta_description = "McExcavate provides parging services to commercial, residential and government clients. One of Ottawa's leading parging service providers since 2013."
+    meta_description = "McExcavate provides parging services to commercial, residential and government clients. One of Ottawa's leading parging service providers since 2008."
     meta_keywords = "ottawa parging, parging ottawa"
     meta_robots = "index, follow"
 
