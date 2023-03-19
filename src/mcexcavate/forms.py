@@ -1,11 +1,19 @@
 from django import forms
 
+Excavation = "Excavation"
+ReSodding =  "Re-Sodding"
+Interlock =  "Interlock"
+Concrete =  "Concrete"
+AsphaltPaving =  "Asphalt Paving"
+AsphaltRepairs =  "Asphalt Repairs"
 
 SERVICE_CHOICES = (
-  ('Excavation', 'Excavation'),
-  ('Re-Sodding', 'Re-Sodding'),
-  ('Interlock', 'Interlock'),
-  ('Concrete', 'Concrete'),
+  (Excavation, 'Excavation'),
+  (ReSodding, 'Re-Sodding'),
+  (Interlock, 'Interlock'),
+  (Concrete, 'Concrete'),
+  (AsphaltPaving, 'Asphalt Paving'),
+  (AsphaltRepairs, 'Asphalt Repairs'),
   )
 
 class ServicePageContactForm(forms.Form):

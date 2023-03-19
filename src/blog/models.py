@@ -21,7 +21,25 @@ class BlogPostManager(models.Manager):
         return self.get_queryset().published()
 
 
+Excavation = "Excavation"
+ReSodding =  "Re-Sodding"
+Interlock =  "Interlock"
+Concrete =  "Concrete"
+AsphaltPaving =  "Asphalt Paving"
+AsphaltRepairs =  "Asphalt Repairs"
+
+SERVICE_CHOICES = (
+  (Excavation, 'Excavation'),
+  (ReSodding, 'Re-Sodding'),
+  (Interlock, 'Interlock'),
+  (Concrete, 'Concrete'),
+  (AsphaltPaving, 'Asphalt Paving'),
+  (AsphaltRepairs, 'Asphalt Repairs'),
+  )
+
+
 class BlogPost(models.Model):
+    id = models.AutoField(primary_key=True)
     user    = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL)
     image   = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     title   = models.CharField(max_length = 120)
@@ -30,6 +48,9 @@ class BlogPost(models.Model):
     publish_date = models.DateTimeField(default=timezone.now)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    service   = models.CharField(max_length = 15,
+                                 choices=SERVICE_CHOICES,
+                                 default=Excavation)
 
     objects = BlogPostManager()
 

@@ -276,28 +276,19 @@
 			</div>
 		</div>
 
-		<div class='col-12'>
+		<div class='col-12 mb-4'>
 			<hr>
 			<h3>What is Asphalt?</h3>
 			 
 
 			<p>"Asphalt cement,<i> black or brown petroleum-like material that has a consistency varying from viscous liquid to glassy solid. It is obtained either as a residue from the distillation of petroleum or from natural deposits. Asphalt consists of compounds of hydrogen and carbon with minor proportions of nitrogen, sulfur, and oxygen."</i> <a href='https://www.britannica.com/science/asphalt-material'>- britannica.com</a> <br>
 			<br>
-			<p>Hot mix asphalt (HMA) is used to pave roads, parking lots and driveways it "consists of a combination of aggregate uniformly mixed and coated with asphalt cement. To dry the aggregates and to obtain sufficient fluidity of asphalt cement for proper mixing and workability, both the aggregate and asphalt must be heated prior to mixing—hence the term “hot mix.” Aggregates and asphalt are combined in a mixing facility in which all of the constituent materials are heated, proportioned and mixed to produce the desired paving mixture."	<a href='https://mcasphalt.com/processes/hot-mix-asphalt/'>- mcasphalt.com</a>
-
-			</p>
-
+			<p>Hot mix asphalt (HMA) is used to pave roads, parking lots and driveways it "consists of a combination of aggregate uniformly mixed and coated with asphalt cement. To dry the aggregates and to obtain sufficient fluidity of asphalt cement for proper mixing and workability, both the aggregate and asphalt must be heated prior to mixing—hence the term “hot mix.” Aggregates and asphalt are combined in a mixing facility in which all of the constituent materials are heated, proportioned and mixed to produce the desired paving mixture."	<a href='https://mcasphalt.com/processes/hot-mix-asphalt/'>- mcasphalt.com</a></p>
 		</div>
 
-		<div class='col-12'>
-			<hr>
-			<h3>Types of Asphalt</h3>
-		</div>
-
-		<div class='col-12'>
-			<hr>
-			<h3>Types of Asphalt Damage</h3>
-		</div> 
+		{% if blogs %}
+		{% include "related-blogs.html" %}
+		{% endif %}
 
 	</div>
 </div>

@@ -32,7 +32,7 @@
 				{% endfor %}
 			</div>
 		</div>
-		<div class='col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12 mx-auto' style='padding:0px;'>
+		<div class='col-xl-4 col-lg-12 mx-auto' style='padding:0px;'>
 			<div class='container-fluid'>
 				{% for blog_post in object_list %}			
 				<div class='row mx-auto small_blog_box'>
@@ -58,6 +58,13 @@
 				{% endfor %}
 			</div>
 		</div>
+
+		{% if user.is_staff %}
+		<div class='col-12 mt-2 mb-4'>
+			<p style='text-align: center;'><a href='/blog-new'> + Create Blog</a></p>
+		</div>
+		{% endif %}
+
 	</div>
 </div>
 

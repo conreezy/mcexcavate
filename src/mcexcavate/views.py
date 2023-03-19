@@ -10,6 +10,7 @@ from requests import Request, Session
 import json
 from project.models import SodEstimate, PavingEstimate
 from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm, PavingPriceForm
+from blog.models import BlogPost
 # from houses.models import HouseSale
 
 def home_page(request):
@@ -34,8 +35,12 @@ def excavation_page(request):
     meta_keywords = "ottawa excavation, excavation ottawa, excavating ottawa, ottawa excavating, excavation services, ottawa excavation services, excavation, excavating"
     meta_robots = "index, follow"
 
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Excavation")  
+
     template_name = "excavation.html"
     context = {"title": title, 
+               "blogs":blogs,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -49,7 +54,11 @@ def interlock_page(request):
     meta_keywords = "ottawa interlock, interlock ottawa, interlock pathways ottawa, ottawa interlock patio, interlock driveway, ottawa interlock repair, "
     meta_robots = "index, follow"
 
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Interlock")  
+
     context = {"title": title,
+               "blogs":blogs,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -139,9 +148,12 @@ def re_sodding_page(request):
 
         form = ServicePageContactForm()
 
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Re-Sodding")
+
     template_name = "re-sodding.html"
-    context = {
-               "title": title, 
+    context = {"title":title, 
+               "blogs":blogs,
                "form":form,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
@@ -194,9 +206,13 @@ def concrete_page(request):
 
         form = ServicePageContactForm()
 
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete")    
+      
     template_name = "concrete.html"
     context = {"title": title,
                "form": form,
+               "blogs": blogs,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -258,9 +274,13 @@ def asphalt_page(request):
         send_mail(subject, message, from_address, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
 
         messages.success(request, f"It would cost aproximately { price } to pave your { area } square foot driveway.")
+    
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="AsphaltPaving")  
 
     template_name = "asphalt-paving.html"
     context = {"title": title,
+               "blogs":blogs,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -276,8 +296,12 @@ def asphalt_repairs_page(request):
     meta_keywords = "ottawa asphalt repairs, asphalt repairs ottawa, asphalt repairs"
     meta_robots = "index, follow"
 
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="AsphaltRepairs")
+
     template_name = "asphalt-repairs.html"
     context = {"title": title,
+               "blogs":blogs,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,

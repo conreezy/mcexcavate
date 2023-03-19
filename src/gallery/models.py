@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Gallery(models.Model):
+    id = models.AutoField(primary_key=True)
     title   = models.CharField(max_length=50, blank=False, null=True)
     image   = models.FileField(upload_to='image/gallery/', blank=False, null=True)
     slug    = models.SlugField(unique=True, blank=False, null=True) 
@@ -19,6 +20,7 @@ class Gallery(models.Model):
         return f"{self.get_absolute_url()}/delete"
 
 class GalleryImages(models.Model):
+    id = models.AutoField(primary_key=True)
     images = models.FileField(upload_to='image/gallery/', blank=True, null=True)
     alt = models.CharField(max_length=250, blank=True, null=True)
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)

@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
 #from django.contrib.sitemaps import Sitemap
+
 
 
 # Create your views here.
@@ -9,8 +11,8 @@ from .models import BlogPost
 from .forms import BlogPostModelForm
 
 def blog_post_list_view(request):
-    title = 'McExcavate Blog'
-    meta_title = 'Ottawa Concrete Blog | McExcavate'
+    title = 'McExcavate Construction Blog'
+    meta_title = 'Ottawa Construction Blog | McExcavate'
     meta_robots = "index, follow"
     blogs = BlogPost.objects.all().published()
 
@@ -34,7 +36,7 @@ def blog_post_list_view(request):
 @staff_member_required
 def blog_post_create_view(request):
     my_title = 'New Blog Post'
-    meta_title = "Create New Blog Post | McExcavate Blog" 
+    meta_title = "Create New Blog Post | McExcavate Construction Blog" 
     meta_keywords = []
     meta_robots = "noindex, nofollow"
 
@@ -44,16 +46,7 @@ def blog_post_create_view(request):
         obj.user = request.user
         obj.save()
         form = BlogPostModelForm()
-
-    # if request.method == 'POST': 
-    #     form = BlogPostModelForm(request.POST or None, request.FILES or None)
-    #     if form.is_valid():
-    #         print("")
-    #         obj = form.save(commit=False)
-    #         obj.user = request.user
-    #         obj.save()
-    #     else:
-    #         form = BlogPostModelForm()
+        messages.success(request, f"Your new blog has been posted.")
 
     template_name = 'blog/create.html'
     context = {'title': my_title, 
@@ -69,7 +62,7 @@ def blog_post_detail_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     title = obj.title
 
-    meta_title = obj.title + " | Canadian Bitcoin Blog" 
+    meta_title = obj.title + " | McExcavate Construction Blog" 
     meta_description = (obj.content[:147]) + '...'
     meta_keywords = []
     meta_robots = "index, follow"
@@ -80,7 +73,6 @@ def blog_post_detail_view(request, slug):
                 
     context = {'blog_post' : obj, 
                'title':title,
-               'form':None, 
                'object_list':qs,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
@@ -93,17 +85,25 @@ def blog_post_detail_view(request, slug):
 def blog_post_update_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     form = BlogPostModelForm(request.POST or None, request.FILES or None, instance=obj)
-    
-    meta_title = obj.title + " | Canadian Bitcoin Blog" 
+    meta_title = obj.title + " | McExcavate Construction Blog" 
     meta_description = (obj.content[:147]) + '...'
     meta_keywords = []
     meta_robots = "noindex, nofollow"
 
+    # if request.method == 'POST':
+    #     if form.is_valid():
+    #         form.save()
+    #         messages.success(request, f"This blog post has been updated.")
+    # else:
+    #     form = BlogPostModelForm()
+
     if form.is_valid():
         form.save()
+        messages.success(request, f"This blog post has been updated.")
+
     template_name = 'blog/update.html'
-    context = {'form' : form, 'title': 
-               f"Update: {obj.title}",
+    context = {'form' : form, 
+               'title':f"Editing: {obj.title}",
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -114,7 +114,7 @@ def blog_post_update_view(request, slug):
 @staff_member_required
 def blog_post_delete_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
-    meta_title = obj.title + " | Canadian Bitcoin Blog"
+    meta_title = obj.title + " | McExcavate Construction Blog"
     meta_robots = "noindex, nofollow" 
 
     template_name = 'blog/delete.html'

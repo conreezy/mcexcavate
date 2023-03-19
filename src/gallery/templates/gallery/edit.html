@@ -8,10 +8,17 @@
 	<div class='row my-2'>
 
 		<div class='col-sm-12'>
-			<div class='container'>
+			<div class='container mb-3'>
+				{% if messages %}
+				{% for message in messages %}
+				<div class='alert alert-{{ message.tags }}' style='width:inherit;'>
+				    {{ message }}
+				</div>
+				{% endfor %}
+			    {% endif %}
 				<form method='POST' action='.' enctype='multipart/form-data'> {% csrf_token %}
 					{{ form|crispy }}
-					<button class="btn btn-danger mt-2"> Add Photos </button>
+					<button class="btn btn-primary mt-2"> Add Photos </button>
 				</form>
 			</div>
 		</div>

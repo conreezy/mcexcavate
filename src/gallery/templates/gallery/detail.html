@@ -35,9 +35,11 @@
 		</div>
 		{% endfor %}
 
+		{% if user.is_staff %}
 		<div class='col-12'>
 			<p style='text-align:center;'><a href='/gallery/{{slug}}/add-photo'> + Add Photo</a></p>
 		</div>
+		{% endif %}
 
 	</div>
 </div>

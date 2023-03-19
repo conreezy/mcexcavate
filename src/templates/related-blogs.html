@@ -1,0 +1,35 @@
+<div class='col-sm-12'>
+	<hr>
+	<h3>Related Blog Posts</h3>
+	<div class='container-fluid'>
+		<div class='row my-3'>
+			<div class='d-none d-xl-block col-12' style='padding:0px;'>
+				<div class='container-fluid'>
+					{% for blog_post in blogs %}
+					<div class='row mx-auto blog_box'>
+						<div class='col-4 mx-auto' style='margin-right:auto; width:100%; overflow:hidden;'>
+							{% if blog_post.image %}
+								<a href="{{ blog_post.get_absolute_url }}">
+									<img src="{{ blog_post.image.url }}" style='padding:25px 25px 25px 10px; margin-right:auto; height:250px; overflow:hidden;'/>
+								</a>
+							{% endif %}
+						</div>
+						<div class='col-8'>
+							<a href="{{ blog_post.get_absolute_url }}">
+								<p class='' style='font-size:20px; font-family:GothamBold; color:black; padding:10px 10px 0px 0px;'>{{ blog_post.title }}</p>
+							</a>
+							<p>{{ blog_post.publish_date }}</p>
+							<p>Author: {{ blog_post.user.username }}</p>
+							<p class='pt-2'>{{ blog_post.content|slice:":250" }}...</p>
+							<p class='my-2'><a href='{{ blog_post.get_absolute_url }}'> Read More...</a></p>
+							{% if not blog_post.publish_date %}
+							<h2>Draft</h2>
+							{% endif %}
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
