@@ -130,17 +130,17 @@ def re_sodding_page(request):
     if form.is_valid():
         name_ = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
         address = form.cleaned_data.get('address')
         service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
 
         # send the contact form to mcexcavate email 
         subject = f"Sod Lead | Re-Sodding Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
                      \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMessage: {content}"
+                     \n\nService: {service} "
         from_address = settings.EMAIL_HOST_USER
         to_address = "mcexcavate.ottawa@gmail.com"
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
@@ -188,17 +188,17 @@ def concrete_page(request):
     if form.is_valid():
         name_ = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
         address = form.cleaned_data.get('address')
         service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
 
         # send the contact form to mcexcavate email 
         subject = f"Concrete Lead | Concrete Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
                      \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMessage: {content}"
+                     \n\nService: {service} "
         from_address = settings.EMAIL_HOST_USER
         to_address = "mcexcavate.ottawa@gmail.com"
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
@@ -366,15 +366,17 @@ def contact_page(request):
         email = form.cleaned_data.get("email")
         address = form.cleaned_data.get("address")
         service = form.cleaned_data.get("service")
+        marketing = form.cleaned_data.get("marketing")
         content = form.cleaned_data.get("content")
 
         # send the confirmation email  
         subject = f'{service} Lead | Contact Page'
-        message =  f'name: {name} \
-                     \n\n email: {email} \
-                     \n\n address: {address} \
-                     \n\n service: {service} \
-                     \n\n content: {content}'
+        message =  f'Name: {name} \
+                     \n\n Email: {email} \
+                     \n\n Address: {address} \
+                     \n\n Service: {service} \
+                     \n\n Marketing: {marketing} \
+                     \n\n Content: {content}'
         from_address = settings.EMAIL_HOST_USER
         to_address = "mcexcavate.ottawa@gmail.com"
         send_mail(subject, message, from_address, [to_address], fail_silently=False)

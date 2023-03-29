@@ -1,6 +1,10 @@
 /* Service Pages */
+.service_title{
+margin:25px 0px 25px 0px;
+}
+
 .service_top_row{
-margin: 25px 0px 0px 0px;
+margin: 0px 0px 0px 0px;
 padding: 0px 5px 0px 5px !important;
 }
 
@@ -9,11 +13,18 @@ color: black;
 margin:0px 0px 10px 0px;
 }
 
-.service_top_row p{
-font-size: 18px;
+.service_top_row_img_caption{
+font-size: 14px;
 font-style: italic;
 color: black;
-margin:0px 0px 15px 0px;
+margin:0px 0px 15px 0px !important;
+padding: 0px 0px 0px 0px;
+}
+
+.service_top_row_p{
+font-size: 18px;
+color: black;
+margin:20px 0px 15px 0px !important;
 padding: 0px 0px 0px 0px;
 }
 
@@ -44,7 +55,7 @@ padding:0x ;
 .services_contact_form{
   box-shadow: 3px 3px 15px grey;
   padding: 20px 20px 20px 20px;
-  margin: 10px 0px 10px 0px;
+  margin: 0px 0px 10px 0px;
   overflow: hidden;
   width:inherit;
 }
