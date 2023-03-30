@@ -34,6 +34,8 @@ class ServicePageContactForm(forms.Form):
     address = forms.CharField(label='Address', widget=forms.TextInput(attrs={}))
     service = forms.ChoiceField(label='Service Required', choices=SERVICE_CHOICES, 
                                                           widget=forms.HiddenInput(attrs={'id':'form_service'}))
+    content = forms.CharField(label='Description of Work',widget=forms.Textarea(attrs={'placeholder': "Please give us an idea of what you're looking to do so we can respond in greater detail."}), required=False)
+    marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
 
 class ContactPageContactForm(forms.Form):
     name    = forms.CharField(label='Name', widget=forms.TextInput(attrs={}))

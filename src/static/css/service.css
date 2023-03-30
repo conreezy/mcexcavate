@@ -1,6 +1,6 @@
 /* Service Pages */
 .service_title{
-margin:25px 0px 25px 0px;
+margin:35px 0px 25px 0px;
 }
 
 .service_top_row{
@@ -8,23 +8,34 @@ margin: 0px 0px 0px 0px;
 padding: 0px 5px 0px 5px !important;
 }
 
-.service_top_row h1{
+.service_title h1{
 color: black;
 margin:0px 0px 10px 0px;
+}
+
+.service_top_row_p{
+font-size: 18px;
+color: black;
+margin:0px 0px 25px 0px !important;
+padding: 0px 0px 0px 0px;
+}
+
+.service_top_row_bullets{
+margin:0px 0px 35px 0px !important;
+padding: 0px 0px 0px 0px;
+}
+
+.service_top_row_bullets p{
+font-size: 18px;
+color: black;
+padding: 2px 0px 2px 0px;
 }
 
 .service_top_row_img_caption{
 font-size: 14px;
 font-style: italic;
 color: black;
-margin:0px 0px 15px 0px !important;
-padding: 0px 0px 0px 0px;
-}
-
-.service_top_row_p{
-font-size: 18px;
-color: black;
-margin:20px 0px 15px 0px !important;
+margin:0px 0px 35px 0px !important;
 padding: 0px 0px 0px 0px;
 }
 

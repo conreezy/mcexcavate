@@ -4,24 +4,30 @@
 {% load static %} 
 <div class='container'>
 	<div class='row'>
-		<div class='col-12'>
+
+		{% include "service_breadcrumbs.html" %}
+
+		<div class='col-lg-6 service_top_row'>
 			<div class='container-fluid'>
-				<div class='row service_top_row'>
-					<div class='col-md-6'>
-						<h1>{{title}}</h1>
-						<ul>
-							<li><p>Professionals with over 15 years experience.</p></li>
-							<li><p>Walkways, patios, driveways, retaining walls, steps....</p></li>
-							<li><p>Repairs and re-lays .</p></li>
-						</ul>
-						<a href='/contact'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a>
-					</div>
-					<div class='col-md-6'>
-						<img src= "{% static 'image/interlock/2109 Damask Front After Interlock.jpg' %}" alt="ottawa interlock front walkway steps and garden wall" style="width: inherit; box-shadow: 5px 5px 20px grey;">
-						<p style='font-size: 14px;'>Walkway, step and garden walls in Orleans.</p>
+				<div class='row'>
+					<div class='col-12'>
+						<p class='service_top_row_p'>Hire us for your interlock needs because we have the expertise to make sure your project is completed correctly and will stand up over the long term.</p>
+						<div class='service_top_row_bullets'>
+						<p>• Driveways, Walkways, Patios</p>
+						<p>• Steps & Retaining Walls</p>
+						<p>• Lift & Re-lay</p>
+						<p>• Residential</p>
+						<p>• Commercial</p>
+						</div>
+						<img src= "{% static 'image/interlock/2109 Damask Front After Interlock.jpg' %}" alt="ottawa interlock front walkway steps and garden wall">
+						<p class='service_top_row_img_caption'>Walkway, step and garden walls in Orleans.</p>
+						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class='col-lg-6 service_top_row'>
+			{% include "services_contact_form.html" %}
 		</div>
 
 		<div class='col-sm-12'>
@@ -81,6 +87,13 @@
 
 {% block javascript %}
 <script>
+
+// ---- Prevent form submit then add / update values
+document.getElementById("sod_contact_form").addEventListener("submit", function(event){
+  event.preventDefault();
+  document.getElementById('form_service').value="Interlock";
+  document.getElementById("sod_contact_form").submit();
+});
 
 var price = document.getElementById("price").value;
 

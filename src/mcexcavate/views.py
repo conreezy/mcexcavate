@@ -54,11 +54,38 @@ def interlock_page(request):
     meta_keywords = "ottawa interlock, interlock ottawa, interlock pathways ottawa, ottawa interlock patio, interlock driveway, ottawa interlock repair, "
     meta_robots = "index, follow"
 
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Interlock Lead | Interlock Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Interlock")  
 
     context = {"title": title,
                "blogs":blogs,
+               "form":form,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -133,6 +160,8 @@ def re_sodding_page(request):
         phone = form.cleaned_data.get('phone')
         address = form.cleaned_data.get('address')
         service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
         subject = f"Sod Lead | Re-Sodding Page"
@@ -140,7 +169,9 @@ def re_sodding_page(request):
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
                      \n\nAddress: {address} \
-                     \n\nService: {service} "
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
         from_address = settings.EMAIL_HOST_USER
         to_address = "mcexcavate.ottawa@gmail.com"
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
@@ -191,6 +222,8 @@ def concrete_page(request):
         phone = form.cleaned_data.get('phone')
         address = form.cleaned_data.get('address')
         service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
         subject = f"Concrete Lead | Concrete Page"
@@ -198,7 +231,9 @@ def concrete_page(request):
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
                      \n\nAddress: {address} \
-                     \n\nService: {service} "
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
         from_address = settings.EMAIL_HOST_USER
         to_address = "mcexcavate.ottawa@gmail.com"
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
@@ -364,6 +399,7 @@ def contact_page(request):
     if form.is_valid():
         name = form.cleaned_data.get("name")
         email = form.cleaned_data.get("email")
+        phone = form.cleaned_data.get("phone")
         address = form.cleaned_data.get("address")
         service = form.cleaned_data.get("service")
         marketing = form.cleaned_data.get("marketing")
@@ -373,10 +409,11 @@ def contact_page(request):
         subject = f'{service} Lead | Contact Page'
         message =  f'Name: {name} \
                      \n\n Email: {email} \
+                     \n\n Phone: {phone} \
                      \n\n Address: {address} \
                      \n\n Service: {service} \
                      \n\n Marketing: {marketing} \
-                     \n\n Content: {content}'
+                     \n\n content: {content}'
         from_address = settings.EMAIL_HOST_USER
         to_address = "mcexcavate.ottawa@gmail.com"
         send_mail(subject, message, from_address, [to_address], fail_silently=False)

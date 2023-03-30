@@ -6,25 +6,27 @@
 	<div class='row'>
 
 		{% include "service_breadcrumbs.html" %}
-		
-		<div class='col-md-6 service_top_row'>
+
+		<div class='col-lg-6 service_top_row'>
 			<div class='container-fluid'>
 				<div class='row'>
 					<div class='col-12'>
-						<ul>
-							<li><i class="fa-regular fa-circle-check" style="color: #07ca14;"></i><p>Free, Prompt, Written Estimate</p></li>
-							<li><p>Premium Tools</p></li>
-							<li><p>Trusted Professionals</p></li>
-							<li><p>Patios, Walkways, Driveways</p></li>
-						</ul>
+						<p class='service_top_row_p'>Hire us for your concrete needs because we have the expertise to make sure your project is completed correctly and will stand up over the long term. We offer a variety of concrete finish options from basic to decorative. We also offer concrete maintenance services inlcuding sealing and pressure washing.</p>
+						<div class='service_top_row_bullets'>
+						<p>• Driveways, Walkways, Patios, Steps</p>
+						<p>• Pads, Slabs</p>
+						<p>• Sidewalks, Curbs</p>
+						<p>• Residential</p>
+						<p>• Commercial</p>
+						</div>
 						<img src= "{% static 'image/stamped-concrete/stamped_service_link.jpg' %}" alt="ottawa stamped conrete front walkway and step">
-						<p class='service_top_row_img_caption'>Back Lawn in Riverside South after re-gradding and laying sod.</p>
+						<p class='service_top_row_img_caption'>Stamped concrete patio in Orleans.</p>
 						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class='col-md-6 service_top_row'>
+		<div class='col-lg-6 service_top_row'>
 			{% include "services_contact_form.html" %}
 		</div>
 
