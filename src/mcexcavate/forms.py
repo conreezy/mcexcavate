@@ -30,7 +30,7 @@ MARKETING_CHOICES = (
 class ServicePageContactForm(forms.Form):
     name    = forms.CharField(label='Name', widget=forms.TextInput(attrs={}))
     email   = forms.EmailField(label='Email', widget=forms.TextInput(attrs={}))
-    phone   = PhoneNumberField(label= 'Phone', widget=forms.TextInput(attrs={}))
+    phone   = PhoneNumberField(label= 'Phone', region="CA", widget=forms.TextInput(attrs={}))
     address = forms.CharField(label='Address', widget=forms.TextInput(attrs={}))
     service = forms.ChoiceField(label='Service Required', choices=SERVICE_CHOICES, 
                                                           widget=forms.HiddenInput(attrs={'id':'form_service'}))
@@ -40,7 +40,7 @@ class ServicePageContactForm(forms.Form):
 class ContactPageContactForm(forms.Form):
     name    = forms.CharField(label='Name', widget=forms.TextInput(attrs={}))
     email   = forms.EmailField(label='Email', widget=forms.TextInput(attrs={}))
-    phone   = PhoneNumberField(label= 'Phone', widget=forms.TextInput(attrs={}))
+    phone   = PhoneNumberField(label= 'Phone', region="CA", widget=forms.TextInput(attrs={}))
     address    = forms.CharField(label='Address', widget=forms.TextInput(attrs={}))
     service = forms.ChoiceField(label='Service Required', choices=SERVICE_CHOICES, 
                                                           widget=forms.Select(attrs={'id':'form_service'}))

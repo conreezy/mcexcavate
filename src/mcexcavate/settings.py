@@ -28,8 +28,13 @@ EMAIL_PORT = 587
 
 ALLOWED_HOSTS = ['170.187.194.201', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
 
-# Application definition
+# PhoneNumberField Settings
+#PHONENUMBER_DB_FORMAT = 
+PHONENUMBER_DEFAULT_REGION = "CA"
+#PHONENUMBER_DEFAULT_FORMAT = 
 
+
+# Application definition
 INSTALLED_APPS = [
     'crispy_forms',
     'django.contrib.admin',

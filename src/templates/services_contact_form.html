@@ -15,7 +15,7 @@
 					    {% endif %}
 			      	</div>
 					<p class='mb-3'>Provide your contact details and we will get back to you quickly to provide more information.</p>
-					<form id='sod_contact_form' method='POST' action=".">{% csrf_token %}
+					<form id='service_contact_form' method='POST' action=".">{% csrf_token %}
 						<div class='form-row'>
 							<div class='form-group col-12 mb-0'>
 								{{ form.name|as_crispy_field }}
