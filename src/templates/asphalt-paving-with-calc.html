@@ -11,12 +11,15 @@
 			<div class='container-fluid'>
 				<div class='row'>
 					<div class='col-12'>
-						<p class='service_top_row_p'>Hire us to pave your driveway because we have paved over one million square feet In Ottawa. Our experienced crews use top quality tools and specialized equipment. We use top quality HL3 fine asphalt on residential driveways to ensure a long life for your driveway.</p>
+						<p class='service_top_row_p'>Hire us for your concrete needs because we have the expertise to make sure your project is completed correctly and will stand up over the long term. We offer a variety of concrete finish options from basic to decorative. We also offer concrete maintenance services inlcuding sealing and pressure washing.</p>
 						<div class='service_top_row_bullets'>
+						<p>• Driveways, Walkways, Patios, Steps</p>
+						<p>• Pads, Slabs</p>
+						<p>• Sidewalks, Curbs</p>
 						<p>• Residential</p>
 						<p>• Commercial</p>
 						</div>
-						<img src= "{% static 'image/paving/ottawa-asphalt-driveway-paving.jpg' %}" alt="ottawa stamped conrete front walkway and step">
+						<img src= "{% static 'image/stamped-concrete/stamped_service_link.jpg' %}" alt="ottawa stamped conrete front walkway and step">
 						<p class='service_top_row_img_caption'>Stamped concrete patio in Orleans.</p>
 						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
 					</div>
@@ -26,6 +29,79 @@
 		<div class='col-lg-6 service_top_row'>
 			{% include "services_contact_form.html" %}
 		</div>
+
+		<div class='col-12 service_top_row'>
+			<div class='container-fluid'>
+				<div class='row'>
+					<div class='col-md-6'>
+						<h1>{{title}}</h1>
+						<p>Hire us to pave your driveway because we have paved over one million square feet In Ottawa. Our experienced crews use top quality tools and specialized equipment. We use top quality HL3 fine asphalt on residential driveways to ensure a long life for your driveway.</p>
+						<a href='/contact'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a>
+					</div>
+					<div class='col-md-6'>
+						<img src= "{% static 'image/paving/ottawa-asphalt-driveway-paving.jpg' %}" alt="ottawa new asphalt driveway in Barrhaven" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p class='mt-2' style='font-size: 14px;font-style: italic;'>Asphalt driveway - Barrhaven</p>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+		<!-- <div class='col-12'>
+			<hr>
+			<div class='container-fluid'>
+				<div class='row my-3 mt-4'>
+					<div class='col-12'>
+						<div class='home_page_services' style='overflow: hidden;'>
+						<h3 class='mb-3'>Asphalt Paving Price Calculator</h3>
+						{% if messages %}
+						    {% for message in messages %}
+						    <div class='alert alert-{{ message.tags }}' style='width:inherit;'>
+						      {{ message }}
+						    </div>
+						    {% endfor %}
+					    {% endif %}
+						<p>Enter your driveway dimensions for an approximate price estimate.</p>
+						<p class='mb-3'>Price is based on paving with 2" of 'HL3 Fine' asphalt.</p>
+						<form id='asphalt_form' method='POST' action=".">{% csrf_token %}
+							<div class='form-row'>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.name|as_crispy_field }}
+								</div>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.email|as_crispy_field }}
+								</div>
+ 							</div>
+ 							<div class='form-row'>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.address|as_crispy_field }}
+								</div>
+								<div class='form-group col-md-6 mb-0'>
+									{{ form.pave_type|as_crispy_field }}
+								</div>
+ 							</div>
+ 							<div class='form-row mb-2'>
+ 								<p>Size of Driveway:</p>
+ 							</div>
+ 							<div class='form-row'>
+								<div class='form-group col-4 mb-0'>
+									{{ form.length|as_crispy_field }}
+								</div>
+								<div class='form-group col-4 mb-0'>
+									{{ form.width|as_crispy_field }}
+								</div>
+								<div class='form-group col-4 mb-0'>
+									{{ form.area|as_crispy_field }}
+								</div>
+ 							</div>
+ 							<div class='pt-3'>
+					      		<button id='' style='float:right;' type="submit" class="btn btn-danger mt-2">Show Me The Price Now!</button>
+					      	</div>
+				      	</form>
+				      	</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
 
 		<div class='col-12'>
 			<hr>

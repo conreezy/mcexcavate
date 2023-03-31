@@ -263,65 +263,91 @@ def asphalt_page(request):
                      asphalt ottawa, ottawa asphalt,"
     meta_robots = "index, follow"
 
-    price = 0
-
-    form = PavingPriceForm(request.POST or None)
+    form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
-        print(form.cleaned_data)
         name_ = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
-        pave_type = form.cleaned_data.get('pave_type').lower()
-        length = int(form.cleaned_data.get('length'))
-        width = int(form.cleaned_data.get('width'))
-        area = int(form.cleaned_data.get('area'))
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
 
-        if pave_type == "remove old asphalt & pave":
-          print("peel and pave")
-          if area < 333:
-            price = 1998
-          elif area >= 333:
-            price = area * 6 
-        elif pave_type == "pave only":
-          print("pave")
-          if area < 333:
-            price = 1998
-          elif area >= 333:
-            price = area * 4.75 
-
-        asphalt_estimate = PavingEstimate.objects.create(**form.cleaned_data)
-        asphalt_estimate.price = price
-        asphalt_estimate.save()
-
-        price = '${:,.2f}'.format(price)       
-
-        # send the confirmation email 
-        subject = f"McExcavate | Asphalt Paving Price Quote"
-        message =  f"Hello {name_}, \
-                     \n\nThank you for using our pricing calculator. \
-                     \n\n{price} to pave your {area} square foot driveway. (accurate to within 10% - 15%) \
-                     \n\nFor more information or to book an an in person estimate contact us today. \
-                     \n\nMcExcavate \
-                     \nOttawa, ON \
-                     \n613-608-7722"
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Concrete Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
         from_address = settings.EMAIL_HOST_USER
-        to_address = email
+        to_address = "mcexcavate.ottawa@gmail.com"
         send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        send_mail(subject, message, from_address, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
 
-        messages.success(request, f"It would cost aproximately { price } to pave your { area } square foot driveway.")
+        form = ServicePageContactForm()
+
+    # price = 0
+
+    # form = PavingPriceForm(request.POST or None)
+    # if form.is_valid():
+    #     print(form.cleaned_data)
+    #     name_ = form.cleaned_data.get('name')
+    #     email = form.cleaned_data.get('email')
+    #     pave_type = form.cleaned_data.get('pave_type').lower()
+    #     length = int(form.cleaned_data.get('length'))
+    #     width = int(form.cleaned_data.get('width'))
+    #     area = int(form.cleaned_data.get('area'))
+
+    #     if pave_type == "remove old asphalt & pave":
+    #       print("peel and pave")
+    #       if area < 333:
+    #         price = 1998
+    #       elif area >= 333:
+    #         price = area * 6 
+    #     elif pave_type == "pave only":
+    #       print("pave")
+    #       if area < 333:
+    #         price = 1998
+    #       elif area >= 333:
+    #         price = area * 4.75 
+
+    #     asphalt_estimate = PavingEstimate.objects.create(**form.cleaned_data)
+    #     asphalt_estimate.price = price
+    #     asphalt_estimate.save()
+
+    #     price = '${:,.2f}'.format(price)       
+
+    #     # send the confirmation email 
+    #     subject = f"McExcavate | Asphalt Paving Price Quote"
+    #     message =  f"Hello {name_}, \
+    #                  \n\nThank you for using our pricing calculator. \
+    #                  \n\n{price} to pave your {area} square foot driveway. (accurate to within 10% - 15%) \
+    #                  \n\nFor more information or to book an an in person estimate contact us today. \
+    #                  \n\nMcExcavate \
+    #                  \nOttawa, ON \
+    #                  \n613-608-7722"
+    #     from_address = settings.EMAIL_HOST_USER
+    #     to_address = email
+    #     send_mail(subject, message, from_address, [to_address], fail_silently=False)
+    #     send_mail(subject, message, from_address, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
+
+    #     messages.success(request, f"It would cost aproximately { price } to pave your { area } square foot driveway.")
     
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="AsphaltPaving")  
 
     template_name = "asphalt-paving.html"
     context = {"title": title,
+               "form":form,
                "blogs":blogs,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
-               "meta_title":meta_title,
-               'form':form,
-               "price":price}
+               #"price":price
+               "meta_title":meta_title,}
     return render(request, template_name, context)
 
 def asphalt_repairs_page(request):
@@ -331,12 +357,39 @@ def asphalt_repairs_page(request):
     meta_keywords = "ottawa asphalt repairs, asphalt repairs ottawa, asphalt repairs"
     meta_robots = "index, follow"
 
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Concrete Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="AsphaltRepairs")
 
     template_name = "asphalt-repairs.html"
     context = {"title": title,
                "blogs":blogs,
+               "form":form,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
