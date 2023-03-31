@@ -1,27 +1,31 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
 
+Default = "---"
 Excavation = "Excavation"
-ReSodding =  "Re-Sodding"
+SodInstallation =  "Sod Installation"
 Interlock =  "Interlock"
 Concrete =  "Concrete"
 AsphaltPaving =  "Asphalt Paving"
 AsphaltRepairs =  "Asphalt Repairs"
 
 SERVICE_CHOICES = (
-  (Excavation, 'Excavation'),
-  (ReSodding, 'Re-Sodding'),
-  (Interlock, 'Interlock'),
+  (Default, '---'),
   (Concrete, 'Concrete'),
+  (SodInstallation, 'Sod Installation'),
+  (Interlock, 'Interlock'),
+  (Excavation, 'Excavation'),
   (AsphaltPaving, 'Asphalt Paving'),
   (AsphaltRepairs, 'Asphalt Repairs'),
   )
 
+Default = "---"
 GoogleSearch = "Google Search"
 Referal =  "Referal"
 Other =  "Other"
 
 MARKETING_CHOICES = (
+  (Default, '---'),
   (GoogleSearch, 'Google Search'),
   (Referal, 'Referal'),
   (Other, 'Other'),

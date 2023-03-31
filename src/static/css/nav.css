@@ -35,7 +35,7 @@ background-color: black;
 .top_nav{
 height:55px;
 background-color: black;
-padding:15px 0px 0px 0px;
+padding:0px 0px 0px 0px;
 margin:0 auto 0 auto;
 text-align: center;
 width:100%;
@@ -63,24 +63,61 @@ visibility: hidden;
 
 .nav_item{
 width:16.33%;
+height: 55px;
 }
 
-.nav_item a{
-padding:16px 40px 17px 40px;
-margin:0px auto 0px auto;
-font-size: 17px;
-color: white;
-} 
-
-.nav_item a:hover {
+.nav_item:hover {
 background-color: white;
 color: black;
 }
+.nav_item:hover a{
+color: black;
+}
+.nav_item:hover p{
+color: black;
+}
+
+.nav_item a{
+text-decoration: none;
+color:white;
+}
+
+.nav_item p{
+padding:15px 40px 14px 40px;
+margin:0px auto 0px auto;
+font-size: 17px;
+color: white;
+}
+
+.nav_service{
+cursor:pointer;
+}
+
+.nav_service:hover > .service_dropdown{
+display: block !important;
+visibility: visible !important;
+}
+
+/*.nav_item a:hover {
+background-color: white;
+color: black;
+}*/
 
 /* Service Dropdown Desktop */
 .service_dropdown{
+/*display: block !important;
+visibility: visible !important*/;
 position: relative;
 display: none;
+padding:0;
+margin:0;
+z-index: 10;
+}
+
+.service_dropdown:hover{
+display: block !important;
+visibility: visible !important;
+position: relative;
 padding:0;
 margin:0;
 }
@@ -88,14 +125,14 @@ margin:0;
 .service_dropdown_content{
 min-width:165px;
 position: relative;
-background-color: #f9f9f9;
-border-radius: 3px;
-border-top:1px solid rgba(0,0,0,0.3);
+background-color: white;
+border-radius: 0px 0px 3px 3px;
+/*border-top:1px solid rgba(0,0,0,0.3);*/
 border-left:1px solid rgba(0,0,0,0.3);
 border-right:1px solid rgba(0,0,0,0.3);
 border-bottom:1px solid rgba(0,0,0,0.3);;
 z-index: 2;
-margin:5px auto 0px auto;
+margin:0px auto 0px auto;
 padding:5px;
 }
 
@@ -117,6 +154,7 @@ display: block;
 
 .service_dropdown_content a:hover {
 background-color: #cecece;
+color:black;
 }
 
 .service_dropdown_content ul:hover + .nav_service {
