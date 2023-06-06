@@ -30,8 +30,6 @@ window.addEventListener("resize", function(event){
 
 //  Service dropdown - mobile
 document.getElementById("nav_service_mobile").addEventListener("click", function(event) {
-  // console.log("button clicked");
   var service_dropdown_mobile = document.getElementById("service_dropdown_mobile");
-  // console.log(service_dropdown_mobile);
   service_dropdown_mobile.classList.toggle('show_block');
 });

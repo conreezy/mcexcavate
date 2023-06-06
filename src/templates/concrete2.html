@@ -2,45 +2,33 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
-
-<div class='service_top_row_hero'>
-	<div class='container'>
-		<div class='row'>
-			<div class="hero_column1">
-				<h1>{{title}}</h1>
-				<p class='service_top_row_p_hero'>Hire us for your concrete needs because we have the expertise to make sure your project is completed correctly and will stand the test of time. We offer a variety of concrete finish options from functional to decorative.</p>
-				<div class='service_top_row_bullets_hero'>
-					<p>• Driveways, Walkways, Patios, Steps</p>
-					<p>• Pads, Slabs</p>
-					<p>• Sidewalks, Curbs</p>
-					<p>• Residential</p>
-					<p>• Commercial</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
 <div class='container'>
-	<div class='row'>
-
-		<div class="service_form_col">
-		{% include "services_contact_form.html" %}
-		</div>
-
-		<div class='top_testimonial'> 
-			<div class="top_testimonial_content">
-				<h3>What Our Customers Have To Say:</h3>
-				<div class='home_page_services'>
-			   	<img src= "{% static 'image/stamped-concrete/brown-stamped-concrete-patio.jpg' %}" alt="stamped concrete patio wood texture">
-					<p class='mt-3'>"The new back patio looks great. Work was completed promptly and to good standards.  Quality of concrete finish is exceptional.  Job site was left clean and tidy.  I would do business with McExcavate again."</p>
-					<br> 
-					<p><b>- H. Finney, Barrhaven</b></p>
+	<div class='row service_row'>
+		{% include "service_breadcrumbs.html" %}
+		<div class='col-lg-6 service_top_row'>
+			<div class='container-fluid'>
+				<div class='row'>
+					<div class='col-12'>
+						<p class='service_top_row_p'>Hire us for your concrete needs because we have the expertise to make sure your project is completed correctly and will stand the test of time. We offer a variety of concrete finish options from functional to decorative.</p>
+						<div class='service_top_row_bullets'>
+						<p>• Driveways, Walkways, Patios, Steps</p>
+						<p>• Pads, Slabs</p>
+						<p>• Sidewalks, Curbs</p>
+						<p>• Residential</p>
+						<p>• Commercial</p>
+						</div>
+						<img src= "{% static 'image/stamped-concrete/stamped_service_link.jpg' %}" alt="ottawa stamped conrete front walkway and step" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p class='service_top_row_img_caption'>Back Lawn in Riverside South after re-gradding and laying sod.</p>
+						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
+					</div>
 				</div>
 			</div>
 		</div>
+		<div class='col-lg-6 service_top_row'>
+			{% include "services_contact_form.html" %}
+		</div>
 
-		<div class='col-12'> 
+		<div class='col-12'>
 			<hr>
 			<h3>Concrete Finish Options</h3>
 			<div class='container-fluid'>
@@ -73,14 +61,13 @@
 				</div>
 			</div>
 		</div>
-
 		<div class='col-12'>
 			<hr>
 			<h3>Stamp Patterns</h3>
 			<div class='container-fluid'>
 				<div class='row my-3'>
 
-					<div class='col-md-4 hg col-sm-6 p-2'>
+					<div class='col-md-3 col-sm-4 p-2'>
 						<div class='small_photo_box'>
 					   		<img src= "{% static 'image/stamped-concrete/Seamless-Italian-Slate.jpg' %}" alt="stamped concrete patio wood stamp">
 							<br> 
@@ -88,7 +75,7 @@
 						</div>
 					</div>
 
-					<div class='col-md-4 hg col-sm-6 p-2'>
+					<div class='col-md-3 col-sm-4 p-2'>
 						<div class='small_photo_box'>
 							<img src= "{% static 'image/stamped-concrete/Random-Sandstone.jpg' %}" alt="stamped concrete pool deck ottawa">
 							<br> 
@@ -96,7 +83,7 @@
 						</div>
 					</div>
 
-					<div class='col-md-4 hg col-sm-6 p-2'>
+					<div class='col-md-3 col-sm-4 p-2'>
 						<div class='small_photo_box'>
 							<img src= "{% static 'image/stamped-concrete/Boardwalk-with-knots.jpg' %}" alt="stamped concrete patio and steps ottawa">
 							<br> 
@@ -104,7 +91,7 @@
 						</div>
 					</div>
 
-					<div class='col-md-4 hg col-sm-6 p-2'>
+					<div class='col-md-3 col-sm-4 p-2'>
 						<div class='small_photo_box'>
 							<img src= "{% static 'image/stamped-concrete/Castle-Stone.png' %}" alt="stamped concrete walkway and steps">
 							<br> 
@@ -112,7 +99,7 @@
 						</div>
 					</div>
 
-					<div class='col-md-4 hg col-sm-6 p-2'>
+					<div class='col-md-3 col-sm-4 p-2'>
 						<div class='small_photo_box'>
 							<img src= "{% static 'image/stamped-concrete/Seamless-Belgium-Slate.jpg' %}" alt="stamped concrete patio and steps ottawa">
 							<br> 
@@ -120,11 +107,43 @@
 						</div>
 					</div>
 
-					<div class='col-md-4 hg col-sm-6 p-2'>
+					<div class='col-md-3 col-sm-4 p-2'>
+						<div class='small_photo_box'>
+							<img src= "{% static 'image/stamped-concrete/Fishscale-Granite-Sets.png' %}" alt="stamped concrete walkway and steps">
+							<br> 
+							<p><b>Fishscale Granite Sets</b></p>
+						</div>
+					</div>
+
+					<div class='col-md-3 col-sm-4 p-2'>
+						<div class='small_photo_box'>
+							<img src= "{% static 'image/stamped-concrete/Herringbone-Old-Cobble-Stone.png' %}" alt="stamped concrete patio and steps ottawa">
+							<br> 
+							<p><b>Heringbone Old Cobble Stone</b></p>
+						</div>
+					</div>
+
+					<div class='col-md-3 col-sm-4 p-2'>
+						<div class='small_photo_box'>
+							<img src= "{% static 'image/stamped-concrete/Parquet-wood-diagonal.jpg' %}" alt="stamped concrete walkway and steps">
+							<br> 
+							<p><b>Parquet Wood Diagonal</b></p>
+						</div>
+					</div>
+
+					<div class='col-md-3 col-sm-4 p-2'>
 						<div class='small_photo_box'>
 							<img src= "{% static 'image/stamped-concrete/Rotating-Ashlar-Italian-Slate.jpg' %}" alt="stamped concrete patio and steps ottawa">
 							<br> 
 							<p><b>Rotating Ashlar Italian Slate</b></p>
+						</div>
+					</div>
+
+					<div class='col-md-3 col-sm-4 p-2'>
+						<div class='small_photo_box'>
+							<img src= "{% static 'image/stamped-concrete/Yuko-Fan-Gang-Tool.png' %}" alt="stamped concrete walkway and steps">
+							<br> 
+							<p><b>Yuko Fan Gang Tool</b></p>
 						</div>
 					</div>
 
@@ -275,7 +294,7 @@
 
 					<div class='col-md-6 p-2'>
 						<div class='home_page_services'>
-							<img src= "{% static 'image/stamped-concrete/stamped-concrete-patio-grey.jpg' %}" alt="stamped concrete patio and steps ottawa" style="width: inherit; box-shadow:5px 5px 20px grey;">
+							<img src= "{% static 'image/stamped-concrete/stamped_patio_2.jpg' %}" alt="stamped concrete patio and steps ottawa" style="width: inherit; box-shadow:5px 5px 20px grey;">
 							<p class='mt-3'>“Great service. Guys worked hard and were quick to do it. Deck and steps look amazing. Thank you to Conor and his crew.  Very pleased with the job.”</p>
 							<br> 
 							<p><b>- J. Song, Kanata</b></p>
@@ -295,10 +314,6 @@
 			</div>
 		</div>
 
-		{% if blogs %}
-		{% include "related-blogs.html" %}
-		{% endif %}
-
 	</div>
 </div>
 
@@ -307,72 +322,65 @@
 {% block javascript %}
 <script>
 
-// ---- Prevent form submit then add / update service value
-document.getElementById("service_contact_form").addEventListener("submit", function(event){
-  event.preventDefault();
-  document.getElementById('form_service').value="Concrete"
-  document.getElementById("service_contact_form").submit();
-});
+var price = document.getElementById("price").value;
 
-// var price = document.getElementById("price").value;
-
-// function changeLengthWidth(){
+function changeLengthWidth(){
 	
-// 	var area = document.getElementById("area").value;
+	var area = document.getElementById("area").value;
 	
-// 	function lengthWidth(area){			
-// 		return Math.sqrt(area);	
-// 	};
+	function lengthWidth(area){			
+		return Math.sqrt(area);	
+	};
 
-// 	length_width = lengthWidth(area)
+	length_width = lengthWidth(area)
 
-// 	function writeLengthWidth(length_width){
-// 		document.getElementById("length").value = length_width.toFixed(2);
-// 		document.getElementById("width").value = length_width.toFixed(2);
-// 	};
+	function writeLengthWidth(length_width){
+		document.getElementById("length").value = length_width.toFixed(2);
+		document.getElementById("width").value = length_width.toFixed(2);
+	};
 
-// 	writeLengthWidth(length_width)
-// };
+	writeLengthWidth(length_width)
+};
 
-// function changeArea(){
+function changeArea(){
 
-// 	var length = document.getElementById("length").value;
-// 	var width = document.getElementById("width").value;
+	var length = document.getElementById("length").value;
+	var width = document.getElementById("width").value;
 
-// 	function findArea(length, width){
-// 	return length * width
-// 	};
+	function findArea(length, width){
+	return length * width
+	};
 
-// 	var area =  findArea(length, width);
+	var area =  findArea(length, width);
 
-// 	function writeArea(area){
-// 		document.getElementById("area").value = area.toFixed(2);
-// 	};
+	function writeArea(area){
+		document.getElementById("area").value = area.toFixed(2);
+	};
 
-// 	writeArea(area);
-// };
+	writeArea(area);
+};
 
-// function getPrice(){
+function getPrice(){
 
-// 	var area = document.getElementById("area").value;
-//  	var sq_price = 2.5;
+	var area = document.getElementById("area").value;
+ 	var sq_price = 2.5;
 
-// 	function price(area,sq_price){
-// 		return area * sq_price
-// 	};
+	function price(area,sq_price){
+		return area * sq_price
+	};
 
-// 	var price = price(area,sq_price);
+	var price = price(area,sq_price);
 
-// 	function writePrice(price){
-// 		document.getElementById("price").innerHTML = price;
-// 	};
+	function writePrice(price){
+		document.getElementById("price").innerHTML = price;
+	};
 
-// 	// alert(price);
+	// alert(price);
 
-// 	var submit_message = "Re-Sodding " + area + " sq feet on the Back lawn = $ " + price + ". \nThank you for using our pricing calculator. We have emailed you a copy of your price quote."
-// 	window.confirm(submit_message);
-// 	writePrice(price);
-// };
+	var submit_message = "Re-Sodding " + area + " sq feet on the Back lawn = $ " + price + ". \nThank you for using our pricing calculator. We have emailed you a copy of your price quote."
+	window.confirm(submit_message);
+	writePrice(price);
+};
 
 </script>
 {% endblock javascript %}

@@ -20,9 +20,8 @@ padding: 0px 5px 0px 5px !important;
 }
 .hero_column1{
 margin:40px 0px 0px 0px !important;
-padding:25px 30px 2px 30px !important;
+padding:25px 30px 0px 30px !important;
 background-color: rgba(0, 0, 0, 0.70);
-width:650px;
 }
 .hero_column1 h1{
 color: white;
@@ -100,7 +99,7 @@ margin:15px 0px 20px 0px;
 }
 
 .top_testimonial{
-position: absolute;
+position: relative;
 margin:0px 0px 50px 0px;
 }
 
@@ -110,7 +109,7 @@ bottom: 0;
 }
 
 .service_form_col{
-position: absolute;
+position: relative;
 margin:120px 0px 50px 0px;
 }
 .services_contact_form_row{
@@ -126,31 +125,3 @@ padding:0x;
   background-color: white;
 }
 
-@media only screen and (max-width: 1400px) {
-
-}
-
-@media only screen and (max-width: 1200px) {
-
-}
-
-@media only screen and (max-width: 992px) {
-
-.service_form_col{
-margin:700px 0px 50px 0px;
-
-}
-.top_testimonial_content{
-margin:700px 0px 50px 0px;
-}
-
-}
-
-
-@media only screen and (max-width: 768px) {
-
-}
-
-@media only screen and (max-width: 576px) {
-
-}

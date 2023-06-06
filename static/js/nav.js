@@ -20,18 +20,16 @@ window.addEventListener("resize", function(event){
   };
 });
 
-//  Service dropdown - desktop
-document.getElementById("nav_service").addEventListener("click", function(event) {
-  // console.log("button clicked");
-  var service_dropdown = document.getElementById("service_dropdown");
-  // console.log(service_dropdown);
-  service_dropdown.classList.toggle('show_block');
-});
+// //  Service dropdown - desktop
+// document.getElementById("nav_service").addEventListener("click", function(event) {
+//   // console.log("button clicked");
+//   var service_dropdown = document.getElementById("service_dropdown");
+//   // console.log(service_dropdown);
+//   service_dropdown.classList.toggle('show_block');
+// });
 
 //  Service dropdown - mobile
 document.getElementById("nav_service_mobile").addEventListener("click", function(event) {
-  // console.log("button clicked");
   var service_dropdown_mobile = document.getElementById("service_dropdown_mobile");
-  // console.log(service_dropdown_mobile);
   service_dropdown_mobile.classList.toggle('show_block');
 });

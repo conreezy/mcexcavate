@@ -4,9 +4,33 @@
 {% load static %} 
 <div class='container'>
 	<div class='row service_row'>
-		<div class='col-12'>
+		{% include "service_breadcrumbs.html" %}
+		<div class='col-lg-6 service_top_row'>
 			<div class='container-fluid'>
 				<div class='row'>
+					<div class='col-12'>
+						<p class='service_top_row_p'>Hire us for your concrete needs because we have the expertise to make sure your project is completed correctly and will stand the test of time. We offer a variety of concrete finish options from functional to decorative.</p>
+						<div class='service_top_row_bullets'>
+						<p>• Driveways, Walkways, Patios, Steps</p>
+						<p>• Pads, Slabs</p>
+						<p>• Sidewalks, Curbs</p>
+						<p>• Residential</p>
+						<p>• Commercial</p>
+						</div>
+						<img src= "{% static 'image/stamped-concrete/stamped_service_link.jpg' %}" alt="ottawa stamped conrete front walkway and step" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p class='service_top_row_img_caption'>Back Lawn in Riverside South after re-gradding and laying sod.</p>
+						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='col-lg-6 service_top_row'>
+			{% include "services_contact_form.html" %}
+		</div>
+
+		<!-- <div class='col-12'>
+			<div class='container-fluid'>
+				<div class='row mt-4'>
 					<div class='col-md-6'>
 						<h1 class='m-0 mb-2' style='color:black;'>{{title}}</h1>
 						<p style='font-size: 22px;' class='mb-3'>- Free, Prompt, Written Estimate</p>
@@ -22,7 +46,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<div class='col-12'>
 			<hr>

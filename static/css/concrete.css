@@ -1,7 +1,7 @@
 .concrete_calculator{
   box-shadow: 3px 3px 15px grey;
-  padding: 10px 20px 20px 20px;
-  margin: 25px 0px 10px 0px;
+  padding: 20px 20px 20px 20px !important;
+  margin: 30px 0px 10px 0px;
   width:inherit;
 }
 .concrete_calculator h4{
