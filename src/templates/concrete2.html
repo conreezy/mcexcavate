@@ -322,65 +322,12 @@
 {% block javascript %}
 <script>
 
-var price = document.getElementById("price").value;
-
-function changeLengthWidth(){
-	
-	var area = document.getElementById("area").value;
-	
-	function lengthWidth(area){			
-		return Math.sqrt(area);	
-	};
-
-	length_width = lengthWidth(area)
-
-	function writeLengthWidth(length_width){
-		document.getElementById("length").value = length_width.toFixed(2);
-		document.getElementById("width").value = length_width.toFixed(2);
-	};
-
-	writeLengthWidth(length_width)
-};
-
-function changeArea(){
-
-	var length = document.getElementById("length").value;
-	var width = document.getElementById("width").value;
-
-	function findArea(length, width){
-	return length * width
-	};
-
-	var area =  findArea(length, width);
-
-	function writeArea(area){
-		document.getElementById("area").value = area.toFixed(2);
-	};
-
-	writeArea(area);
-};
-
-function getPrice(){
-
-	var area = document.getElementById("area").value;
- 	var sq_price = 2.5;
-
-	function price(area,sq_price){
-		return area * sq_price
-	};
-
-	var price = price(area,sq_price);
-
-	function writePrice(price){
-		document.getElementById("price").innerHTML = price;
-	};
-
-	// alert(price);
-
-	var submit_message = "Re-Sodding " + area + " sq feet on the Back lawn = $ " + price + ". \nThank you for using our pricing calculator. We have emailed you a copy of your price quote."
-	window.confirm(submit_message);
-	writePrice(price);
-};
+// ---- Prevent form submit then add / update service value
+document.getElementById("service_contact_form").addEventListener("submit", function(event){
+  event.preventDefault();
+  document.getElementById('form_service').value="Concrete"
+  document.getElementById("service_contact_form").submit();
+});
 
 </script>
 {% endblock javascript %}
