@@ -1,5 +1,6 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
+from captcha.fields import ReCaptchaField
 
 Default = "---"
 Excavation = "Excavation"
@@ -40,6 +41,7 @@ class ServicePageContactForm(forms.Form):
                                                           widget=forms.HiddenInput(attrs={'id':'form_service'}))
     content = forms.CharField(label='Description of Work',widget=forms.Textarea(attrs={'placeholder': "Please give us an idea of what you're looking to do so we can respond in greater detail."}), required=False)
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
+    #captcha = ReCaptchaField()
 
 class ContactPageContactForm(forms.Form):
     name    = forms.CharField(label='Name', widget=forms.TextInput(attrs={}))
@@ -50,6 +52,7 @@ class ContactPageContactForm(forms.Form):
                                                           widget=forms.Select(attrs={'id':'form_service'}))
     content = forms.CharField(label='Description of Work',widget=forms.Textarea(attrs={'placeholder': "Please give us an idea of what you're looking to do so we can respond in greater detail."}), required=False)
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
+    #captcha = ReCaptchaField()
 
 YARD_CHOICES = (
     ('Front', 'Front'),

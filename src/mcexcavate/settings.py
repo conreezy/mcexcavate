@@ -9,10 +9,8 @@ import json
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #SECRET_KEY = config["SECRET_KEY"]
-
 SECRET_KEY = 'dc578pv-t)gq+k)yw+rd^2(pd)pji*x5til*kzdjb1@byr3+)h'
-EMAIL_HOST_USER = 'info@mcexcavate.com'
-EMAIL_HOST_PASSWORD = 'Duke3818#'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -20,7 +18,16 @@ DEBUG = True
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = 'mail.privateemail.com'
+#EMAIL_HOST = 'mail.privateemail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+
+#EMAIL_HOST_USER = 'info@mcexcavate.com'
+#EMAIL_HOST_PASSWORD = 'Duke3818#'
+
+EMAIL_HOST_USER = 'mcexcavate.ottawa@gmail.com'
+#EMAIL_HOST_PASSWORD = 'Topley3818!'
+EMAIL_HOST_PASSWORD = 'fhzxfioobaesfznb'
+
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587 
 #EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
@@ -32,6 +39,10 @@ ALLOWED_HOSTS = ['170.187.194.201', '127.0.0.1', 'mcexcavate.com', 'www.mcexcava
 #PHONENUMBER_DB_FORMAT = 
 PHONENUMBER_DEFAULT_REGION = "CA"
 #PHONENUMBER_DEFAULT_FORMAT = 
+
+# Captcha Keys
+RECAPTCHA_PUBLIC_KEY = '6LfBhfYmAAAAAIPs-frb9SeAGW12jXJmu4fIQqvb'
+RECAPTCHA_PRIVATE_KEY = '6LfBhfYmAAAAALm8H0PZF4YBB8hzpkGtWW3vg4ZB'
 
 
 # Application definition
@@ -46,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'phonenumber_field',
+    'captcha',
 
     # my app
     'gallery',
