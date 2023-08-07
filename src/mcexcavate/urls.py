@@ -38,11 +38,12 @@ from blog.views import (
     #blog_sitemap,
 )
 
-from .sitemaps import GallerySitemap, StaticViewSitemap
+from .sitemaps import GallerySitemap, BlogSitemap, StaticViewSitemap
 
 sitemaps = {
     "static":StaticViewSitemap,
-    "galleries":GallerySitemap 
+    "galleries":GallerySitemap,
+    "blogs":BlogSitemap 
 }
 
 urlpatterns = [
