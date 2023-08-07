@@ -47,7 +47,7 @@ color: black;
 .service_hero_col_img_caption{
 font-size: 14px;
 font-style: italic;
-color: black;
+color: white;
 margin:0px 0px 35px 0px !important;
 padding: 0px 0px 0px 0px;
 }
@@ -72,10 +72,6 @@ position: absolute;
 bottom: 0;
 }
 
-.service_form_col{
-position: absolute;
-margin:120px 0px 50px 0px;
-}
 .services_contact_form_row{
 padding:0x;
 }
@@ -99,10 +95,6 @@ padding:0x;
 
 @media only screen and (max-width: 992px) {
 
-.service_form_col{
-margin:700px 0px 50px 0px;
-
-}
 .top_testimonial_content{
 margin:700px 0px 50px 0px;
 }
@@ -111,10 +103,12 @@ margin:700px 0px 50px 0px;
 
 
 @media only screen and (max-width: 768px) {
-
+.service_hero_col h1{
+font-size: 24px;
+}
 }
 
 @media only screen and (max-width: 576px) {
 .service_hero_col h1{
-font-size: 24px;
+font-size: 21px;
 }
