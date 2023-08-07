@@ -2,11 +2,15 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
 from gallery.models import Gallery
+from blog.models import BlogPost
 
 class GallerySitemap(Sitemap):
-
 	def items(self):
 		return Gallery.objects.all()
+
+class BlogSitemap(Sitemap):
+	def items(self):
+		return BlogPost.objects.all()
 
 
 class StaticViewSitemap(Sitemap):
@@ -18,6 +22,14 @@ class StaticViewSitemap(Sitemap):
 				'sod-installation',
 				'lawn-mowing',
 				'concrete',
+				'stamped_driveway_page',
+           		'stamped_patio_page',
+           		'stamped_walkway_page',
+           		'concrete_repairs_page',
+           		'concrete_resurfacing_page',
+           		'concrete_sealing_page',
+           		'concrete_steps_page',
+           		'concrete_slabs_page',
 				'parging',
 				'asphalt-paving',
 				'asphalt-repairs',
