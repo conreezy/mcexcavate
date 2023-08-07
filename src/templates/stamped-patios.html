@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %} 
+<div class='container'>
+	<div class='row service_row'>
+		{% include "service_breadcrumbs.html" %}
+		<div class='col-lg-6 service_top_row'>
+			<div class='container-fluid'>
+				<div class='row'>
+					<div class='col-12'>
+						<p class='service_top_row_p'>We do stamped concrete patios.</p>
+						<p class='service_top_row_p'>PAGE UNDER CONSTRUCTION</p>
+						<div class='service_top_row_bullets'>
+						<p></p>
+						</div>
+						<!-- <img src= "{% static 'image/stamped-concrete/stamped-concrete-patio-grey.jpg' %}" alt="ottawa stamped conrete front walkway and step" style="width: inherit; box-shadow: 5px 5px 20px grey;">
+						<p class='service_top_row_img_caption'>Stamped concrete back patio in Rothwell Heights.</p> -->
+						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div class='col-lg-6 service_top_row'>
+			{% include "services_contact_form.html" %}
+		</div> -->
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+// ---- Prevent form submit then add / update service value
+document.getElementById("service_contact_form").addEventListener("submit", function(event){
+  event.preventDefault();
+  document.getElementById('form_service').value="Concrete"
+  document.getElementById("service_contact_form").submit();
+});
+
+</script>
+{% endblock javascript %}

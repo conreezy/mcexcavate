@@ -212,7 +212,7 @@ def concrete_page(request):
     title = "STAMPED CONCRETE OTTAWA"
     meta_title = 'Stamped Concrete Ottawa | McExcavate Inc.'
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
-    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
+    meta_keywords = "ottawa stamped conrete, stamped concrete, stamped concrete ottawa"
     meta_robots = "index, follow"
 
     form = ServicePageContactForm(request.POST or None)
@@ -245,6 +245,380 @@ def concrete_page(request):
     blogs = BlogPost.objects.filter(service="Concrete")    
       
     template_name = "concrete2.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title}
+    return render(request, template_name, context)
+
+def stamped_driveway_page(request):
+    title = "STAMPED CONCRETE DRIVEWWAYS OTTAWA"
+    meta_title = 'Stamped Concrete Driveways Ottawa | McExcavate Inc.'
+    meta_description = "We've been building stamped concrete driveways in Ottawa for over 10 years. \
+                        McExcavate has the expertise to ensure your prjoect is done correctly."
+    meta_keywords = "stamped concrete driveway, concrete driveway ottawa, \
+                     stamped concrete driveway ottawa, ottawa stamped concrete driveway"
+    meta_robots = "index, follow"
+
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Stamped Driveways Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete")    
+      
+    template_name = "stamped-driveways.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title}
+    return render(request, template_name, context)
+
+def stamped_patio_page(request):
+    title = "STAMPED CONCRETE PATIOS OTTAWA"
+    meta_title = 'Stamped Concrete Patios Ottawa | McExcavate Inc.'
+    meta_description = "We have been building stamped concrete patios in Ottawa for over 10 years. \
+                        McExcavate has the expertise to ensure your prjoect is done correctly."
+    meta_keywords = "stamped concrete patio, concrete patio ottawa, \
+                     stamped concrete patio ottawa, ottawa stamped concrete patio"
+    meta_robots = "index, follow"
+
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Stamped Patios Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete")    
+      
+    template_name = "stamped-patios.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title}
+    return render(request, template_name, context) 
+
+def stamped_walkway_page(request):
+    title = "STAMPED CONCRETE WALKWAYS OTTAWA"
+    meta_title = 'Stamped Concrete Walkways Ottawa | McExcavate Inc.'
+    meta_description = "We have been building stamped concrete walkways in Ottawa for over 10 years. \
+                        McExcavate expertise to ensure your prjoect is done correctly."
+    meta_keywords = "stamped concrete walkway, concrete walkway ottawa, \
+                     stamped concrete walkway ottawa, ottawa stamped concrete walkway"
+    meta_robots = "index, follow"
+
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Stamped Walkways Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete")    
+      
+    template_name = "stamped-walkways.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title}
+    return render(request, template_name, context)
+
+def concrete_repairs_page(request):
+    title = "CONCRETE REPAIRS OTTAWA"
+    meta_title = 'Concrete Repairs Ottawa | McExcavate Inc.'
+    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
+    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
+    meta_robots = "index, follow"
+
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Concrete Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete")    
+      
+    template_name = "concrete-repairs.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title}
+    return render(request, template_name, context)
+
+def concrete_resurfacing_page(request):
+    title = "CONCRETE RESURFACING OTTAWA"
+    meta_title = 'Concrete Resurfacing Ottawa | McExcavate Inc.'
+    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
+    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
+    meta_robots = "index, follow"
+
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Concrete Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete")    
+      
+    template_name = "concrete-resurfacing.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title}
+    return render(request, template_name, context)
+
+def concrete_sealing_page(request):
+    title = "CONCRETE SEALING OTTAWA"
+    meta_title = 'Concrete Sealing Ottawa | McExcavate Inc.'
+    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
+    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
+    meta_robots = "index, follow"
+
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Concrete Sealing Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete")    
+      
+    template_name = "concrete-sealing.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title}
+    return render(request, template_name, context)
+
+def concrete_slabs_page(request):
+    title = "CONCRETE SLABS OTTAWA"
+    meta_title = 'Concrete Slabs Ottawa | McExcavate Inc.'
+    meta_description = "We build concrete slabs in Ottawa. We have been building concrete slabs Since 2013."
+    meta_keywords = "conrete slabs, concrete slabs ottawa, ottawa concrete slabs"
+    meta_robots = "index, follow"
+
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Concrete Slabs Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete") 
+      
+    template_name = "concrete-slabs.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title}
+    return render(request, template_name, context)
+
+def concrete_steps_page(request):
+    title = "CONCRETE STEPS OTTAWA"
+    meta_title = 'Concrete Steps Ottawa | McExcavate Inc.'
+    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
+    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
+    meta_robots = "index, follow"
+
+    form = ServicePageContactForm(request.POST or None)
+    if form.is_valid():
+        name_ = form.cleaned_data.get('name')
+        email = form.cleaned_data.get('email')
+        phone = form.cleaned_data.get('phone')
+        address = form.cleaned_data.get('address')
+        service = form.cleaned_data.get('service')
+        content = form.cleaned_data.get('content')
+        marketing = form.cleaned_data.get('marketing')
+
+        # send the contact form to mcexcavate email 
+        subject = f"Concrete Lead | Concrete Steps Page"
+        message =  f"Name: {name_} \
+                     \n\nEmail: {email} \
+                     \n\nPhone: {phone} \
+                     \n\nAddress: {address} \
+                     \n\nService: {service} \
+                     \n\nMarketing: {marketing}\
+                     \n\nMessage: {content}"
+        from_address = settings.EMAIL_HOST_USER
+        to_address = "mcexcavate.ottawa@gmail.com"
+        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete") 
+      
+    template_name = "concrete-steps.html"
     context = {"title": title,
                "form": form,
                "blogs": blogs,

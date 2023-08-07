@@ -225,3 +225,7 @@ padding: 2.5px;
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
 }
+
+.pdf_dl{
+height:25px;
+}
