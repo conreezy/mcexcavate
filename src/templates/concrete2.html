@@ -2,35 +2,44 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
-<div class='container'>
-	<div class='row service_row'>
-		{% include "service_breadcrumbs.html" %}
-		<div class='col-lg-6 service_top_row'>
-			<div class='container-fluid'>
-				<div class='row'>
-					<div class='col-12'>
-						<p class='service_top_row_p'>Hire us for your stamped concrete project because we have the expertise to make sure your project is completed correctly and will stand the test of time.</p>
-						<div class='service_top_row_bullets'>
-						<p>• Driveways</p>
-						<p>• Patios</p>
-						<p>• Walkways</p>
-						<p>• Pool Surrounds</p>
-						<p>• Steps</p>
+<div class='container-fluid p-0'>
+	<div class='row service_hero'>
+		<div class='container'>
+			<div class='row'>
+				<div class='col-lg-6 service_hero_col'>
+					<div class='container-fluid'>
+						<div class='row'>
+							<div class='col-12'>
+								<h1>{{title}}</h1>
+								<div class="row service_hero_text">
+									<div class='col-12'>
+										<p class='service_hero_col_p'>Hire us for your stamped concrete project because we have the expertise to make sure your project is completed correctly and will stand the test of time.</p>
+										<p class='service_hero_col_bullets'>• Driveways</p>
+										<p class='service_hero_col_bullets'>• Patios</p>
+										<p class='service_hero_col_bullets'>• Walkways</p>
+										<p class='service_hero_col_bullets'>• Pool Surrounds</p>
+										<p class='service_hero_col_bullets'>• Steps</p>
+									</div>
+								</div>
+								<img src= "{% static 'image/stamped-concrete/stamped-concrete-patio-grey.jpg' %}" 
+								     alt="ottawa stamped conrete front walkway and step">
+								<p class='service_hero_col_img_caption'>Stamped concrete back patio in Rothwell Heights.</p>
+							</div>
 						</div>
-						<img src= "{% static 'image/stamped-concrete/stamped-concrete-patio-grey.jpg' %}" alt="ottawa stamped conrete front walkway and step" style="width: inherit; box-shadow: 5px 5px 20px grey;">
-						<p class='service_top_row_img_caption'>Stamped concrete back patio in Rothwell Heights.</p>
-						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
 					</div>
+				</div>
+				<div class='col-lg-6 service_hero_col'>
+					{% include "services_contact_form.html" %}
 				</div>
 			</div>
 		</div>
-		<div class='col-lg-6 service_top_row'>
-			{% include "services_contact_form.html" %}
-		</div>
+	</div>
+</div>
 
+<div class='container'>
+	<div class='row'>
 		<!-- <div class='col-12'>
-			<hr>
-			<h2 style='color:black;' class="pt-3">What is Stamped Concrete?</h2>
+			<h2 style='color:black;' class="pt-5">What is Stamped Concrete?</h2>
 			<div class='container-fluid'>
 				<div class='row mt-4 mb-3'>
 					<div class='col-md-12 mt-1 mb-2'>
