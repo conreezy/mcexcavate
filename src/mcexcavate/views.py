@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect, reverse
 from django.template.loader import get_template
 from django.contrib import messages
 from django.conf import settings
@@ -242,6 +242,7 @@ def concrete_page(request):
         messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
 
         form = ServicePageContactForm()
+        return HttpResponseRedirect('success/')
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Concrete")    
@@ -250,6 +251,23 @@ def concrete_page(request):
     context = {"title": title,
                "form": form,
                "blogs": blogs,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title}
+    return render(request, template_name, context)
+
+def concrete_success_page(request):
+    title = "Thank you! \
+             You are one step closer to becoming another happy customer!"
+    meta_title = 'Thank you for contacting us! -McExcavate'
+    meta_description = "Thank you for contacting us about your stamped concrete project! \
+                        We will be in touch soon to answer your questions or set up an estimate."
+    meta_keywords = ""
+    meta_robots = "noindex, nofollow" 
+      
+    template_name = "concrete-success.html"
+    context = {"title": title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,

@@ -10,6 +10,7 @@ from gallery.views import (
 from .views import (
     home_page,
 
+    #services
     excavation_page,
     interlock_page,
     re_sodding_page,
@@ -27,9 +28,15 @@ from .views import (
     asphalt_page,
     asphalt_repairs_page,
 
+    #form fill
+    concrete_success_page,
+
+    #about
     careers_page,
     about_page,
     contact_page,
+
+    # backend
     DashboardView,
 )
 
@@ -58,14 +65,15 @@ urlpatterns = [
     path('concrete/stamped-driveway/', stamped_driveway_page, name='stamped_driveway_page'),
     path('concrete/stamped-patio/', stamped_patio_page, name='stamped_patio_page'),
     path('concrete/stamped-walkway/', stamped_walkway_page, name='stamped_walkway_page'),
-    path('concrete/concrete-repair/', concrete_repairs_page, name='concrete_repairs_page'),
-    path('concrete/concrete-resurfacing/', concrete_resurfacing_page, name='concrete_resurfacing_page'),
-    path('concrete/concrete-sealing/', concrete_sealing_page, name='concrete_sealing_page'),
-    path('concrete/concrete-steps/', concrete_steps_page, name='concrete_steps_page'),
-    path('concrete/concrete-slabs/', concrete_slabs_page, name='concrete_slabs_page'),
+    path('concrete/repair/', concrete_repairs_page, name='concrete_repairs_page'),
+    path('concrete/resurfacing/', concrete_resurfacing_page, name='concrete_resurfacing_page'),
+    path('concrete/sealing/', concrete_sealing_page, name='concrete_sealing_page'),
+    path('concrete/steps/', concrete_steps_page, name='concrete_steps_page'),
+    path('concrete/slabs/', concrete_slabs_page, name='concrete_slabs_page'),
     path('parging/', parging_page, name='parging'),
     path('asphalt-paving/', asphalt_page, name='asphalt-paving'),
     path('asphalt-repairs/', asphalt_repairs_page, name='asphalt-repairs'),
+    path('concrete/success/', concrete_success_page, name='concrete_success_page'),
 
     # -- Gallery 
     path('gallery-new/', gallery_create_view),

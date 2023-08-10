@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %} 
+<div class='container'>
+	<div class='row'>
+		<div class='col-12 mt-3 mb-5'>
+				<h2 class='' style='color: black;'>Success!</h2>
+				<h1 class=''>Thank you for considering us for your stamped concrete project!</h1>
+				<p class=''>You're one step closer to becoming one of our happy customers :)</p>
+				<p class=''>We will contact you soon to set up an estimate and answer any questions.</p>
+				<p class='my-3' style="font-size: 22px;"><a href="/concrete/"><-- BACK TO STAMPED CONCRETE</a></p>
+				<img src= "{% static 'image/stamped-concrete/lorna-success.png' %}" 
+								     alt="happy customer"
+								     class='mt-3'>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+
+</script>
+{% endblock javascript %}
