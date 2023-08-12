@@ -3,6 +3,23 @@
 margin:25px 0px 25px 0px;
 }
 
+.service_top_row{
+padding-left: 0px ;
+padding-right: 0px;
+}
+
+.service_top_row img{
+width: inherit; 
+}
+
+.service_top_row_p{
+
+}
+
+.service_top_row_bullets{
+margin: 10px 0px 20px 0px; 
+}
+
 .service_hero{
 margin: 0px 0px 0px 0px !important;
 padding: 55px 5px 75px 5px !important;
