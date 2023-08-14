@@ -76,11 +76,11 @@ urlpatterns = [
     path('concrete/success/', concrete_success_page, name='concrete_success_page'),
 
     # -- Gallery 
-    path('gallery-new/', gallery_create_view),
+    path('gallery-new', gallery_create_view),
     path('gallery/', include('gallery.urls')),
     
     # -- Blog
-    path('blog-new/', blog_post_create_view),
+    path('blog-new', blog_post_create_view),
     path('blog/', include('blog.urls')),
 
     # -- Other pages
