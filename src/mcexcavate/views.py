@@ -38,7 +38,7 @@ def excavation_page(request):
     meta_description = "McExcavate provides Ottawa Excavation services to commercial, residential and government clients. One of Ottawa's leading excavation companies since 2013."
     meta_keywords = "ottawa excavation, excavation ottawa, excavating ottawa, ottawa excavating, excavation services, ottawa excavation services, excavation, excavating"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/excavation"
+    canonical = "https://mcexcavate.com/excavation/"
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Excavation")  
@@ -59,7 +59,7 @@ def interlock_page(request):
     meta_description = "McExcavate produces high quality interlock and hardscape projects to commercial, residential and government clients in Ottawa."
     meta_keywords = "ottawa interlock, interlock ottawa, interlock pathways ottawa, ottawa interlock patio, interlock driveway, ottawa interlock repair, "
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/interlock"
+    canonical = "https://mcexcavate.com/interlock/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -106,7 +106,7 @@ def re_sodding_page(request):
     meta_description = "We provide sod installation services in Ottawa. McExcavate has been re-sodding lawns in Ottawa since 2013. We use high quality screened top soil and make sure the new lawn is perfectly graded."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/sod-installation"
+    canonical = "https://mcexcavate.com/sod-installation/"
     # price = 0 
 
     # form = SodPriceForm(request.POST or None)
@@ -208,7 +208,7 @@ def maintenance_page(request):
     meta_description = "McExcavate provides lawn mowing services in Ottawa to residential and commercial clients. Weekly lawn cutting and season long lawn maintenance and lawn care."
     meta_keywords = "ottawa lawn mowing, lawn mowing ottawa, lawn maintenance ottawa, ottawa lawn maintenance, grass mowing, ottawa grass mowing, over-seeding, fertilizing, aeration, hedge trimming, top dressing"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/lawn-mowing"
+    canonical = "https://mcexcavate.com/lawn-mowing/"
 
     template_name = "maintenance.html"
     context = {"title": title,
@@ -276,7 +276,7 @@ def concrete_success_page(request):
                         We will be in touch soon to answer your questions or set up an estimate."
     meta_keywords = ""
     meta_robots = "noindex, nofollow" 
-    canonical = "https://mcexcavate.com/concrete/success"
+    canonical = "https://mcexcavate.com/concrete/success/"
       
     template_name = "concrete-success.html"
     context = {"title": title,
@@ -295,7 +295,7 @@ def stamped_driveway_page(request):
     meta_keywords = "stamped concrete driveway, concrete driveway ottawa, \
                      stamped concrete driveway ottawa, ottawa stamped concrete driveway"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete/stamped-driveway"
+    canonical = "https://mcexcavate.com/concrete/stamped-driveway/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -345,7 +345,7 @@ def stamped_patio_page(request):
     meta_keywords = "stamped concrete patio, concrete patio ottawa, \
                      stamped concrete patio ottawa, ottawa stamped concrete patio"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete/stamped-patio"
+    canonical = "https://mcexcavate.com/concrete/stamped-patio/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -395,7 +395,7 @@ def stamped_walkway_page(request):
     meta_keywords = "stamped concrete walkway, concrete walkway ottawa, \
                      stamped concrete walkway ottawa, ottawa stamped concrete walkway"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete/stamped-walkway"
+    canonical = "https://mcexcavate.com/concrete/stamped-walkway/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -443,7 +443,7 @@ def concrete_repairs_page(request):
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete/repairs"
+    canonical = "https://mcexcavate.com/concrete/repairs/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -491,7 +491,7 @@ def concrete_resurfacing_page(request):
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete/resurfacing"
+    canonical = "https://mcexcavate.com/concrete/resurfacing/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -539,7 +539,7 @@ def concrete_sealing_page(request):
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete/sealing"
+    canonical = "https://mcexcavate.com/concrete/sealing/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -587,7 +587,7 @@ def concrete_slabs_page(request):
     meta_description = "We build concrete slabs in Ottawa. We have been building concrete slabs Since 2013."
     meta_keywords = "conrete slabs, concrete slabs ottawa, ottawa concrete slabs"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete/slabs"
+    canonical = "https://mcexcavate.com/concrete/slabs/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -635,7 +635,7 @@ def concrete_steps_page(request):
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete/steps"
+    canonical = "https://mcexcavate.com/concrete/steps/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -685,7 +685,7 @@ def asphalt_page(request):
                      ottawa asphalt driveways, asphalt driveways ottawa, ottawa paving, paving ottawa, driveway paving,\
                      asphalt ottawa, ottawa asphalt,"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/asphalt-paving"
+    canonical = "https://mcexcavate.com/asphalt-paving/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -781,7 +781,7 @@ def asphalt_repairs_page(request):
     meta_description = "McExcavate does asphalt repairs including ramps, pathces and pot holes. Since 2013 we have done residential, commercial and government contracts"
     meta_keywords = "ottawa asphalt repairs, asphalt repairs ottawa, asphalt repairs"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/asphalt-repairs"
+    canonical = "https://mcexcavate.com/asphalt-repairs/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -829,7 +829,7 @@ def parging_page(request):
     meta_description = "McExcavate provides parging services to commercial, residential and government clients. One of Ottawa's leading parging service providers since 2013."
     meta_keywords = "ottawa parging, parging ottawa"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/parging"
+    canonical = "https://mcexcavate.com/parging/"
 
     template_name = "parging.html"
     context = {"title": title,
@@ -846,7 +846,7 @@ def careers_page(request):
     meta_description = "McExcavate has been employing people in the construction industry since 2013. We pride outselves on being an excellent employer and having a great work environment."
     meta_keywords = "ottawa construction jobs, construction jobs ottawa, equipment operator job ottawa, landscaping jobs ottawa, construction careers ottawa, construction foreman job ottawa, landscape foreman ottawa"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/careers"
+    canonical = "https://mcexcavate.com/careers/"
 
     template_name = "careers.html"
     context = {"title": title,
@@ -863,7 +863,7 @@ def about_page(request):
     meta_description = "Our work is done to the highest quality standards."
     meta_keywords = "mcexcavate ottawa, mcexcavate, mcexcavate inc"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/about"
+    canonical = "https://mcexcavate.com/about/"
 
     template_name = "about.html"
     context = {"title": title,
@@ -880,7 +880,7 @@ def contact_page(request):
     meta_description = "Contact Us by phone, email or send a message through one of our forms."
     meta_keywords = ""
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/about"
+    canonical = "https://mcexcavate.com/contact/"
 
     form = ContactPageContactForm(request.POST or None)
     if form.is_valid():
