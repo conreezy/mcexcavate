@@ -443,7 +443,7 @@ def concrete_repairs_page(request):
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete/repairs/"
+    canonical = "https://mcexcavate.com/concrete/repair/"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
