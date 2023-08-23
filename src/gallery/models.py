@@ -18,9 +18,7 @@ class Gallery(models.Model):
 
     def get_delete_url(self):
         return f"{self.get_absolute_url()}/delete"
-
-    def save(self, *args, **kwargs):
-
+        
 class GalleryImages(models.Model):
     id = models.AutoField(primary_key=True)
     images = models.FileField(upload_to='image/gallery/', blank=True, null=True)
