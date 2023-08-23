@@ -39,4 +39,16 @@ class GalleryImages(models.Model):
         alt_text = alt_text.replace('.PNG', '')
         self.alt = alt_text
 
+        if not self.id:
+            self.images = self.compressImage(self.images)
+
         super(GalleryImages, self).save(*args, **kwargs)
+
+    def compressImage(self,images):
+        imageTemproary = Image.open(images)
+        outputIoStream = BytesIO()
+        imageTemproaryResized = imageTemproary.resize( (1020,573) ) 
+        imageTemproary.save(outputIoStream , format='JPEG', quality=60)
+        outputIoStream.seek(0)
+        images = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % images.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
+        return images
