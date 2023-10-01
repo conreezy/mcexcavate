@@ -1,3 +1,4 @@
 django-crispy-forms
 requests
 django-recaptcha
+opencv-python

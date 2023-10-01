@@ -8,9 +8,8 @@ from django.contrib import messages
 
 @login_required
 def gallery_create_view(request):
-    title = "Create New Gallery"
-    template_name  = 'gallery/create.html'
-    meta_robots = "noindex, nofollow"
+    title = 'Create New Gallery'
+    meta_robots = 'noindex, nofollow'
 
     if request.method == 'POST':
         gallery_form = GalleryForm(request.POST, request.FILES)
@@ -24,10 +23,13 @@ def gallery_create_view(request):
                 image_instance.save()
             gallery_form = GalleryForm()
             gallery_images_form = GalleryImagesForm()
+        else:
+            print("error not valid")
     else:
         gallery_form = GalleryForm()
         gallery_images_form = GalleryImagesForm()
 
+    template_name  = 'gallery/create.html'
     context = {"title": title, 
               'gallery_form': gallery_form, 
               'gallery_images_form': gallery_images_form,
@@ -37,8 +39,8 @@ def gallery_create_view(request):
 def gallery_list_view(request):
     title = "PHOTO GALLERY"
     meta_title = 'Photo Gallery | McExcavate Inc.'
-    meta_description = "Visit our gallery to see photos of work we have done over the years. Excvating photos, sodding photos, interlock photos..."
-    meta_keywords = "excavating photos, interlock photos, sodding photos, new grass photos, lawn photos"
+    meta_description = "Visit our gallery to see photos of work we have done over the years. Stamped concrete photos, sodding photos, interlock photos..."
+    meta_keywords = "concrete photos, interlock photos, sodding photos"
     meta_robots = "index, follow"
 
     galleries = Gallery.objects.all()
