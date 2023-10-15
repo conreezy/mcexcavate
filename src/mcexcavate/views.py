@@ -103,7 +103,7 @@ def interlock_page(request):
 def re_sodding_page(request):
     title = "SOD INSTALLATION OTTAWA"
     meta_title = "Sod Installation Ottawa | McExcavate"
-    meta_description = "We provide sod installation services in Ottawa. McExcavate has been re-sodding lawns in Ottawa since 2013. We use high quality screened top soil and make sure the new lawn is perfectly graded."
+    meta_description = "McExcavate has been providing sod installation in Ottawa since 2013. We use high quality top soil and make sure the lawn is perfectly graded before laying sod."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/sod-installation/"
@@ -843,7 +843,7 @@ def parging_page(request):
 def careers_page(request):
     title = "OTTAWA CONSTRUCTION JOBS"
     meta_title = 'Ottawa Construction Jobs | Careers With McExcavate'
-    meta_description = "McExcavate has been employing people in the construction industry since 2013. We pride outselves on being an excellent employer and having a great work environment."
+    meta_description = "McExcavate has been employing people in the construction industry since 2013. We pride ourselves on providing a professional, rewarding and fun environment."
     meta_keywords = "ottawa construction jobs, construction jobs ottawa, equipment operator job ottawa, landscaping jobs ottawa, construction careers ottawa, construction foreman job ottawa, landscape foreman ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/careers/"
