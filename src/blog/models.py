@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 
 #User = settings.AUTH_USER_MODEL
@@ -22,11 +24,11 @@ class BlogPostManager(models.Manager):
 
 
 Excavation = "Excavation"
-ReSodding =  "Re-Sodding"
-Interlock =  "Interlock"
-Concrete =  "Concrete"
-AsphaltPaving =  "Asphalt Paving"
-AsphaltRepairs =  "Asphalt Repairs"
+ReSodding = "Re-Sodding"
+Interlock = "Interlock"
+Concrete = "Concrete"
+AsphaltPaving = "Asphalt Paving"
+AsphaltRepairs = "Asphalt Repairs"
 
 SERVICE_CHOICES = (
   (Excavation, 'Excavation'),
@@ -44,7 +46,8 @@ class BlogPost(models.Model):
     image   = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     title   = models.CharField(max_length = 120)
     slug    = models.SlugField(unique=True)
-    content = models.TextField(null = True, blank = True)
+    content = RichTextUploadingField(null=True, blank=True)
+    #content = models.TextField(null = True, blank = True)
     publish_date = models.DateTimeField(default=timezone.now)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

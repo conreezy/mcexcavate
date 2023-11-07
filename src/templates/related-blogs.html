@@ -16,11 +16,11 @@
 						</div>
 						<div class='col-8'>
 							<a href="{{ blog_post.get_absolute_url }}">
-								<p class='' style='font-size:20px; font-family:GothamBold; color:black; padding:10px 10px 0px 0px;'>{{ blog_post.title }}</p>
+								<p class='mt-2' style='font-size:20px; font-family:GothamBold; color:black; padding:10px 10px 0px 0px;'>{{ blog_post.title }}</p>
 							</a>
 							<p>{{ blog_post.publish_date }}</p>
 							<p>Author: {{ blog_post.user.username }}</p>
-							<p class='pt-2'>{{ blog_post.content|slice:":250" }}...</p>
+							<p class='pt-2'>{{ blog_post.content|slice:":250"|safe }}...</p>
 							<p class='my-2'><a href='{{ blog_post.get_absolute_url }}'> Read More...</a></p>
 							{% if not blog_post.publish_date %}
 							<h2>Draft</h2>

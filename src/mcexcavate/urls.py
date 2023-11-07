@@ -94,7 +94,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # -- Sitemap
-    path('sitemap.xml', sitemap, {"sitemaps":sitemaps})
+    path('sitemap.xml', sitemap, {"sitemaps":sitemaps}),
+
+    # -- CkEditor
+    path('ckeditor', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:

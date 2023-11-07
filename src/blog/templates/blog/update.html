@@ -12,7 +12,8 @@
     {% endfor %}
     {% endif %}
 	<form class='form-group' method='POST' action="." enctype='multipart/form-data'>{% csrf_token %}
-        {{ form|crispy }}
+        {{ form.media }}
+        {{ form.as_p }}
         <div class= 'justify-content-center'>   
         <button type="submit" class="btn btn-primary">Update Blog Post</button>
         </div>

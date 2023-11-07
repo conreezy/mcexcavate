@@ -44,16 +44,6 @@ PHONENUMBER_DEFAULT_REGION = "CA"
 RECAPTCHA_PUBLIC_KEY = '6LfBhfYmAAAAAIPs-frb9SeAGW12jXJmu4fIQqvb'
 RECAPTCHA_PRIVATE_KEY = '6LfBhfYmAAAAALm8H0PZF4YBB8hzpkGtWW3vg4ZB'
 
-# DjangoResized
-# DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
-# DJANGORESIZED_DEFAULT_SCALE = 0.5
-# DJANGORESIZED_DEFAULT_QUALITY = 100
-# DJANGORESIZED_DEFAULT_KEEP_META = True
-# DJANGORESIZED_DEFAULT_FORCE_FORMAT = 'JPEG'
-# DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'JPEG': ".jpg"}
-# DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
-
-
 # Application definition
 INSTALLED_APPS = [
     'crispy_forms',
@@ -67,6 +57,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'phonenumber_field',
     'captcha',
+    'ckeditor',
+    'ckeditor_uploader',
 
     # my app
     'gallery',
@@ -151,6 +143,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+CKEDITOR_UPLOAD_PATH = "blog-uploads/"
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

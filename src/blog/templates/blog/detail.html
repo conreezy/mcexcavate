@@ -18,16 +18,16 @@
 						<h2>Draft</h2>
 						{% endif %}
 					</div>
-					<div class='col-12' style='overflow:hidden;'>
+					<!-- <div class='col-12' style='overflow:hidden;'>
 						{% if blog_post.image %}
 							<a href="{{ blog_post.get_absolute_url }}">
 								<img src="{{ blog_post.image.url }}" alt='' style='padding:25px 10px 25px 10px; width:100%; text-align:center;'/>
 							</a>
 						{% endif %}
-					</div>
+					</div> -->
 					<div class='col-12'>
 						{% if blog_post.content %}
-							<p style='padding:0px 25px 25px 10px;'>{{ blog_post.content }}</p>
+							<p style='padding:0px 25px 25px 10px;'>{{ blog_post.content|safe }}</p>
 						{% endif %}
 					</div>
 					<div class='col-12'>
@@ -57,7 +57,7 @@
 							<p class='mt-2' style='font-size:16px; font-family:GothamBold; color:black; padding:5px 0px 0px 0px; margin-right:auto;'>{{ blog_post.title }}</p>
 							<p>{{ blog_post.publish_date }}</p>
 							<p>Author: {{ blog_post.user.username }}</p>
-							<p class='pt-1'><a href='{{ blog_post.get_absolute_url }}'> Read More...</a> </p>
+							<p class='mt-1 mb-2'><a href='{{ blog_post.get_absolute_url }}'> Read More...</a> </p>
 						</a>
 						{% if not blog_post.publish_date %}
 						<h2>Draft</h2>
