@@ -36,8 +36,6 @@ def blog_post_list_view(request):
 @staff_member_required
 def blog_post_create_view(request):
     my_title = 'New Blog Post'
-    meta_title = "Create New Blog Post | McExcavate Construction Blog" 
-    meta_keywords = []
     meta_robots = "noindex, nofollow"
 
     form = BlogPostModelForm(request.POST or None, request.FILES or None)
@@ -52,9 +50,7 @@ def blog_post_create_view(request):
     template_name = 'blog/create.html'
     context = {'title': my_title, 
                'form': form, 
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title}
+               "meta_robots":meta_robots}
 
     return render (request , template_name, context)   
 
@@ -63,7 +59,7 @@ def blog_post_detail_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     title = obj.title
 
-    meta_title = obj.title + " | McExcavate Construction Blog" 
+    meta_title = obj.title
     meta_description = (obj.content[:147]) + '...'
     meta_keywords = []
     meta_robots = "index, follow"
@@ -86,9 +82,6 @@ def blog_post_detail_view(request, slug):
 def blog_post_update_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     form = BlogPostModelForm(request.POST or None, request.FILES or None, instance=obj)
-    meta_title = obj.title + " | McExcavate Construction Blog" 
-    meta_description = (obj.content[:147]) + '...'
-    meta_keywords = []
     meta_robots = "noindex, nofollow"
 
     # if request.method == 'POST':
@@ -105,17 +98,13 @@ def blog_post_update_view(request, slug):
     template_name = 'blog/update.html'
     context = {'form' : form, 
                'title':f"Editing: {obj.title}",
-               "meta_description":meta_description,
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title}
+               "meta_robots":meta_robots,}
 
     return render (request , template_name, context)    
 
 @staff_member_required
 def blog_post_delete_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
-    meta_title = obj.title + " | McExcavate Construction Blog"
     meta_robots = "noindex, nofollow" 
 
     template_name = 'blog/delete.html'
@@ -123,7 +112,6 @@ def blog_post_delete_view(request, slug):
         obj.delete()
         return redirect('/blog')
     context = {'object':obj, 
-               "meta_title":meta_title,
                "meta_robots":meta_robots,}
     return render (request , template_name, context)
 

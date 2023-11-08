@@ -15,8 +15,8 @@ from blog.models import BlogPost
 
 def home_page(request):
     title = "McExcavate"
-    meta_title = "McExcavate | Ottawa Concrete Company"
-    meta_description = "McExcavate is an Ottawa based concrete company specializing in stamped concrete, patios, \
+    meta_title = "McExcavate | Ottawa Concrete Contractor"
+    meta_description = "McExcavate is an Ottawa based concrete contractor specializing in stamped concrete, patios, \
                         driveways, steps, concrete repairs and concrete sealing since 2013."
     meta_keywords = "ottawa concrete company, concrete company ottawa, ottawa concrete contractor, \
                      concrete contractor ottawa"
