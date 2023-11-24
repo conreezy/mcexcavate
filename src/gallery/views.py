@@ -37,9 +37,9 @@ def gallery_create_view(request):
     return render(request, template_name, context)
 
 def gallery_list_view(request):
-    title = "PHOTO GALLERY"
-    meta_title = 'Photo Gallery | McExcavate Inc.'
-    meta_description = "Visit our gallery to see photos of work we have done over the years. Stamped concrete photos, sodding photos, interlock photos..."
+    title = "OUR PROJECTS"
+    meta_title = 'Our Projects | McExcavate Inc.'
+    meta_description = "Visit our projects gallery to see photos of work we have done over the years. Stamped concrete, sodding, and interlock project photos..."
     meta_keywords = "concrete photos, interlock photos, sodding photos"
     meta_robots = "index, follow"
 

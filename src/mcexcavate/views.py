@@ -584,7 +584,8 @@ def concrete_sealing_page(request):
 def concrete_slabs_page(request):
     title = "CONCRETE SLABS OTTAWA"
     meta_title = 'Concrete Slabs Ottawa'
-    meta_description = "We build concrete slabs in Ottawa. We have been building concrete slabs Since 2013."
+    meta_description = "We build concrete slabs from excavation to forming and pouring. \
+                        Commercial and residential. Basement and garage floors, shed pads, hot tub pads..."
     meta_keywords = "conrete slabs, concrete slabs ottawa, ottawa concrete slabs"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/slabs/"
@@ -858,9 +859,10 @@ def careers_page(request):
     return render(request, template_name, context)
 
 def about_page(request):
-    title = "ABOUT"
+    title = "ABOUT MCEXCAVATE"
     meta_title = 'About Us | McExcavate Inc.'
-    meta_description = "Our work is done to the highest quality standards."
+    meta_description = "McExcavate is an Ottawa based commercial and residential concrete contractor \
+                        founded in 2013. We specialeze in decorative coloured and stamped concrete."
     meta_keywords = "mcexcavate ottawa, mcexcavate, mcexcavate inc"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/about/"
@@ -877,7 +879,8 @@ def about_page(request):
 def contact_page(request):
     title = "CONTACT US"
     meta_title = 'Contact Us | McExcavate'
-    meta_description = "Contact Us by phone, email or send a message through one of our forms."
+    meta_description = "Contact Us - Phone: 613-608-7722, Email: info@mcexcavate.com or send a message \
+                        through one of our forms. Visit our website for more information..."
     meta_keywords = ""
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/contact/"

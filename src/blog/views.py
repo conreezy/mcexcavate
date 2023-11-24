@@ -57,7 +57,6 @@ def blog_post_create_view(request):
 def blog_post_detail_view(request, slug):
     qs = BlogPost.objects.all().published()
     obj = get_object_or_404(BlogPost, slug=slug)
-    title = obj.title
 
     meta_title = obj.title
     meta_description = (obj.content[:147]) + '...'
@@ -69,7 +68,6 @@ def blog_post_detail_view(request, slug):
     keywords = [obj.title]
                 
     context = {'blog_post' : obj, 
-               'title':title,
                'object_list':qs,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
