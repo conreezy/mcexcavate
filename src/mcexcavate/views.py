@@ -222,7 +222,8 @@ def maintenance_page(request):
 def concrete_page(request):
     title = "STAMPED CONCRETE OTTAWA"
     meta_title = 'Stamped Concrete Ottawa | McExcavate'
-    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
+    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been \
+                        building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, stamped concrete, stamped concrete ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/"

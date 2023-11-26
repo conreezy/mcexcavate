@@ -12,6 +12,12 @@
   	<!-- Favicon -->
   	<meta name="msapplication-TileColor" content="#00a300">
 	<meta name="theme-color" content="#ffffff">
+	<!-- Open Graph Tags -->
+	<meta property="og:title" content="{{ meta_title }}" />
+    <meta property="og:description" content="{{ meta_description|truncatewords_html:10}}" />
+    <meta property="og:image" content="{% static 'image/logos/mcexcavate-logo.png' %}" />
+    <meta property="og:url" content="{{ canonical }}" />
+    <meta property="og:type" content="website" />
 	
 	{% load static %}
 	<!-- Favicon -->
