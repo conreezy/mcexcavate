@@ -115,7 +115,6 @@ padding:0x;
 .top_testimonial_content{
 margin:700px 0px 50px 0px;
 }
-
 }
 
 
@@ -128,4 +127,5 @@ font-size: 24px;
 @media only screen and (max-width: 576px) {
 .service_hero_col h1{
 font-size: 21px;
+}
 }

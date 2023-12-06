@@ -8,35 +8,33 @@
 		<div class='col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12' style='padding:0px;'>
 			<div class='container-fluid'>
 				<div class='row mx-auto blog_box'>
-					<div class='col-12'>
+					<div class='blog_content_edit'>
+					{% if request.user.is_authenticated %}
+						{% if request.user.is_staff %}
+							<a href="{{ blog_post.get_edit_url }}" class='btn btn-primary'> Edit </a>
+							<a href="{{ blog_post.get_delete_url }}" class='btn btn-primary'> Delete </a>
+						{% endif %}
+					{% endif %}
+					</div>
+					<div class='blog_content_title'>
 						<a href="{{ blog_post.get_absolute_url }}">
-							<h1 class='mt-2' style='font-size:20px; font-family:GothamBold; color:black; padding:10px 10px 10px 10px;'>{{ blog_post.title }}</h1>
+							<h1 class='mt-2'>{{ blog_post.title }}</h1>
 						</a>
-						<p style='font-size:16px; font-family:GothamLight; color:black; padding: 0px 10px 0px 10px;'>{{ blog_post.user }}</p>
-						<p style='font-size:16px; font-family:GothamLight; color:black; padding: 0px 10px 0px 10px;'>{{ blog_post.publish_date }}</p>
 						{% if not blog_post.publish_date %}
 						<h2>Draft</h2>
 						{% endif %}
 					</div>
-					<!-- <div class='col-12' style='overflow:hidden;'>
-						{% if blog_post.image %}
-							<a href="{{ blog_post.get_absolute_url }}">
-								<img src="{{ blog_post.image.url }}" alt='' style='padding:25px 10px 25px 10px; width:100%; text-align:center;'/>
-							</a>
-						{% endif %}
-					</div> -->
-					<div class='col-12 mb-4'>
+					<div class='blog_content'>
 						{% if blog_post.content %}
-							<p style='padding:0px 25px 25px 10px;'>{{ blog_post.content|safe }}</p>
+							<p>{{ blog_post.content|safe }}</p>
 						{% endif %}
 					</div>
-					<div class='col-12'>
-					{% if request.user.is_authenticated %}
-						{% if request.user.is_staff %}
-							<a href="{{ blog_post.get_edit_url }}" class='btn btn-primary' style='margin:10px 10px 20px 10px'> Edit </a>
-							<a href="{{ blog_post.get_delete_url }}" class='btn btn-primary' style='margin:10px 10px 20px 10px'> Delete </a>
+					<div class='blog_content_author'>
+						<p>{{ blog_post.user }}</p>
+						<p>{{ blog_post.publish_date }}</p>
+						{% if not blog_post.publish_date %}
+						<h2>Draft</h2>
 						{% endif %}
-					{% endif %}
 					</div>
 				</div>
 			</div>

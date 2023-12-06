@@ -7,8 +7,7 @@ Excavation = "Excavation"
 SodInstallation =  "Sod Installation"
 Interlock =  "Interlock"
 Concrete =  "Concrete"
-AsphaltPaving =  "Asphalt Paving"
-AsphaltRepairs =  "Asphalt Repairs"
+Parging =  "Parging"
 
 SERVICE_CHOICES = (
   (Default, '---'),
@@ -16,8 +15,7 @@ SERVICE_CHOICES = (
   (SodInstallation, 'Sod Installation'),
   (Interlock, 'Interlock'),
   (Excavation, 'Excavation'),
-  (AsphaltPaving, 'Asphalt Paving'),
-  (AsphaltRepairs, 'Asphalt Repairs'),
+  (Parging, 'Parging'),
   )
 
 Default = "---"
