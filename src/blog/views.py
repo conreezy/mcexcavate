@@ -54,7 +54,7 @@ def blog_post_list_view(request):
                'meta_description' : meta_description,
                'meta_keywords': meta_keywords}
 
-    return render (request , template_name, context) 
+    return render (request , template_name, context)
 
 def blog_post_detail_view(request, slug):
     blogs = BlogPost.objects.all().published()

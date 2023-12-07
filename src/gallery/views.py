@@ -42,7 +42,7 @@ def gallery_list_view(request):
     meta_description = "Visit our projects gallery to see photos of work we have done over the years. Stamped concrete, sodding, and interlock project photos..."
     meta_keywords = "concrete photos, interlock photos, sodding photos"
     meta_robots = "index, follow"
-    og_image = blog_post.img.url
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
 
     galleries = Gallery.objects.all()
@@ -64,8 +64,6 @@ def gallery_detail_view(request, slug):
     meta_keywords = obj.meta_keywords
     meta_description = obj.description
     meta_robots = "index, follow"
-    og_image = blog_post.img.url
-    og_type = "website"
 
     obj = get_object_or_404(Gallery, slug=slug)
     gallery = list(GalleryImages.objects.filter(gallery=obj)) 
@@ -73,6 +71,9 @@ def gallery_detail_view(request, slug):
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    og_image = gallery.image.url
+    og_type = "website"
     
     template_name = "gallery/detail.html"
     context = {"title": title, 

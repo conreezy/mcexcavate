@@ -901,7 +901,9 @@ def parging_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def careers_page(request):
