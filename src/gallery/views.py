@@ -42,6 +42,8 @@ def gallery_list_view(request):
     meta_description = "Visit our projects gallery to see photos of work we have done over the years. Stamped concrete, sodding, and interlock project photos..."
     meta_keywords = "concrete photos, interlock photos, sodding photos"
     meta_robots = "index, follow"
+    og_image = blog_post.img.url
+    og_type = "website"
 
     galleries = Gallery.objects.all()
 
@@ -51,22 +53,26 @@ def gallery_list_view(request):
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
-               "meta_title":meta_title,}
+               "meta_title":meta_title,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def gallery_detail_view(request, slug):
+    title = "OTTAWA " + (obj.title).upper()
+    meta_title = obj.meta_title
+    meta_keywords = obj.meta_keywords
+    meta_description = obj.description
+    meta_robots = "index, follow"
+    og_image = blog_post.img.url
+    og_type = "website"
+
     obj = get_object_or_404(Gallery, slug=slug)
     gallery = list(GalleryImages.objects.filter(gallery=obj)) 
     paginator = Paginator(gallery, 8)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
-    title = "OTTAWA " + (obj.title).upper()
-    meta_title = obj.meta_title
-    meta_keywords = obj.meta_keywords
-    meta_description = obj.description
-    meta_robots = "index, follow"
     
     template_name = "gallery/detail.html"
     context = {"title": title, 
@@ -76,7 +82,9 @@ def gallery_detail_view(request, slug):
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
                "page_obj":page_obj,
-               "slug":slug}
+               "slug":slug,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 @login_required

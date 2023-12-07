@@ -11,7 +11,6 @@ import json
 from project.models import SodEstimate, PavingEstimate
 from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm, PavingPriceForm
 from blog.models import BlogPost
-# from houses.models import HouseSale
 
 def home_page(request):
     title = "McExcavate"
@@ -22,6 +21,8 @@ def home_page(request):
                      concrete contractor ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     template_name = "index.html"
     context = {"title": title, 
@@ -29,7 +30,9 @@ def home_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def excavation_page(request):
@@ -39,6 +42,8 @@ def excavation_page(request):
     meta_keywords = "ottawa excavation, excavation ottawa, excavating ottawa, ottawa excavating, excavation services, ottawa excavation services, excavation, excavating"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/excavation/"
+    og_image = "https://mcexcavate.com/static/image/excavation/large yellow komatsu excavator.jpg"
+    og_type = "website"
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Excavation")  
@@ -50,7 +55,9 @@ def excavation_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def interlock_page(request):
@@ -60,6 +67,8 @@ def interlock_page(request):
     meta_keywords = "ottawa interlock, interlock ottawa, interlock pathways ottawa, ottawa interlock patio, interlock driveway, ottawa interlock repair, "
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/interlock/"
+    og_image = "https://mcexcavate.com/static/image/interlock/black with grey border interlock front step and walkway.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -97,7 +106,9 @@ def interlock_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, "interlock.html", context)
 
 def re_sodding_page(request):
@@ -107,6 +118,9 @@ def re_sodding_page(request):
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/sod-installation/"
+    og_image = "https://mcexcavate.com/static/image/sod/1_sod_gallery.jpg"
+    og_type = "website"
+
     # price = 0 
 
     # form = SodPriceForm(request.POST or None)
@@ -199,7 +213,9 @@ def re_sodding_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def maintenance_page(request):
@@ -227,6 +243,8 @@ def concrete_page(request):
     meta_keywords = "ottawa stamped conrete, stamped concrete, stamped concrete ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -266,7 +284,9 @@ def concrete_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def concrete_success_page(request):
@@ -297,6 +317,8 @@ def stamped_driveway_page(request):
                      stamped concrete driveway ottawa, ottawa stamped concrete driveway"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/stamped-driveway/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -335,7 +357,9 @@ def stamped_driveway_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def stamped_patio_page(request):
@@ -347,6 +371,8 @@ def stamped_patio_page(request):
                      stamped concrete patio ottawa, ottawa stamped concrete patio"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/stamped-patio/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -385,7 +411,9 @@ def stamped_patio_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context) 
 
 def stamped_walkway_page(request):
@@ -397,6 +425,8 @@ def stamped_walkway_page(request):
                      stamped concrete walkway ottawa, ottawa stamped concrete walkway"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/stamped-walkway/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -435,7 +465,9 @@ def stamped_walkway_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def concrete_repairs_page(request):
@@ -445,6 +477,8 @@ def concrete_repairs_page(request):
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/repair/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -483,7 +517,9 @@ def concrete_repairs_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def concrete_resurfacing_page(request):
@@ -493,6 +529,8 @@ def concrete_resurfacing_page(request):
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/resurfacing/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -531,7 +569,9 @@ def concrete_resurfacing_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def concrete_sealing_page(request):
@@ -541,6 +581,8 @@ def concrete_sealing_page(request):
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/sealing/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/sealing-stamped-concrete.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -579,7 +621,9 @@ def concrete_sealing_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def concrete_slabs_page(request):
@@ -590,6 +634,8 @@ def concrete_slabs_page(request):
     meta_keywords = "conrete slabs, concrete slabs ottawa, ottawa concrete slabs"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/slabs/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/smoothfinish.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -628,7 +674,9 @@ def concrete_slabs_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def concrete_steps_page(request):
@@ -638,6 +686,8 @@ def concrete_steps_page(request):
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/steps/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -676,7 +726,9 @@ def concrete_steps_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def asphalt_page(request):
@@ -688,6 +740,8 @@ def asphalt_page(request):
                      asphalt ottawa, ottawa asphalt,"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/asphalt-paving/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -774,7 +828,9 @@ def asphalt_page(request):
                "meta_keywords":meta_keywords,
                #"price":price
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def asphalt_repairs_page(request):
@@ -784,6 +840,8 @@ def asphalt_repairs_page(request):
     meta_keywords = "ottawa asphalt repairs, asphalt repairs ottawa, asphalt repairs"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/asphalt-repairs/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -822,7 +880,9 @@ def asphalt_repairs_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def parging_page(request):
@@ -832,6 +892,8 @@ def parging_page(request):
     meta_keywords = "ottawa parging, parging ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/parging/"
+    og_image = "https://mcexcavate.com/static/image/parging/white_parging.jpg"
+    og_type = "website"
 
     template_name = "parging.html"
     context = {"title": title,
@@ -849,6 +911,8 @@ def careers_page(request):
     meta_keywords = "ottawa construction jobs, construction jobs ottawa, equipment operator job ottawa, landscaping jobs ottawa, construction careers ottawa, construction foreman job ottawa, landscape foreman ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/careers/"
+    og_image = "https://mcexcavate.com/static/image/careers/concrete-finisher.jpg"
+    og_type = "website"
 
     template_name = "careers.html"
     context = {"title": title,
@@ -856,7 +920,9 @@ def careers_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}
     return render(request, template_name, context)
 
 def about_page(request):
@@ -867,6 +933,8 @@ def about_page(request):
     meta_keywords = "mcexcavate ottawa, mcexcavate, mcexcavate inc"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/about/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     template_name = "about.html"
     context = {"title": title,
@@ -874,7 +942,9 @@ def about_page(request):
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
-               "meta_title":meta_title} 
+               "meta_title":meta_title,
+               'og_image' : og_image,
+               'og_type' : og_type,} 
     return render(request, template_name, context)
 
 def contact_page(request):
@@ -885,6 +955,8 @@ def contact_page(request):
     meta_keywords = ""
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/contact/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
 
     form = ContactPageContactForm(request.POST or None)
     if form.is_valid():
@@ -915,13 +987,15 @@ def contact_page(request):
 
     template_name = "contact.html"
     context = {
-        "title": title, 
-        "form": form,
-        "meta_description":meta_description,
-        "meta_robots":meta_robots,
-        "meta_keywords":meta_keywords,
-        "meta_title":meta_title,
-        "canonical":canonical}    
+               "title": title, 
+               "form": form,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title,
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,}    
     return render(request, template_name, context)
 
     # def dashboard_view(request):

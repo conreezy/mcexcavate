@@ -47,7 +47,7 @@ class ContactPageContactForm(forms.Form):
     name    = forms.CharField(label='Name', widget=forms.TextInput(attrs={}))
     email   = forms.EmailField(label='Email', widget=forms.TextInput(attrs={}))
     phone   = PhoneNumberField(label= 'Phone', region="CA", widget=forms.TextInput(attrs={}))
-    address    = forms.CharField(label='Address', widget=forms.TextInput(attrs={}))
+    address = forms.CharField(label='Address', widget=forms.TextInput(attrs={}))
     service = forms.ChoiceField(label='Service Required', choices=SERVICE_CHOICES, 
                                                           widget=forms.Select(attrs={'id':'form_service'}))
     content = forms.CharField(label='Description of Work',widget=forms.Textarea(attrs={'placeholder': "Please give us an idea of what you're looking to do so we can respond in greater detail.",

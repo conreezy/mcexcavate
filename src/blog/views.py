@@ -10,29 +10,6 @@ from django.contrib import messages
 from .models import BlogPost
 from .forms import BlogPostModelForm
 
-def blog_post_list_view(request):
-    title = 'McExcavate Construction Blog'
-    meta_title = 'Ottawa Construction Blog | McExcavate'
-    meta_robots = "index, follow"
-    blogs = BlogPost.objects.all().published()
-
-    
-    meta_description = "Read about various landscaping topics here on our blog. We've got some useful information about concrete, interlock and much more..."
-    meta_keywords = ['ottawa bitcoin blog',
-                'bitcoin blog ottawa',
-                'canada bitcoin blog',
-                'bitcoin blog canada']
-                
-    template_name = 'blog/blog.html'
-    context = {'object_list':blogs,
-               'title':title,
-               "meta_robots":meta_robots,
-               'meta_title': meta_title,
-               'meta_description' : meta_description,
-               'meta_keywords': meta_keywords}
-
-    return render (request , template_name, context)
-    
 @staff_member_required
 def blog_post_create_view(request):
     my_title = 'New Blog Post'
@@ -52,23 +29,52 @@ def blog_post_create_view(request):
                'form': form, 
                "meta_robots":meta_robots}
 
-    return render (request , template_name, context)   
+    return render (request , template_name, context)  
+
+def blog_post_list_view(request):
+    title = 'McExcavate Construction Blog'
+    meta_title = 'Ottawa Construction Blog | McExcavate'
+    meta_robots = "index, follow"
+    #og_image = blog_post.img.url
+    og_type = "website"
+
+    blogs = BlogPost.objects.all().published()
+
+    meta_description = "Read about various landscaping topics here on our blog. We've got some useful information about concrete, interlock and much more..."
+    meta_keywords = ['ottawa bitcoin blog',
+                'bitcoin blog ottawa',
+                'canada bitcoin blog',
+                'bitcoin blog canada']
+                
+    template_name = 'blog/blog.html'
+    context = {'object_list':blogs,
+               'title':title,
+               "meta_robots":meta_robots,
+               'meta_title': meta_title,
+               'meta_description' : meta_description,
+               'meta_keywords': meta_keywords}
+
+    return render (request , template_name, context) 
 
 def blog_post_detail_view(request, slug):
-    qs = BlogPost.objects.all().published()
-    obj = get_object_or_404(BlogPost, slug=slug)
+    blogs = BlogPost.objects.all().published()
+    blog_post = get_object_or_404(BlogPost, slug=slug)
+    og_image = blog_post.image.url
+    og_type = "article"
 
-    meta_title = obj.title
-    meta_description = (obj.content[:147]) + '...'
+    meta_title = blog_post.title
+    meta_description = (blog_post.content[:147]) + '...'
     meta_keywords = []
     meta_robots = "index, follow"
 
     template_name = 'blog/detail.html'
     description = 'Canadian Bitcoin Blog - '
-    keywords = [obj.title]
+    keywords = [blog_post.title]
                 
-    context = {'blog_post' : obj, 
-               'object_list':qs,
+    context = {'og_image' : og_image,
+               'og_type' : og_type,
+               'blog_post' : blog_post, 
+               'object_list':blogs,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
