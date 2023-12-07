@@ -59,20 +59,20 @@ def gallery_list_view(request):
     return render(request, template_name, context)
 
 def gallery_detail_view(request, slug):
+    obj = get_object_or_404(Gallery, slug=slug)
+    gallery = list(GalleryImages.objects.filter(gallery=obj)) 
+    paginator = Paginator(gallery, 8)
+
     title = "OTTAWA " + (obj.title).upper()
     meta_title = obj.meta_title
     meta_keywords = obj.meta_keywords
     meta_description = obj.description
     meta_robots = "index, follow"
 
-    obj = get_object_or_404(Gallery, slug=slug)
-    gallery = list(GalleryImages.objects.filter(gallery=obj)) 
-    paginator = Paginator(gallery, 8)
-
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    og_image = gallery.image.url
+    og_image = obj.image.url
     og_type = "website"
     
     template_name = "gallery/detail.html"
