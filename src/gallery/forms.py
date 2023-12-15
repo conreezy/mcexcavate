@@ -13,7 +13,7 @@ class GalleryForm(forms.ModelForm):
     description = forms.CharField(max_length=160, 
                                       widget=forms.Textarea(attrs={'placeholder': 'Text that will be displayed on Google search results under the title. 160 characters max.'}))
     meta_keywords = forms.CharField(max_length=200, 
-                                   widget=forms.Textarea(attrs={'placeholder': 'Add a few SEO keywords specific to this stone type. Seperated by commas. EX: keyword1, keyword2, keyword3'}))
+                                   widget=forms.Textarea(attrs={'placeholder': 'Add a few SEO keywords. Seperated by commas. EX: keyword1, keyword2, keyword3'}))
 
     class Meta:
     	model = Gallery

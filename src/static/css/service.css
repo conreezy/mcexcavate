@@ -23,13 +23,14 @@ margin: 10px 0px 20px 0px;
 .service_hero{
 margin: 0px 0px 0px 0px !important;
 padding: 55px 5px 75px 5px !important;
-background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)), url("/static/image/stamped-concrete/brown-stamped-concrete-patio.jpg");
+background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)), url("/static/image/stamped-concrete/dark-grey-stamped-concrete-walkway-banner.jpg");
 height:inherit;
 background-position: center;
 background-repeat: no-repeat;
 background-size: cover;
 width: 100%;
 }
+
 .service_hero_col{
 margin: 0px 0px 0px 0px;
 padding: 0px 5px 0px 5px !important;
@@ -38,14 +39,14 @@ padding: 0px 5px 0px 5px !important;
 .service_hero_col h1{
 margin-top: -7px;
 color: white;
-font-size: 32px;
+font-size: 36px;
 text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .service_hero_text{
 margin: 25px 0px 0px 0px!important;
 padding: 20px 10px 25px 10px;
-background-color: rgba(255, 255, 255, 0.70);;
+background-color: rgba(255, 255, 255, 0.90);;
 width: inherit;
 }
 
@@ -120,12 +121,12 @@ margin:700px 0px 50px 0px;
 
 @media only screen and (max-width: 768px) {
 .service_hero_col h1{
-font-size: 24px;
+font-size: 32px;
 }
 }
 
 @media only screen and (max-width: 576px) {
 .service_hero_col h1{
-font-size: 21px;
+font-size: 26px;
 }
 }

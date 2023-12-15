@@ -7,7 +7,7 @@ class GalleryImagesInline(admin.TabularInline):
     model = GalleryImages
 
 class GalleryImagesAdmin(admin.ModelAdmin):
-    list_display = ['alt']
+    list_display = ['alt', 'gallery']
     sortable_by = ('alt')
     search_fields = ['alt']
 

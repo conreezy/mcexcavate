@@ -18,6 +18,9 @@ class Gallery(models.Model):
     meta_title  = models.CharField(max_length=55, blank=False, null=True)
     meta_keywords  = models.CharField(max_length=160, blank=False, null=True) 
 
+    def __str__(self):
+        return self.title
+
     def get_absolute_url(self):
         return f"/gallery/{self.slug}"
 

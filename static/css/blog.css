@@ -32,12 +32,108 @@ padding: 0px 10px 0px 0px;
 margin:0px;
 }
 
-.blog_content{
+.blog_content_edit{
+width:100%;
 padding:25px 45px 0px 55px;
 }
 
-.blog_content h1{
+.blog_content_title{
+width:100%;
+padding:15px 45px 0px 55px;
+}
+
+.blog_content_title h1{
+font-size:26px; 
+font-family:GothamBold; 
+color:black;'
+}
+
+.blog_content{
+width:100%;
+padding:25px 45px 25px 55px;
+}
+
+.blog_content h2{
 font-size:20px; 
 font-family:GothamBold; 
 color:black;'
 }
+
+.blog_content_author{
+width:100%;
+padding:0px 45px 25px 55px;
+}
+
+.blog_content_author p{
+font-size:14px; 
+font-style:italic; 
+font-family:GothamLight; 
+color:black;
+}
+
+
+/* How Much Does Stamped Concrete Cost In Ontario? */
+#stamped_ON_img{
+width:33%;
+padding:15px 15px 10px 0px;
+}
+
+
+
+/* Responsive */
+@media only screen and (max-width: 1400px) {
+
+}
+
+@media only screen and (max-width: 1200px) {
+
+}
+
+@media only screen and (max-width: 992px) {
+
+
+}
+
+
+@media only screen and (max-width: 768px) {
+.blog_content_edit{
+padding:25px 25px 0px 25px;
+}
+
+.blog_content_title{
+padding:15px 25px 0px 25px;
+}
+.blog_content{
+padding:25px 25px 25px 25px;
+}
+
+.blog_content_author{
+padding:0px 25px 25px 25px;
+}
+
+}
+
+@media only screen and (max-width: 576px) {
+
+.blog_content_edit{
+padding:25px 15px 0px 15px;
+}
+
+.blog_content_title{
+padding:15px 15px 0px 15px;
+}
+.blog_content{
+padding:25px 15px 25px 15px;
+}
+
+.blog_content_author{
+padding:0px 15px 25px 15px;
+}
+
+#stamped_ON_img{
+width:50%;
+padding:15px 15px 10px 0px;
+}
+
+}
+

@@ -236,7 +236,7 @@ def maintenance_page(request):
     return render(request, template_name, context)
 
 def concrete_page(request):
-    title = "STAMPED CONCRETE OTTAWA"
+    title = "Stamped Concrete Ottawa"
     meta_title = 'Stamped Concrete Ottawa | McExcavate'
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been \
                         building stamped concrete patios, walkways and driveways since 2013."
