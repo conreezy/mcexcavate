@@ -236,7 +236,7 @@ def maintenance_page(request):
     return render(request, template_name, context)
 
 def concrete_page(request):
-    title = "Stamped Concrete Ottawa"
+    title = "STAMPED CONCRETE OTTAWA"
     meta_title = 'Stamped Concrete Ottawa | McExcavate'
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been \
                         building stamped concrete patios, walkways and driveways since 2013."
@@ -309,8 +309,8 @@ def concrete_success_page(request):
     return render(request, template_name, context)
 
 def stamped_driveway_page(request):
-    title = "STAMPED CONCRETE DRIVEWWAYS OTTAWA"
-    meta_title = 'Stamped Concrete Driveways Ottawa | McExcavate'
+    title = "STAMPED CONCRETE DRIVEWAY OTTAWA"
+    meta_title = 'Stamped Concrete Driveway Ottawa | McExcavate'
     meta_description = "We've been building stamped concrete driveways in Ottawa for over 10 years. \
                         McExcavate has the expertise to ensure your prjoect is done correctly."
     meta_keywords = "stamped concrete driveway, concrete driveway ottawa, \
@@ -331,7 +331,7 @@ def stamped_driveway_page(request):
         marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | Stamped Driveways Page"
+        subject = f"Stamped Driveway Lead | Stamped Driveway Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \

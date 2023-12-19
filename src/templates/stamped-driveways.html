@@ -3,27 +3,80 @@
 {% load crispy_forms_tags %}
 {% load static %} 
 <div class='container'>
-	<div class='row service_row'>
+	<div class='row'>
+
 		{% include "service_breadcrumbs.html" %}
-		<div class='col-lg-6 service_top_row'>
+
+		<div class='col-lg-6 '>
 			<div class='container-fluid'>
 				<div class='row'>
-					<div class='col-12'>
-						<p class='service_top_row_p'>We do stamped concrete driveways.</p>
-						<p class='service_top_row_p'>PAGE UNDER CONSTRUCTION</p>
+					<div class='col-12 service_top_row p-0'>
+						<p class='service_top_row_p'>Hire us to build your stamped concrete driveway because it has to be done correctly the first time. We will build the base and concrete slab with the long term in mind. The finish and colouring will be done with extreme attention to detail.</p>
 						<div class='service_top_row_bullets'>
-						<p></p>
+						<p>• Propper base construction</p>
+						<p>• Sufficient reinforcement</p>
+						<p>• Professional finishing</p>
+						<p>• Excellent customer service</p>
 						</div>
-						<!-- <img src= "{% static 'image/stamped-concrete/stamped-concrete-patio-grey.jpg' %}" alt="ottawa stamped conrete front walkway and step" style="width: inherit; box-shadow: 5px 5px 20px grey;">
-						<p class='service_top_row_img_caption'>Stamped concrete back patio in Rothwell Heights.</p> -->
+						<img src= "{% static 'image/stamped-concrete/concrete_driveway_sidewalk.jpg' %}" alt="concrete driveway and sidewalk">
+						<p class='service_img_caption_black'>Concrete driveway and sidewalk.</p>
 						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- <div class='col-lg-6 service_top_row'>
+		<div class='col-lg-6 service_top_row'>
 			{% include "services_contact_form.html" %}
-		</div> -->
+		</div>
+
+		<div class='col-sm-12'>
+			<hr>
+			<h2 class='mt-5' style='color:black;'>How We Build Stamped Concrete Driveways</h2>
+			<div class='container-fluid'>
+				<div class='row mb-3 mt-0'>
+					<div class='col-md-12 mb-2 mt-2'>
+						<p>If you are considering building a new driveway or replacing an existing driveway in Ottawa you are likely weighing the options between asphalt, interlock or concrete. Since concrete driveways are more expensive to install than asphalt and also more expensive to remove you will want to be sure that yours is constructed correctly in order for the investment to make sense. Below we explain some things that you may want to keep in mind while planning the construction of a concrete driveway. 
+						</p>
+						<br>
+						<h3>Excavation & Base</h3>
+						<p>Everyone living in Ottawa knows that we experience vast temperature differences between peak summer heat and the depths of winter cold. This causes the ground to freeze deeply and then thaw completely resulting in movement and shifting of any ground that retains a lot of water. Therefore soil and clay need to be dug out and replaced with crushed stone.</p>
+					  <p>Our recommendation for a driveway base is the following:</p>
+					  <ul>
+					  	<li>Excavate 2 feet deep.</li>
+					  	<li>Over-dig by at least 1 foot on either side of driveway.</li>
+					  	<li>Add landscape fabric and geo-grid.</li>
+					  	<li>Add 4 inches deep of Granular B (dust to 4" diameter) stone.</li>
+					  	<li>Add 14 inches deep of Granular A (dust to 3/4" diameter) stone.</li>
+					  	<li>Compact the base every 4 inches using a diesel plate compactor or vibrating roller.</li>
+					  </ul>
+						<br>
+						<h3>Insulation</h3>
+						<p>It is always a good idea to add insulation under your concrete driveway.</p>
+						<br>
+						<h3>Reinforcement</h3>
+						<p>We reccomend rebar with at most 2 foot spacing plus welded wire mesh for driveway reinforcement. This may seem like overkill but in our opinion it is better to have too much reinforcement than too little.</p>
+						<br>
+						<h3>Concrete</h3>
+						<p>We pour driveways at a minimum of 6" thick. We use concrete with air entrainment and fibre mesh.</p>
+						<br>
+						<h3>Colour</h3>
+						<p>If we are colouring a driveway we will order concrete with an integral colour added in at the concrete plant. We will then add an acceent colour using realease powder while we stamp or we will add the secondary colour after the concrete has hardened using a water soluble antiquing powder.</p>
+						<br>
+						<h3>Control Joints</h3>
+						<p>We put crack control joints approximately every 5 to 7 feet depending on the dimensions of the driveway. We can do either tooled or sawed joints.</p>
+						<br>
+						<h3>Sealing</h3> 
+						<p>We seal every stamped concrete driveway after it has cured. A sealer will protect the concrete from being penetrated by oil, grease, dirt, chemicals or other substances. Sealing also protects the colour from fading due to exposure from UV light.</p> 
+					</div>
+				</div>
+			</div>
+		</div> 
+
+		{% if blogs %}
+		{% include "related-blogs.html" %}
+		{% endif %}
+		
+
 	</div>
 </div>
 
@@ -32,10 +85,10 @@
 {% block javascript %}
 <script>
 
-// ---- Prevent form submit then add / update service value
+// ---- Prevent form submit then add / update values
 document.getElementById("service_contact_form").addEventListener("submit", function(event){
   event.preventDefault();
-  document.getElementById('form_service').value="Concrete"
+  document.getElementById('form_service').value="Concrete";
   document.getElementById("service_contact_form").submit();
 });
 
