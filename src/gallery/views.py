@@ -63,7 +63,7 @@ def gallery_detail_view(request, slug):
     gallery = list(GalleryImages.objects.filter(gallery=obj)) 
     paginator = Paginator(gallery, 8)
 
-    title = "OTTAWA " + (obj.title).upper()
+    title = (obj.title) + " Projects"
     meta_title = obj.meta_title
     meta_keywords = obj.meta_keywords
     meta_description = obj.description
@@ -78,6 +78,7 @@ def gallery_detail_view(request, slug):
     template_name = "gallery/detail.html"
     context = {"title": title, 
                "gallery":gallery,
+               "obj":obj,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,

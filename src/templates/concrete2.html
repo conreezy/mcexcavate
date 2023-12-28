@@ -5,6 +5,22 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
+<div class='container-fluid py-3'>
+	<div class='row'>
+		<div class='col-12'>
+			<h2 class='blog_h2'>Our Services</h2>
+			<a href="/">
+				<p style='display: inline'>Home</p>
+			</a>
+			<p style='display: inline'> --> </p>
+			<a href="/services/">
+				<p style='display: inline'>Services</p>
+			</a>
+			<p style='display: inline'> --></p>
+			<p style='display: inline'>{{ title }}</p>
+		</div>
+	</div>
+</div>
 <div class='container-fluid p-0'>
 	<div class='row service_hero'>
 		<div class='container'>

@@ -11,6 +11,7 @@ from .views import (
     home_page,
 
     #services
+    services_page,
     excavation_page,
     interlock_page,
     re_sodding_page,
@@ -57,6 +58,7 @@ urlpatterns = [
     path('', home_page, name='home'),
 
     # -- Services
+    path('services/', services_page, name='services'),
     path('excavation/', excavation_page, name='excavation'),
     path('interlock/', interlock_page, name='interlock'),
     path('sod-installation/', re_sodding_page, name='sod-installation'),

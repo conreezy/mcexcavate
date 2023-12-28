@@ -2,15 +2,14 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
+{% include "service_breadcrumbs2.html" %}
 <div class='container'>
 	<div class='row'>
-
-		{% include "service_breadcrumbs.html" %}
-
-		<div class='col-lg-6 service_top_row'>
+		<div class='col-lg-6 '>
 			<div class='container-fluid'>
 				<div class='row'>
-					<div class='col-12'>
+					<div class='col-12 service_top_row'>
+						<h1>{{title}}</h1>
 						<p class='service_top_row_p'>Hire us for your interlock needs because we have the expertise to make sure your project is completed correctly and will stand up over the long term.</p>
 						<div class='service_top_row_bullets'>
 						<p>• Driveways, Walkways, Patios</p>
@@ -20,8 +19,7 @@
 						<p>• Commercial</p>
 						</div>
 						<img src= "{% static 'image/interlock/2109 Damask Front After Interlock.jpg' %}" alt="ottawa interlock front walkway steps and garden wall">
-						<p class='service_top_row_img_caption'>Walkway, step and garden walls in Orleans.</p>
-						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
+						<p class='service_img_caption_black'>Walkway, step and garden walls in Orleans.</p>
 					</div>
 				</div>
 			</div>

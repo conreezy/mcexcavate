@@ -18,6 +18,12 @@ font-size:25px;
 color:#007BFF;
 }
 
+.gallery_col h1{
+text-align: center;
+font-size:25px;
+color:#007BFF;
+}
+
 .gallery_col p:hover{
 color:#591a8c;
 }

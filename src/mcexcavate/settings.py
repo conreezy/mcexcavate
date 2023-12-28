@@ -13,7 +13,7 @@ SECRET_KEY = 'dc578pv-t)gq+k)yw+rd^2(pd)pji*x5til*kzdjb1@byr3+)h'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -33,7 +33,7 @@ EMAIL_PORT = 587
 #EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
 #EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
 
-ALLOWED_HOSTS = ['170.187.194.201', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
+ALLOWED_HOSTS = ['172.105.25.80', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
 
 # PhoneNumberField Settings
 #PHONENUMBER_DB_FORMAT = 

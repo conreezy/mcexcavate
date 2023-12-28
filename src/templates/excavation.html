@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-{% include "top_banner.html" %}
 {% load crispy_forms_tags %}
 {% load static %} 
+{% include "service_breadcrumbs2.html" %}
 <div class='container'>
 	<div class='row mb-3'>
-
+		{% include "top_banner.html" %}
 		<div class='col-sm-12'>
 			<div class='container-fluid'>
 				<div class='row mb-3'>

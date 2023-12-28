@@ -52,8 +52,8 @@ margin:30px 0px 5px 0px;
 margin:25px 0px 25px 0px;
 }
 .service_top_row{
-padding-left: 0px ;
-padding-right: 0px;
+padding-left: 0px !important;
+padding-right: 0px !important;
 }
 .service_top_row img{
 width: inherit; 

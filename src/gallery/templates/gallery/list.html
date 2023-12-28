@@ -1,7 +1,6 @@
 {% extends "base.html" %}
-
 {% block content %}
-{% include "top_banner.html" %}
+{% include "gallery/projects_breadcrumbs.html" %}
 {% load static %} 
 <div class='container'>
 	<div class='row my-3'>
@@ -9,9 +8,9 @@
 		<div class='col-sm-12'>
 			<div class='container'>
 
-				<div class='row mt-3 mb-2'>
+				<div class='row mb-2'>
 					{% for gallery in galleries %}
-					<div class='col-md-6 my-3'>
+					<div class='col-md-6 mb-3'>
 						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
 				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
 				   			<img src= "{{ gallery.image.url }}" alt="re-sodded front lawn of single family home" style="width: inherit">
