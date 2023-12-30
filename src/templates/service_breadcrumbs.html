@@ -1,3 +1,24 @@
+{% if breadcrumbs_title%}
+<div class='container-fluid pt-3 mb-4'>
+	<div class='row'>
+		<div class='col-12'>
+			<h2 class='blog_h2'>Our Services</h2>
+			<a href="/">
+				<p style='display: inline'>Home</p>
+			</a>
+			<p style='display: inline'> --> </p>
+			<a href="/services/">
+				<p style='display: inline'>Services</p>
+			</a>
+			<p style='display: inline'> --></p>
+			<p style='display: inline'>{{ breadcrumbs_title }}</p>
+		</div>
+		<div class='col-12'>
+			<hr class='mb-2 mx-auto'>
+		</div>
+	</div>
+</div>
+{% else %}
 <div class='container-fluid pt-3'>
 	<div class='row'>
 		<div class='col-12'>
@@ -13,3 +34,4 @@
 		</div>
 	</div>
 </div>
+{% endif %} 

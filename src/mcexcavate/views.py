@@ -59,6 +59,7 @@ def services_page(request):
 
 def excavation_page(request):
     title = "EXCAVATION OTTAWA"
+    breadcrumbs_title = "Excavation"
     meta_title = 'Ottawa Excavation Services | McExcavate Inc.'
     meta_description = "McExcavate provides Ottawa Excavation services to commercial, residential and government clients. One of Ottawa's leading excavation companies since 2013."
     meta_keywords = "ottawa excavation, excavation ottawa, excavating ottawa, ottawa excavating, excavation services, ottawa excavation services, excavation, excavating"
@@ -79,11 +80,13 @@ def excavation_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title" : breadcrumbs_title}
     return render(request, template_name, context)
 
 def interlock_page(request):
     title = "INTERLOCK OTTAWA"
+    breadcrumbs_title = "Interlock"
     meta_title = 'Ottawa Interlock | McExcavate'
     meta_description = "McExcavate produces high quality interlock and hardscape projects to commercial, residential and government clients in Ottawa."
     meta_keywords = "ottawa interlock, interlock ottawa, interlock pathways ottawa, ottawa interlock patio, interlock driveway, ottawa interlock repair, "
@@ -130,11 +133,13 @@ def interlock_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, "interlock.html", context)
 
 def re_sodding_page(request):
     title = "SOD INSTALLATION OTTAWA"
+    breadcrumbs_title = "Sod Installation"
     meta_title = "Sod Installation Ottawa | McExcavate"
     meta_description = "McExcavate has been providing sod installation in Ottawa since 2013. We use high quality top soil and make sure the lawn is perfectly graded before laying sod."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
@@ -237,7 +242,8 @@ def re_sodding_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context)
 
 def maintenance_page(request):
@@ -259,6 +265,7 @@ def maintenance_page(request):
 
 def concrete_page(request):
     title = "STAMPED CONCRETE OTTAWA"
+    breadcrumbs_title = "Stamped Concrete"
     meta_title = 'Stamped Concrete Ottawa | McExcavate'
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been \
                         building stamped concrete patios, walkways and driveways since 2013."
@@ -308,7 +315,8 @@ def concrete_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context)
 
 def concrete_success_page(request):
@@ -332,6 +340,7 @@ def concrete_success_page(request):
 
 def stamped_driveway_page(request):
     title = "STAMPED CONCRETE DRIVEWAYS OTTAWA"
+    breadcrumbs_title = "Stamped Concrete Driveways"
     meta_title = 'Stamped Concrete Driveways Ottawa | McExcavate'
     meta_description = "We've been building stamped concrete driveways in Ottawa for over 10 years. \
                         McExcavate has the expertise to ensure your prjoect is done correctly."
@@ -381,11 +390,13 @@ def stamped_driveway_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context)
 
 def stamped_patio_page(request):
     title = "STAMPED CONCRETE PATIOS OTTAWA"
+    breadcrumbs_title = "Stamped Concrete Patios"
     meta_title = 'Stamped Concrete Patios Ottawa | McExcavate'
     meta_description = "We have been building stamped concrete patios in Ottawa for over 10 years. \
                         Build a beautiful stamped concrete patio to enjoy your yard."
@@ -435,11 +446,13 @@ def stamped_patio_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context) 
 
 def stamped_walkway_page(request):
     title = "STAMPED CONCRETE WALKWAYS OTTAWA"
+    breadcrumbs_title = "Stamped Concrete Walkways"
     meta_title = 'Stamped Concrete Walkways Ottawa'
     meta_description = "We have been building stamped concrete walkways in Ottawa for over 10 years. \
                         McExcavate expertise to ensure your prjoect is done correctly."
@@ -489,11 +502,13 @@ def stamped_walkway_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context)
 
 def concrete_repairs_page(request):
     title = "CONCRETE REPAIRS OTTAWA"
+    breadcrumbs_title = "Concrete Repairs"
     meta_title = 'Concrete Repairs Ottawa'
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
@@ -541,11 +556,13 @@ def concrete_repairs_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context)
 
 def concrete_resurfacing_page(request):
     title = "CONCRETE RESURFACING OTTAWA"
+    breadcrumbs_title = "Concrete Resurfacing"
     meta_title = 'Concrete Resurfacing Ottawa'
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
@@ -593,11 +610,13 @@ def concrete_resurfacing_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context)
 
 def concrete_sealing_page(request):
     title = "CONCRETE SEALING OTTAWA"
+    breadcrumbs_title = "Concrete Sealing"
     meta_title = 'Concrete Sealing Ottawa'
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
@@ -645,11 +664,13 @@ def concrete_sealing_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context)
 
 def concrete_slabs_page(request):
     title = "CONCRETE SLABS OTTAWA"
+    breadcrumbs_title = "Concrete Slabs"
     meta_title = 'Concrete Slabs Ottawa'
     meta_description = "We build concrete slabs from excavation to forming and pouring. \
                         Commercial and residential. Basement and garage floors, shed pads, hot tub pads..."
@@ -698,11 +719,13 @@ def concrete_slabs_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context)
 
 def concrete_steps_page(request):
     title = "CONCRETE STEPS OTTAWA"
+    breadcrumbs_title = "Concrete Steps"
     meta_title = 'Concrete Steps Ottawa'
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
@@ -750,7 +773,8 @@ def concrete_steps_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,}
     return render(request, template_name, context)
 
 def asphalt_page(request):
@@ -909,7 +933,8 @@ def asphalt_repairs_page(request):
 
 def parging_page(request):
     title = "PARGING OTTAWA"
-    meta_title = 'Parging Ottawa'
+    breadcrumbs_title = "Parging"
+    meta_title = 'Parging Ottawa | McExcavate'
     meta_description = "McExcavate provides parging services to commercial, residential and government clients. One of Ottawa's leading parging service providers since 2013."
     meta_keywords = "ottawa parging, parging ottawa"
     meta_robots = "index, follow"
@@ -948,6 +973,7 @@ def parging_page(request):
 
     template_name = "parging.html"
     context = {"title": title,
+               "breadcrumbs_title": breadcrumbs_title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -960,6 +986,7 @@ def parging_page(request):
 
 def careers_page(request):
     title = "OTTAWA CONSTRUCTION JOBS"
+    breadcrumbs_title = "Careers"
     meta_title = 'Ottawa Construction Jobs | Careers With McExcavate'
     meta_description = "McExcavate has been employing people in the construction industry since 2013. We pride ourselves on providing a professional, rewarding and fun environment."
     meta_keywords = "ottawa construction jobs, construction jobs ottawa, equipment operator job ottawa, landscaping jobs ottawa, construction careers ottawa, construction foreman job ottawa, landscape foreman ottawa"
@@ -970,6 +997,7 @@ def careers_page(request):
 
     template_name = "careers.html"
     context = {"title": title,
+               "breadcrumbs_title": breadcrumbs_title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -981,6 +1009,7 @@ def careers_page(request):
 
 def about_page(request):
     title = "ABOUT MCEXCAVATE"
+    breadcrumbs_title = "About Us"
     meta_title = 'About Us | McExcavate Inc.'
     meta_description = "McExcavate is an Ottawa based commercial and residential concrete contractor \
                         founded in 2013. We specialeze in decorative coloured and stamped concrete."
@@ -992,6 +1021,7 @@ def about_page(request):
 
     template_name = "about.html"
     context = {"title": title,
+               "breadcrumbs_title": breadcrumbs_title,
                "canonical":canonical,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
@@ -1003,6 +1033,7 @@ def about_page(request):
 
 def contact_page(request):
     title = "CONTACT US"
+    breadcrumbs_title = "Contact Us"
     meta_title = 'Contact Us | McExcavate'
     meta_description = "Contact Us - Phone: 613-608-7722, Email: info@mcexcavate.com or send a message \
                         through one of our forms. Visit our website for more information..."
@@ -1043,6 +1074,7 @@ def contact_page(request):
     context = {
                "title": title, 
                "form": form,
+               "breadcrumbs_title": breadcrumbs_title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
