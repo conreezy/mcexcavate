@@ -2,28 +2,28 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
+{% include "service_breadcrumbs.html" %}
 <div class='container'>
-	<div class='row service_row'>
-		{% include "service_breadcrumbs.html" %}
-		<div class='col-lg-6 service_top_row'>
+	<div class='row mb-5'>
+		<div class='col-lg-6 '>
 			<div class='container-fluid'>
 				<div class='row'>
-					<div class='col-12'>
-						<p class='service_top_row_p'>We do concrete sealing.</p>
-						<p class='service_top_row_p'>PAGE UNDER CONSTRUCTION</p>
+					<div class='col-12 service_top_row'>
+						<h1>{{title}}</h1>
 						<div class='service_top_row_bullets'>
-						<p>• Sealing</p>
+						<p style="font-size: 18px;">Sealing your concrete has many benefits. Sealant protects the concrete from spills, weather, sunlight, water penetration and more. Sealant can also be used to create a non-slip surface on your walkway, patio, steps or driveway. Sealing also helps bring out the colour and texture in stamped and coloured concrete. Contact us today to discuss your project!</p>
+						<br>
 						</div>
-						<!-- <img src= "{% static 'image/stamped-concrete/stamped-concrete-patio-grey.jpg' %}" alt="ottawa stamped conrete front walkway and step" style="width: inherit; box-shadow: 5px 5px 20px grey;">
-						<p class='service_top_row_img_caption'>Stamped concrete back patio in Rothwell Heights.</p> -->
-						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
+						<img src= "{% static 'image/sealing/sealing-stamped-concrete-with-roller.jpg' %}" alt="ottawa interlock front walkway steps and garden wall">
+						<p class='service_img_caption_black'>Sealing stamped concrete with rollers.</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- <div class='col-lg-6 service_top_row'>
+		<div class='col-lg-6 service_top_row'>
 			{% include "services_contact_form.html" %}
-		</div> -->
+		</div>
+
 	</div>
 </div>
 

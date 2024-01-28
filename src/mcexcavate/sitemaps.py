@@ -16,18 +16,18 @@ class BlogSitemap(Sitemap):
 class StaticViewSitemap(Sitemap):
 
 	def items(self):
-		return ['home', 
-				'excavation', 
-				'interlock', 
-				'sod-installation',
+		return ['home',
+				'services' 
 				'concrete',
-				'stamped_driveway_page',
-           		'stamped_patio_page',
-           		'stamped_walkway_page',
-           		'concrete_repairs_page',
-           		'concrete_sealing_page',
-           		'concrete_steps_page',
-           		'concrete_slabs_page',
+				'concrete_slabs_page',
+				'concrete_steps_page',
+				'concrete_repairs_page',
+				'concrete_resurfacing_page',
+				'concrete_sealing_page',
+				'parging',
+				'sod-installation',
+				'interlock', 
+				'excavation', 
 				'careers',
 				'about',
 				'contact']

@@ -2,28 +2,32 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
+{% include "service_breadcrumbs.html" %}
 <div class='container'>
-	<div class='row service_row'>
-		{% include "service_breadcrumbs.html" %}
-		<div class='col-lg-6 service_top_row'>
+	<div class='row mb-5'>
+		<div class='col-lg-6'>
 			<div class='container-fluid'>
 				<div class='row'>
-					<div class='col-12'>
-						<p class='service_top_row_p'>We build concrete slabs.</p>
-						<p class='service_top_row_p'>PAGE UNDER CONSTRUCTION</p>
+					<div class='col-12 service_top_row'>
+						<h1>{{title}}</h1>
 						<div class='service_top_row_bullets'>
-						<p>• Slabs</p>
+						<p style="font-size: 18px;">You want to build your concrete slab correctly so that it stands the test of time. You may have blueprints or need advice on concrete thickness and reinforcement requirements. Whether you are looking to build a shed slab, garage floor, fuel tank slab, loading dock or anything in between we make sure to build the slab strong enough for it's intended use and pay attention to detail on the finishing.</p>
+						<br>
+						<p style="font-size: 18px;">• Excellent Customer Service</p>
+						<p style="font-size: 18px;">• Expert Knowledge</p>
+						<p style="font-size: 18px;">• Experience</p>
+						<p style="font-size: 18px;">• Satisfaction Guaranteed</p>
+						<br>
 						</div>
-						<!-- <img src= "{% static 'image/stamped-concrete/stamped-concrete-patio-grey.jpg' %}" alt="ottawa stamped conrete front walkway and step" style="width: inherit; box-shadow: 5px 5px 20px grey;">
-						<p class='service_top_row_img_caption'>Stamped concrete back patio in Rothwell Heights.</p> -->
-						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
+						<img src= "{% static 'image/slabs/fuel_tank_slab.jpg' %}" alt="Fuel tank slab with bollards">
+						<p class='service_img_caption_black'>Fuel tank slab with vehicle protection bollards.</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- <div class='col-lg-6 service_top_row'>
+		<div class='col-lg-6 service_top_row'>
 			{% include "services_contact_form.html" %}
-		</div> -->
+		</div>
 	</div>
 </div>
 

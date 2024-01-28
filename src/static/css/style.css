@@ -112,6 +112,7 @@ p {
   height: 100px;
   align-items: center;
 }
+
 /* HOME PAGE */
 .img-ban-1 {
   display: flex;
@@ -121,13 +122,31 @@ p {
   justify-content: space-between;
   flex-wrap: nowrap;
 }
+
 .ban-box {
   width: 33%;
 }
+
 .ban-image {
 width: 100%;
 padding: 2.5px;
 }
+
+.social_proofs{
+padding:20px 40px 20px 40px !important;
+}
+
+.social_proofs div{
+justify-content: center;
+align-items: center;
+padding:0px 40px 0px 40px;
+}
+
+.social_proofs img{
+max-height: 150px;
+width:auto;
+}
+
 .carousel-1 {
   display: flex;
   justify-content: center;

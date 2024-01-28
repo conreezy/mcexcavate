@@ -2,28 +2,33 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
+{% include "service_breadcrumbs.html" %}
 <div class='container'>
-	<div class='row service_row'>
-		{% include "service_breadcrumbs.html" %}
-		<div class='col-lg-6 service_top_row'>
+	<div class='row mb-5'>
+		<div class='col-lg-6 '>
 			<div class='container-fluid'>
 				<div class='row'>
-					<div class='col-12'>
-						<p class='service_top_row_p'>We do concrete resurfacing</p>
-						<p class='service_top_row_p'>PAGE UNDER CONSTRUCTION</p>
+					<div class='col-12 service_top_row'>
+						<h1>{{title}}</h1>
 						<div class='service_top_row_bullets'>
-						<p>• resurfacing</p>
+						<p style="font-size: 18px;">Your our old concrete doesn't need to be completely removed and replaced. You can resurface your old looking concrete to make it look brand new again. You can also add to the functionality of your concrete surface by using a resurfacing product that protects it from salt damage and reducing slipping. You can also beautify your existing concrete by using a coloured and stamped finish. Contact us today to discuss your project!</p>
+						<br>
+						<p>• High Quality Products</p>
+						<p>• Multitude of Surface Options</p>
+						<p>• Experience</p>
+						<p>• Excellent Customer Service</p>
+						<br>
 						</div>
-						<!-- <img src= "{% static 'image/stamped-concrete/stamped-concrete-patio-grey.jpg' %}" alt="ottawa stamped conrete front walkway and step" style="width: inherit; box-shadow: 5px 5px 20px grey;">
-						<p class='service_top_row_img_caption'>Stamped concrete back patio in Rothwell Heights.</p> -->
-						<!-- <a href='#contactform'><button class="btn btn-danger service_page_button">Request a Free Quote!</button></a> -->
+						<img src= "{% static 'image/resurfacing/step-resurfacing.jpeg' %}" alt="ottawa interlock front walkway steps and garden wall">
+						<p class='service_img_caption_black'>Concrete step repair and resurfacing.</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- <div class='col-lg-6 service_top_row'>
+		<div class='col-lg-6 service_top_row'>
 			{% include "services_contact_form.html" %}
-		</div> -->
+		</div>
+
 	</div>
 </div>
 
