@@ -13,7 +13,7 @@ SECRET_KEY = 'dc578pv-t)gq+k)yw+rd^2(pd)pji*x5til*kzdjb1@byr3+)h'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -25,8 +25,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 #EMAIL_HOST_PASSWORD = 'Duke3818#'
 
 EMAIL_HOST_USER = 'mcexcavate.ottawa@gmail.com'
-#EMAIL_HOST_PASSWORD = 'Topley3818!'
-EMAIL_HOST_PASSWORD = 'fhzxfioobaesfznb'
+EMAIL_HOST_PASSWORD = 'Duke3818!'
+#EMAIL_HOST_PASSWORD = 'fhzxfioobaesfznb'
 
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587 

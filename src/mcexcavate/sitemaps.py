@@ -17,7 +17,7 @@ class StaticViewSitemap(Sitemap):
 
 	def items(self):
 		return ['home',
-				'services' 
+				'services', 
 				'concrete',
 				'concrete_slabs_page',
 				'concrete_steps_page',

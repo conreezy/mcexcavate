@@ -16,7 +16,7 @@ def home_page(request):
     title = "McExcavate"
     meta_title = "McExcavate | Ottawa Concrete Contractor"
     meta_description = "McExcavate is an Ottawa based concrete contractor specializing in stamped concrete, patios, \
-                        driveways, steps, concrete repairs and concrete sealing since 2013."
+                        driveways, steps, concrete repairs and concrete sealing since 2008."
     meta_keywords = "ottawa concrete company, concrete company ottawa, ottawa concrete contractor, \
                      concrete contractor ottawa"
     meta_robots = "index, follow"
@@ -141,7 +141,7 @@ def re_sodding_page(request):
     title = "SOD INSTALLATION OTTAWA"
     breadcrumbs_title = "Sod Installation"
     meta_title = "Sod Installation Ottawa | McExcavate"
-    meta_description = "McExcavate has been providing sod installation in Ottawa since 2013. We use high quality top soil and make sure the lawn is perfectly graded before laying sod."
+    meta_description = "McExcavate has been providing sod installation in Ottawa since 2008. We use high quality top soil and make sure the lawn is perfectly graded before laying sod."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/sod-installation/"
@@ -251,7 +251,7 @@ def stamped_concrete_page(request):
     breadcrumbs_title = "Stamped Concrete"
     meta_title = 'Stamped Concrete Ottawa | McExcavate'
     meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been \
-                        building stamped concrete patios, walkways and driveways since 2013."
+                        building stamped concrete patios, walkways and driveways since 2008."
     meta_keywords = "ottawa stamped conrete, stamped concrete, stamped concrete ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/"
@@ -649,7 +649,7 @@ def careers_page(request):
     title = "OTTAWA CONSTRUCTION JOBS"
     breadcrumbs_title = "Careers"
     meta_title = 'Ottawa Construction Jobs | Careers With McExcavate'
-    meta_description = "McExcavate has been employing people in the construction industry since 2013. We pride ourselves on providing a professional, rewarding and fun environment."
+    meta_description = "McExcavate has been employing people in the construction industry since 2008. We pride ourselves on providing a professional, rewarding and fun environment."
     meta_keywords = "ottawa construction jobs, construction jobs ottawa, equipment operator job ottawa, landscaping jobs ottawa, construction careers ottawa, construction foreman job ottawa, landscape foreman ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/careers/"
@@ -673,7 +673,7 @@ def about_page(request):
     breadcrumbs_title = "About Us"
     meta_title = 'About Us | McExcavate Inc.'
     meta_description = "McExcavate is an Ottawa based commercial and residential concrete contractor \
-                        founded in 2013. We specialeze in decorative coloured and stamped concrete."
+                        founded in 2008. We specialeze in decorative coloured and stamped concrete."
     meta_keywords = "mcexcavate ottawa, mcexcavate, mcexcavate inc"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/about/"
@@ -894,7 +894,7 @@ def asphalt_page(request):
 def asphalt_repairs_page(request):
     title = "ASPHALT REPAIRS OTTAWA"
     meta_title = 'Asphalt Repairs Ottawa'
-    meta_description = "McExcavate does asphalt repairs including ramps, pathces and pot holes. Since 2013 we have done residential, commercial and government contracts"
+    meta_description = "McExcavate does asphalt repairs including ramps, pathces and pot holes. Since 2008 we have done residential, commercial and government contracts"
     meta_keywords = "ottawa asphalt repairs, asphalt repairs ottawa, asphalt repairs"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/asphalt-repairs/"
