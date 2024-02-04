@@ -25,8 +25,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 #EMAIL_HOST_PASSWORD = 'Duke3818#'
 
 EMAIL_HOST_USER = 'mcexcavate.ottawa@gmail.com'
-EMAIL_HOST_PASSWORD = 'Duke3818!'
-#EMAIL_HOST_PASSWORD = 'fhzxfioobaesfznb'
+#EMAIL_HOST_PASSWORD = 'Duke3818!'
+EMAIL_HOST_PASSWORD = 'vfmr olja dsgd dbca'
 
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587 
