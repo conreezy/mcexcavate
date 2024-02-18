@@ -20,12 +20,14 @@ SERVICE_CHOICES = (
 
 Default = "---"
 GoogleSearch = "Google Search"
+Flyer = "Flyer"
 Referal =  "Referal"
 Other =  "Other"
 
 MARKETING_CHOICES = (
   (Default, '---'),
   (GoogleSearch, 'Google Search'),
+  (Flyer, 'Flyer'),
   (Referal, 'Referal'),
   (Other, 'Other'),
   )

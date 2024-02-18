@@ -7,7 +7,7 @@ from blog.models import BlogPost
 class GallerySitemap(Sitemap):
 	def items(self):
 		return Gallery.objects.all()
-
+ 
 class BlogSitemap(Sitemap):
 	def items(self):
 		return BlogPost.objects.all()

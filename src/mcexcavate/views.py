@@ -269,7 +269,7 @@ def stamped_concrete_page(request):
         marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | Concrete Page"
+        subject = f"Stamped Concrete Lead | Stamped Concrete Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
@@ -343,7 +343,7 @@ def concrete_repairs_page(request):
         marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | Concrete Page"
+        subject = f"Concrete Repair Lead | Concrete Repair Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
@@ -397,7 +397,7 @@ def concrete_resurfacing_page(request):
         marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | Concrete Page"
+        subject = f"Concrete Resurfacing Lead | Concrete Resurfacing Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
@@ -451,7 +451,7 @@ def concrete_sealing_page(request):
         marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | Concrete Sealing Page"
+        subject = f"Sealing Lead | Concrete Sealing Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
@@ -506,7 +506,7 @@ def concrete_slabs_page(request):
         marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | Concrete Slabs Page"
+        subject = f"Concrete Slabs Lead | Concrete Slabs Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
@@ -560,7 +560,7 @@ def concrete_steps_page(request):
         marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | Concrete Steps Page"
+        subject = f"Concrete Steps Lead | Concrete Steps Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
@@ -614,7 +614,7 @@ def parging_page(request):
         marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | Concrete Page"
+        subject = f"Parging Lead | Parging Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
@@ -912,7 +912,7 @@ def asphalt_repairs_page(request):
         marketing = form.cleaned_data.get('marketing')
 
         # send the contact form to mcexcavate email 
-        subject = f"Concrete Lead | Concrete Page"
+        subject = f"Asphalt Repairs Lead | Asphalt Repairs Page"
         message =  f"Name: {name_} \
                      \n\nEmail: {email} \
                      \n\nPhone: {phone} \
