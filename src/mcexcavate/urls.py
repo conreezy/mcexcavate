@@ -21,6 +21,7 @@ from .views import (
     concrete_sealing_page,
     concrete_steps_page,
     concrete_slabs_page,
+    bollard_page,
     parging_page,
 
     #form fill
@@ -62,6 +63,7 @@ urlpatterns = [
     path('concrete-sealing/', concrete_sealing_page, name='concrete_sealing_page'),
     path('concrete-steps/', concrete_steps_page, name='concrete_steps_page'),
     path('concrete-slabs/', concrete_slabs_page, name='concrete_slabs_page'),
+    path('bollards/', bollard_page, name='bollards'),
     path('parging/', parging_page, name='parging'),
     path('concrete/success/', concrete_success_page, name='concrete_success_page'),
 

@@ -8,6 +8,7 @@ SodInstallation =  "Sod Installation"
 Interlock =  "Interlock"
 Concrete =  "Concrete"
 Parging =  "Parging"
+Bollards = "Bollards"
 
 SERVICE_CHOICES = (
   (Default, '---'),
@@ -16,6 +17,7 @@ SERVICE_CHOICES = (
   (Interlock, 'Interlock'),
   (Excavation, 'Excavation'),
   (Parging, 'Parging'),
+  (Bollards, 'Bollards'),
   )
 
 Default = "---"
