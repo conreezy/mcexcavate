@@ -13,7 +13,7 @@ SECRET_KEY = 'dc578pv-t)gq+k)yw+rd^2(pd)pji*x5til*kzdjb1@byr3+)h'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
