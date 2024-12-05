@@ -38,18 +38,24 @@ def gallery_create_view(request):
 
 def gallery_list_view(request):
     title = "OUR PROJECTS"
-    meta_title = 'Our Projects | McExcavate Inc.'
+    meta_title = 'Our Projects | Crusader Construction Inc.'
     meta_description = "Visit our projects gallery to see photos of work we have done over the years. Stamped concrete, sodding, and interlock project photos..."
     meta_keywords = "concrete photos, interlock photos, sodding photos"
     meta_robots = "index, follow"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
 
-    galleries = Gallery.objects.all()
+    stamped_gallery = Gallery.objects.filter(title="Stamped Concrete")
+    plain_gallery = Gallery.objects.filter(title="Plain Concrete")
+    sod_gallery = Gallery.objects.filter(title="Re-sodding")
+    interlock_gallery = Gallery.objects.filter(title="Interlock")
 
     template_name = 'gallery/list.html'
     context = {"title": title, 
-               'galleries': galleries,
+               "stamped_gallery": stamped_gallery,
+               "plain_gallery": plain_gallery,
+               "sod_gallery": sod_gallery,
+               "interlock_gallery": interlock_gallery,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -60,7 +66,7 @@ def gallery_list_view(request):
 
 def gallery_detail_view(request, slug):
     obj = get_object_or_404(Gallery, slug=slug)
-    gallery = list(GalleryImages.objects.filter(gallery=obj)) 
+    gallery = list(GalleryImages.objects.filter(gallery=obj).order_by("-id"))
     paginator = Paginator(gallery, 8)
 
     title = (obj.title) + " Projects"
