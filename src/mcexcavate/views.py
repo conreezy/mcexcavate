@@ -551,7 +551,7 @@ def concrete_steps_page(request):
     title = "CONCRETE STEPS"
     breadcrumbs_title = "Concrete Steps"
     meta_title = 'Concrete Steps Ottawa | Crusader Construction'
-    meta_description = "McExcavate specializes in stamped concrete in Ottawa. We have been building \
+    meta_description = "Crusader specializes in stamped concrete in Ottawa. We have been building \
                         stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
@@ -714,7 +714,7 @@ def careers_page(request):
     title = "OTTAWA CONSTRUCTION JOBS"
     breadcrumbs_title = "Careers"
     meta_title = 'Ottawa Construction Jobs | Careers With Crusader Construction'
-    meta_description = "McExcavate has been employing people in the construction industry since 2013. \
+    meta_description = "Crusader has been employing people in the construction industry since 2013. \
                         We pride ourselves on providing a professional, rewarding and fun environment."
     meta_keywords = "ottawa construction jobs, construction jobs ottawa, equipment operator job ottawa, \
                      landscaping jobs ottawa, construction careers ottawa, construction foreman job ottawa, landscape foreman ottawa"
@@ -741,7 +741,7 @@ def about_page(request):
     meta_title = 'About Us | Crusader Construction'
     meta_description = "Crusader Construction is an Ottawa based commercial and residential concrete contractor \
                         founded in 2013. We specialeze in decorative coloured and stamped concrete."
-    meta_keywords = "mcexcavate ottawa, mcexcavate, mcexcavate inc"
+    meta_keywords = "crusader construction ottawa, crusader construction, crusader construction inc"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/about/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
@@ -763,7 +763,7 @@ def contact_page(request):
     title = "CONTACT US"
     breadcrumbs_title = "Contact Us"
     meta_title = 'Contact Us | Crusader Construction'
-    meta_description = "Contact Us - Phone: 613-608-7722, Email: info@mcexcavate.com or send a message \
+    meta_description = "Contact Us - Phone: 613-608-7722, Email: info@crusaderconstruction.ca or send a message \
                         through one of our forms. Visit our website for more information..."
     meta_keywords = ""
     meta_robots = "index, follow"
