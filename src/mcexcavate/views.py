@@ -13,9 +13,9 @@ from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm,
 from blog.models import BlogPost
 
 def home_page(request):
-    title = "Crusader Construction"
-    meta_title = "Crusader Construction | Ottawa Concrete Contractor"
-    meta_description = "Crusader Construction is an Ottawa based concrete contractor specializing in stamped concrete, patios, \
+    title = "Crusader Concrete"
+    meta_title = "Crusader Concrete | Ottawa Concrete Contractor"
+    meta_description = "Crusader Concrete is an Ottawa based concrete contractor specializing in stamped concrete, patios, \
                         driveways, steps, concrete repairs and concrete sealing since 2013."
     meta_keywords = "ottawa concrete company, concrete company ottawa, ottawa concrete contractor, \
                      concrete contractor ottawa"
@@ -37,10 +37,10 @@ def home_page(request):
 
 def services_page(request):
     title = "OUR SERVICES"
-    meta_title = 'Our Services | Crusader Construction'
+    meta_title = 'Our Services | Crusader Concrete'
     meta_description = "We are stamped concrete experts, we also do concrete slabs, steps, sidewalks and curbs. \
                         Additionaly we do sod installation, interlock and excavation"
-    meta_keywords = "Crusader Construction services"
+    meta_keywords = "Crusader Concrete services"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/services/"
     og_image = "https://mcexcavate.com/static/image/excavation/large yellow komatsu excavator.jpg"
@@ -60,8 +60,8 @@ def services_page(request):
 def excavation_page(request):
     title = "EXCAVATION OTTAWA"
     breadcrumbs_title = "Excavation"
-    meta_title = 'Ottawa Excavation Services | Crusader Construction'
-    meta_description = "Crusader Construction provides Ottawa Excavation services to commercial, residential \
+    meta_title = 'Ottawa Excavation Services | Crusader Concrete'
+    meta_description = "Crusader Concrete provides Ottawa Excavation services to commercial, residential \
                         and government clients. One of Ottawa's leading excavation companies since 2013."
     meta_keywords = "ottawa excavation, excavation ottawa, excavating ottawa, ottawa excavating, \
                     excavation services, ottawa excavation services, excavation, excavating"
@@ -89,8 +89,8 @@ def excavation_page(request):
 def interlock_page(request):
     title = "INTERLOCK OTTAWA"
     breadcrumbs_title = "Interlock"
-    meta_title = 'Ottawa Interlock | Crusader Construction'
-    meta_description = "Crusader Construction produces high quality interlock and hardscape projects to commercial, \
+    meta_title = 'Ottawa Interlock | Crusader Concrete'
+    meta_description = "Crusader Concrete produces high quality interlock and hardscape projects to commercial, \
                         residential and government clients in Ottawa."
     meta_keywords = "ottawa interlock, interlock ottawa, interlock pathways ottawa, ottawa interlock patio, \
                      interlock driveway, ottawa interlock repair, "
@@ -144,8 +144,8 @@ def interlock_page(request):
 def re_sodding_page(request):
     title = "SOD INSTALLATION OTTAWA"
     breadcrumbs_title = "Sod Installation"
-    meta_title = "Sod Installation Ottawa | Crusader Construction"
-    meta_description = "Crusader Construction has been providing sod installation in Ottawa since 2013. \
+    meta_title = "Sod Installation Ottawa | Crusader Concrete"
+    meta_description = "Crusader Concrete has been providing sod installation in Ottawa since 2013. \
                         We use high quality top soil and make sure the lawn is perfectly graded before laying sod."
     meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, \
                      re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
@@ -255,8 +255,8 @@ def re_sodding_page(request):
 def stamped_concrete_page(request):
     title = "STAMPED CONCRETE OTTAWA"
     breadcrumbs_title = "Stamped Concrete"
-    meta_title = 'Stamped Concrete Ottawa | Crusader Construction'
-    meta_description = "Crusader Construction specializes in stamped concrete in Ottawa. We have been \
+    meta_title = 'Stamped Concrete Ottawa | Crusader Concrete'
+    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been \
                         building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, stamped concrete, stamped concrete ottawa"
     meta_robots = "index, follow"
@@ -311,7 +311,7 @@ def stamped_concrete_page(request):
 def concrete_success_page(request):
     title = "Thank you! \
              You are one step closer to becoming another happy customer!"
-    meta_title = 'Thank you for contacting us! -Crusader Construction'
+    meta_title = 'Thank you for contacting us! -Crusader Concrete'
     meta_description = "Thank you for contacting us about your stamped concrete project! \
                         We will be in touch soon to answer your questions or set up an estimate."
     meta_keywords = ""
@@ -330,8 +330,8 @@ def concrete_success_page(request):
 def concrete_repairs_page(request):
     title = "CONCRETE REPAIR OTTAWA"
     breadcrumbs_title = "Concrete Repair"
-    meta_title = 'Concrete Repair Ottawa | Crusader Construction'
-    meta_description = "Crusader Construction specializes in stamped concrete in Ottawa. We have been building \
+    meta_title = 'Concrete Repair Ottawa | Crusader Concrete'
+    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been building \
                         stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
@@ -386,7 +386,7 @@ def concrete_resurfacing_page(request):
     title = "CONCRETE RESURFACING OTTAWA"
     breadcrumbs_title = "Concrete Resurfacing"
     meta_title = 'Concrete Resurfacing Ottawa'
-    meta_description = "Crusader Construction specializes in stamped concrete in Ottawa. We have been building \
+    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been building \
                         stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
@@ -441,7 +441,7 @@ def concrete_sealing_page(request):
     title = "CONCRETE SEALING OTTAWA"
     breadcrumbs_title = "Concrete Sealing"
     meta_title = 'Concrete Sealing Ottawa'
-    meta_description = "Crusader Construction specializes in stamped concrete in Ottawa. We have been \
+    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been \
                         building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
     meta_robots = "index, follow"
@@ -495,7 +495,7 @@ def concrete_sealing_page(request):
 def concrete_slabs_page(request):
     title = "PLAIN CONCRETE"
     breadcrumbs_title = "Plain Concrete"
-    meta_title = 'Ottawa Concrete | Crusader Construction'
+    meta_title = 'Ottawa Concrete | Crusader Concrete'
     meta_description = "We build concrete slabs from excavation to forming and pouring. \
                         Commercial and residential. Basement and garage floors, shed pads, hot tub pads..."
     meta_keywords = "conrete slabs, concrete slabs ottawa, ottawa concrete slabs"
@@ -550,7 +550,7 @@ def concrete_slabs_page(request):
 def concrete_steps_page(request):
     title = "CONCRETE STEPS"
     breadcrumbs_title = "Concrete Steps"
-    meta_title = 'Concrete Steps Ottawa | Crusader Construction'
+    meta_title = 'Concrete Steps Ottawa | Crusader Concrete'
     meta_description = "Crusader specializes in stamped concrete in Ottawa. We have been building \
                         stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
@@ -605,8 +605,8 @@ def concrete_steps_page(request):
 def bollard_page(request):
     title = "SECURITY BOLLARDS"
     breadcrumbs_title = "Bollards"
-    meta_title = 'Security Bollards Ottawa | Crusader Construction'
-    meta_description = "Crusader Construction installs bollards for commercial, residential and government clients. \
+    meta_title = 'Security Bollards Ottawa | Crusader Concrete'
+    meta_description = "Crusader Concrete installs bollards for commercial, residential and government clients. \
                         One of Ottawa's leading installers of bollards since 2013."
     meta_keywords = "ottawa bollards, bollards ottawa, security bollards ottawa, ottawa security bollards"
     meta_robots = "index, follow"
@@ -659,8 +659,8 @@ def bollard_page(request):
 def parging_page(request):
     title = "PARGING"
     breadcrumbs_title = "Parging"
-    meta_title = 'Parging Ottawa | Crusader Construction'
-    meta_description = "Crusader Construction provides parging services to commercial, residential \
+    meta_title = 'Parging Ottawa | Crusader Concrete'
+    meta_description = "Crusader Concrete provides parging services to commercial, residential \
                         and government clients. One of Ottawa's leading parging service providers since 2013."
     meta_keywords = "ottawa parging, parging ottawa"
     meta_robots = "index, follow"
@@ -713,7 +713,7 @@ def parging_page(request):
 def careers_page(request):
     title = "OTTAWA CONSTRUCTION JOBS"
     breadcrumbs_title = "Careers"
-    meta_title = 'Ottawa Construction Jobs | Careers With Crusader Construction'
+    meta_title = 'Ottawa Construction Jobs | Careers With Crusader Concrete'
     meta_description = "Crusader has been employing people in the construction industry since 2013. \
                         We pride ourselves on providing a professional, rewarding and fun environment."
     meta_keywords = "ottawa construction jobs, construction jobs ottawa, equipment operator job ottawa, \
@@ -736,12 +736,12 @@ def careers_page(request):
     return render(request, template_name, context)
 
 def about_page(request):
-    title = "ABOUT CRUSADER CONSTRUCTION"
+    title = "ABOUT CRUSADER CONCRETE"
     breadcrumbs_title = "About Us"
-    meta_title = 'About Us | Crusader Construction'
-    meta_description = "Crusader Construction is an Ottawa based commercial and residential concrete contractor \
+    meta_title = 'About Us | Crusader Concrete'
+    meta_description = "Crusader Concrete is an Ottawa based commercial and residential concrete contractor \
                         founded in 2013. We specialeze in decorative coloured and stamped concrete."
-    meta_keywords = "crusader construction ottawa, crusader construction, crusader construction inc"
+    meta_keywords = "crusader Concrete ottawa, crusader Concrete, crusader Concrete inc"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/about/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
@@ -762,8 +762,8 @@ def about_page(request):
 def contact_page(request):
     title = "CONTACT US"
     breadcrumbs_title = "Contact Us"
-    meta_title = 'Contact Us | Crusader Construction'
-    meta_description = "Contact Us - Phone: 613-608-7722, Email: info@crusaderconstruction.ca or send a message \
+    meta_title = 'Contact Us | Crusader Concrete'
+    meta_description = "Contact Us - Phone: 613-608-7722, Email: info@crusaderconcrete.ca or send a message \
                         through one of our forms. Visit our website for more information..."
     meta_keywords = ""
     meta_robots = "index, follow"
@@ -839,7 +839,7 @@ class DashboardView(TemplateView):
         context = super(DashboardView, self).get_context_data(**kwargs)
 
         title = "DASHBOARD"
-        meta_title = 'Dashboard | Crusader Construction Inc.'
+        meta_title = 'Dashboard | Crusader Concrete Inc.'
         meta_description = "Manage everything here."
         meta_keywords = "dashboard"
         meta_robots = "noindex, nofollow"
@@ -859,7 +859,7 @@ class DashboardView(TemplateView):
 def asphalt_page(request):
     title = "ASPHALT DRIVEWAY PAVING OTTAWA"
     meta_title = 'Asphalt Driveway Paving Ottawa'
-    meta_description = "Crusader Construction provides asphalt driveway paving in Ottawa to residential \
+    meta_description = "Crusader Concrete provides asphalt driveway paving in Ottawa to residential \
                         and commercial clients. We have been one of Ottawa's leading asphalt paving companies since 2013."
     meta_keywords = "driveway paving ottawa, ottawa driveway paving, asphalt driveway paving ottawa, ottawa asphalt driveway paving,\
                      ottawa asphalt driveways, asphalt driveways ottawa, ottawa paving, paving ottawa, driveway paving,\
@@ -962,7 +962,7 @@ def asphalt_page(request):
 def asphalt_repairs_page(request):
     title = "ASPHALT REPAIRS OTTAWA"
     meta_title = 'Asphalt Repairs Ottawa'
-    meta_description = "Crusader Construction does asphalt repairs including ramps, pathces and pot holes. \
+    meta_description = "Crusader Concrete does asphalt repairs including ramps, pathces and pot holes. \
                         Since 2013 we have done residential, commercial and government contracts"
     meta_keywords = "ottawa asphalt repairs, asphalt repairs ottawa, asphalt repairs"
     meta_robots = "index, follow"

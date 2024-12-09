@@ -32,8 +32,8 @@ def blog_post_create_view(request):
     return render (request , template_name, context)  
 
 def blog_post_list_view(request):
-    title = 'Crusader Construction Blog'
-    meta_title = 'Ottawa Construction Blog | Crusader Construction'
+    title = 'Crusader Concrete Blog'
+    meta_title = 'Ottawa Concrete Blog | Crusader Concrete'
     meta_robots = "index, follow"
     #og_image = blog_post.img.url
     og_type = "website"
@@ -42,9 +42,9 @@ def blog_post_list_view(request):
 
     meta_description = "Read about various construction topics here on our blog. We've got some useful information about concrete, interlock and much more..."
     meta_keywords = ['ottawa construction blog',
-                'construction blog ottawa',
-                'ontario construction blog',
-                'construction blog ontario']
+                'concrete blog ottawa',
+                'ontario concrete blog',
+                'concrete blog ontario']
                 
     template_name = 'blog/blog.html'
     context = {'object_list':blogs,
@@ -68,7 +68,7 @@ def blog_post_detail_view(request, slug):
     meta_robots = "index, follow"
 
     template_name = 'blog/detail.html'
-    description = 'Crusader Construction Blog - '
+    description = 'Crusader Concrete Blog - '
     keywords = [blog_post.title]
                 
     context = {'og_image' : og_image,
