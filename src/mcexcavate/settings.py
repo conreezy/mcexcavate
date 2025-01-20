@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'ckeditor',
     'ckeditor_uploader',
-    'django_recaptcha',
+    #'django_recaptcha',
     #'captcha',
 
 
