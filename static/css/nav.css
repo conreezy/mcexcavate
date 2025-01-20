@@ -188,6 +188,7 @@ color:black;
 cursor: pointer;
 }
 
+/*service drop down*/
 .service_dropdown_mobile{
 display: none;
 width: 100%;
@@ -215,6 +216,38 @@ text-align: center;
 }
 
 .service_dropdown_mobile a:hover {
+background-color: #cecece;
+color:black;
+}
+
+/*project drop down*/
+.project_dropdown_mobile{
+display: none;
+width: 100%;
+background-color: white;
+border-top:1px solid rgba(0,0,0,0.3);
+border-left:1px solid rgba(0,0,0,0.3);
+border-right:1px solid rgba(0,0,0,0.3);
+border-bottom:1px solid rgba(0,0,0,0.3);
+margin:5px 0px 5px 0px;
+padding:5px;
+}
+
+.project_dropdown_mobile ul{
+list-style-type: none;
+padding:0px;
+}
+
+.project_dropdown_mobile a{
+float: none;
+color: black;
+padding:4px;
+text-decoration: none;
+display: block;
+text-align: center;
+}
+
+.project_dropdown_mobile a:hover {
 background-color: #cecece;
 color:black;
 }

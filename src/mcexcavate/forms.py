@@ -1,6 +1,7 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
-from captcha.fields import ReCaptchaField
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox 
 
 Default = "---"
 Excavation = "Excavation"
@@ -8,6 +9,7 @@ SodInstallation =  "Sod Installation"
 Interlock =  "Interlock"
 Concrete =  "Concrete"
 Parging =  "Parging"
+Bollards = "Bollards"
 
 SERVICE_CHOICES = (
   (Default, '---'),
@@ -16,6 +18,7 @@ SERVICE_CHOICES = (
   (Interlock, 'Interlock'),
   (Excavation, 'Excavation'),
   (Parging, 'Parging'),
+  (Bollards, 'Bollards'),
   )
 
 Default = "---"
@@ -31,6 +34,14 @@ MARKETING_CHOICES = (
   (Referal, 'Referal'),
   (Other, 'Other'),
   )
+
+class CustomReCaptchaV2Checkbox(ReCaptchaV2Checkbox):
+    # Removing 'form-control' class from reCAPTCHA widget that is added by crispy forms, which break the layout
+    # More information - https://github.com/django-recaptcha/django-recaptcha/issues/340
+    def build_attrs(self, base_attrs, extra_attrs=None):
+        attrs = super().build_attrs(base_attrs, extra_attrs)
+        attrs['class'] = attrs['class'].replace('form-control', '')
+        return attrs
 
 class ServicePageContactForm(forms.Form):
     name    = forms.CharField(label='Name', widget=forms.TextInput(attrs={}))
@@ -56,7 +67,8 @@ class ContactPageContactForm(forms.Form):
                                                                                         'rows':'3'
                                                                                       }), required=False)
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
-    #captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=CustomReCaptchaV2Checkbox)  
+
 
 YARD_CHOICES = (
     ('Front', 'Front'),

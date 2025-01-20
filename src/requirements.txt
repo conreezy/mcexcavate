@@ -1,7 +1,7 @@
 asgiref==3.4.1
 certifi==2021.10.8
 charset-normalizer==2.0.10
-Django==4.0
+Django==4.1
 django-crispy-forms==1.13.0
 django-phonenumber-field==7.0.2
 django-recaptcha==3.0.0

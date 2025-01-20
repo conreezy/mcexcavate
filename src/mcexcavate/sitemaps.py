@@ -28,8 +28,9 @@ class StaticViewSitemap(Sitemap):
 				'sod-installation',
 				'interlock', 
 				'excavation', 
-				'careers',
+				'bollards',
 				'about',
+				'careers',
 				'contact']
 
 	def location(self, item):

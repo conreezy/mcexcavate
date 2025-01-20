@@ -33,3 +33,9 @@ document.getElementById("nav_service_mobile").addEventListener("click", function
   var service_dropdown_mobile = document.getElementById("service_dropdown_mobile");
   service_dropdown_mobile.classList.toggle('show_block');
 });
+
+//  Projects dropdown - mobile
+document.getElementById("nav_project_mobile").addEventListener("click", function(event) {
+  var project_dropdown_mobile = document.getElementById("project_dropdown_mobile");
+  project_dropdown_mobile.classList.toggle('show_block');
+});

@@ -32,19 +32,19 @@ def blog_post_create_view(request):
     return render (request , template_name, context)  
 
 def blog_post_list_view(request):
-    title = 'McExcavate Construction Blog'
-    meta_title = 'Ottawa Construction Blog | McExcavate'
+    title = 'Crusader Concrete Blog'
+    meta_title = 'Ottawa Concrete Blog | Crusader Concrete'
     meta_robots = "index, follow"
     #og_image = blog_post.img.url
     og_type = "website"
 
     blogs = BlogPost.objects.all().published()
 
-    meta_description = "Read about various landscaping topics here on our blog. We've got some useful information about concrete, interlock and much more..."
-    meta_keywords = ['ottawa bitcoin blog',
-                'bitcoin blog ottawa',
-                'canada bitcoin blog',
-                'bitcoin blog canada']
+    meta_description = "Read about various construction topics here on our blog. We've got some useful information about concrete, interlock and much more..."
+    meta_keywords = ['ottawa construction blog',
+                'concrete blog ottawa',
+                'ontario concrete blog',
+                'concrete blog ontario']
                 
     template_name = 'blog/blog.html'
     context = {'object_list':blogs,
@@ -68,7 +68,7 @@ def blog_post_detail_view(request, slug):
     meta_robots = "index, follow"
 
     template_name = 'blog/detail.html'
-    description = 'Canadian Bitcoin Blog - '
+    description = 'Crusader Concrete Blog - '
     keywords = [blog_post.title]
                 
     context = {'og_image' : og_image,

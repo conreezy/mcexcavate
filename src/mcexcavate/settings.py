@@ -40,8 +40,8 @@ PHONENUMBER_DEFAULT_REGION = "CA"
 #PHONENUMBER_DEFAULT_FORMAT = 
 
 # Captcha Keys
-RECAPTCHA_PUBLIC_KEY = '6LfBhfYmAAAAAIPs-frb9SeAGW12jXJmu4fIQqvb'
-RECAPTCHA_PRIVATE_KEY = '6LfBhfYmAAAAALm8H0PZF4YBB8hzpkGtWW3vg4ZB'
+RECAPTCHA_PUBLIC_KEY = '6LfG1aIqAAAAAPMeB-NJ3d3Rvr0ehi9mmb1GaO4m'
+RECAPTCHA_PRIVATE_KEY = '6LfG1aIqAAAAAHcIJyPfaZ4_9L92OuoMEl0G1rEO'
 
 # Application definition
 INSTALLED_APPS = [
@@ -55,9 +55,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'phonenumber_field',
-    'captcha',
     'ckeditor',
     'ckeditor_uploader',
+    'django_recaptcha',
+    #'captcha',
+
 
     # my app
     'gallery',

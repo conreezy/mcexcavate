@@ -9,11 +9,38 @@
 			<div class='container'>
 
 				<div class='row mb-2'>
-					{% for gallery in galleries %}
+					{% for gallery in stamped_gallery %}
 					<div class='col-md-6 mb-3'>
 						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
 				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
-				   			<img src= "{{ gallery.image.url }}" alt="re-sodded front lawn of single family home" style="width: inherit">
+				   			<img src= "{{ gallery.image.url }}" alt="" style="width: inherit">
+				   		</a>
+						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
+					</div>
+					{% endfor %}
+					{% for gallery in plain_gallery %}
+					<div class='col-md-6 mb-3'>
+						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
+				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
+				   			<img src= "{{ gallery.image.url }}" alt="" style="width: inherit">
+				   		</a>
+						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
+					</div>
+					{% endfor %}
+					{% for gallery in sod_gallery %}
+					<div class='col-md-6 mb-3'>
+						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
+				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
+				   			<img src= "{{ gallery.image.url }}" alt="" style="width: inherit">
+				   		</a>
+						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
+					</div>
+					{% endfor %}
+					{% for gallery in interlock_gallery %}
+					<div class='col-md-6 mb-3'>
+						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
+				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
+				   			<img src= "{{ gallery.image.url }}" alt="" style="width: inherit">
 				   		</a>
 						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
 					</div>

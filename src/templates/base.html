@@ -7,24 +7,21 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="{{ meta_description }}" />
-  	<meta name="keywords" content="{{ meta_keywords }}" />
-  	<meta name="robots" content="{{ meta_robots}}" />
-  	<!-- Favicon -->
-  	<meta name="msapplication-TileColor" content="#00a300">
-	<meta name="theme-color" content="#ffffff">
+  <meta name="keywords" content="{{ meta_keywords }}" />
+  <meta name="robots" content="{{ meta_robots}}" />
 	<!-- Open Graph Tags -->
 	<meta property="og:title" content="{{ meta_title }}" />
-    <meta property="og:description" content="{{ meta_description|truncatewords_html:10}}" />
-    <meta property="og:image" content="{{ og_image }}" /> 
-    <meta property="og:url" content="{{ canonical }}" />
-    <meta property="og:type" content="{{ og_type }}" />
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="mcexcavate.com">
-    <meta property="twitter:url" content="{{ canonical }}">
-    <meta name="twitter:title" content="{{ meta_title }}">
-    <meta name="twitter:description" content="{{ meta_description|truncatewords_html:10}}">
-    <meta name="twitter:image" content="{{ og_image }}">
+  <meta property="og:description" content="{{ meta_description|truncatewords_html:10}}" />
+  <meta property="og:image" content="{{ og_image }}" /> 
+  <meta property="og:url" content="{{ canonical }}" />
+  <meta property="og:type" content="{{ og_type }}" />
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="mcexcavate.com">
+  <meta property="twitter:url" content="{{ canonical }}">
+  <meta name="twitter:title" content="{{ meta_title }}">
+  <meta name="twitter:description" content="{{ meta_description|truncatewords_html:10}}">
+  <meta name="twitter:image" content="{{ og_image }}">
 
 	
 	{% load static %}
@@ -45,6 +42,7 @@
 	<link href="{% static 'css/style.css' %}" rel="stylesheet">
 	<!--- Bootsrtap CSS -->
 	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	
 	<!-- Google Icons -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<!-- Canonical -->
@@ -79,6 +77,16 @@
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 	<!-- Font Awesome -->
 	<script src="https://kit.fontawesome.com/17fca1d543.js" crossorigin="anonymous"></script>
+	<!-- Site Name -->
+	<script type="application/ld+json">
+    {
+      "@context" : "https://schema.org",
+      "@type" : "WebSite",
+      "name" : "Crusader Concrete",
+      "alternateName": ["Stamped Concrete Ottawa"],
+      "url" : "https://mcexcavate.com/",
+    }
+  </script>
 
 </body>
 <footer>
