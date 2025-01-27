@@ -15,8 +15,8 @@ from blog.models import BlogPost
 def home_page(request):
     title = "Crusader Concrete"
     meta_title = "Crusader Concrete | Ottawa Concrete Contractor"
-    meta_description = "Crusader Concrete is an Ottawa based concrete contractor specializing in stamped concrete, patios, \
-                        driveways, steps, concrete repairs and concrete sealing since 2013."
+    meta_description = "Crusader Concrete is an Ottawa based concrete contractor specializing in stamped concrete. \
+                        Beautify your space with custom colours and patterns! Since 2013…"
     meta_keywords = "ottawa concrete company, concrete company ottawa, ottawa concrete contractor, \
                      concrete contractor ottawa"
     meta_robots = "index, follow"
@@ -38,7 +38,7 @@ def home_page(request):
 def services_page(request):
     title = "OUR SERVICES"
     meta_title = 'Our Services | Crusader Concrete'
-    meta_description = "We are stamped concrete experts, we also do concrete slabs, steps, sidewalks and curbs. \
+    meta_description = "We are stamped concrete experts, we also do plain concrete, steps, sidewalks and curbs. \
                         Additionaly we do sod installation, interlock and excavation"
     meta_keywords = "Crusader Concrete services"
     meta_robots = "index, follow"
