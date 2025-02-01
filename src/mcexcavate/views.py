@@ -14,6 +14,7 @@ from blog.models import BlogPost
 import os
 from PIL import Image
 from django.core.exceptions import ValidationError
+from .settings import MEDIA_ROOT
 
 MAX_UPLOAD_IMAGES = 5  # Limit to 5 images
 
@@ -32,7 +33,7 @@ def handle_uploaded_files(images, request):
         return None
 
     # Define a directory where you want to save the uploaded files
-    upload_dir = "static/image/formuploads/"
+    upload_dir = MEDIA_ROOT + "/form_uploads/"
     if not os.path.exists(upload_dir):
         os.makedirs(upload_dir)
     
@@ -108,6 +109,7 @@ def home_page(request):
     canonical = "https://mcexcavate.com"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    print(MEDIA_ROOT)
 
     template_name = "index.html"
     context = {"title": title, 
@@ -856,7 +858,7 @@ def contact_page(request):
             # Send email with or without images
             send_email_with_attachments(form_data, file_paths)
             messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-            return HttpResponseRedirect("/concrete/") # Redirect on success
+            return HttpResponseRedirect("/contact/") # Redirect on success
 
         else:
             messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
