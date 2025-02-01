@@ -36,13 +36,12 @@ MARKETING_CHOICES = (
   (Other, 'Other'),
   )
 
-# class CustomReCaptchaV2Checkbox(ReCaptchaV2Checkbox):
-#     # Removing 'form-control' class from reCAPTCHA widget that is added by crispy forms, which break the layout
-#     # More information - https://github.com/django-recaptcha/django-recaptcha/issues/340
-#     def build_attrs(self, base_attrs, extra_attrs=None):
-#         attrs = super().build_attrs(base_attrs, extra_attrs)
-#         attrs['class'] = attrs['class'].replace('form-control', '')
-#         return attrs
+class CustomReCaptchaV2Checkbox(ReCaptchaV2Checkbox):
+    def build_attrs(self, base_attrs, extra_attrs=None):
+        attrs = super().build_attrs(base_attrs, extra_attrs)
+        if 'class' in attrs:
+            attrs['class'] = attrs['class'].replace('form-control', '')  # Remove form-control class
+        return attrs
     
 class ServicePageContactForm(forms.Form):
     name    = forms.CharField(label='Name', 
@@ -74,7 +73,7 @@ class ServicePageContactForm(forms.Form):
                                          Upload up to 5 images (max size: 10MB each).") 
                              )
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+    captcha = ReCaptchaField(widget=CustomReCaptchaV2Checkbox)
 
 class ContactPageContactForm(forms.Form):
     name    = forms.CharField(label='Name', 
@@ -106,7 +105,7 @@ class ContactPageContactForm(forms.Form):
                                          Upload up to 5 images (max size: 10MB each).") 
                              )
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+    captcha = ReCaptchaField(widget=CustomReCaptchaV2Checkbox)
 
 
 YARD_CHOICES = (
