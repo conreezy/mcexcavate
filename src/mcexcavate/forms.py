@@ -1,7 +1,8 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
-#from django_recaptcha.fields import ReCaptchaField
-#from django_recaptcha.widgets import ReCaptchaV2Checkbox 
+from django.utils.safestring import mark_safe
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox, ReCaptchaV2Invisible
 
 Default = "---"
 Excavation = "Excavation"
@@ -42,32 +43,70 @@ MARKETING_CHOICES = (
 #         attrs = super().build_attrs(base_attrs, extra_attrs)
 #         attrs['class'] = attrs['class'].replace('form-control', '')
 #         return attrs
-
+    
 class ServicePageContactForm(forms.Form):
-    name    = forms.CharField(label='Name', widget=forms.TextInput(attrs={}))
-    email   = forms.EmailField(label='Email', widget=forms.TextInput(attrs={}))
-    phone   = PhoneNumberField(label= 'Phone', region="CA", widget=forms.TextInput(attrs={}))
-    address = forms.CharField(label='Address', widget=forms.TextInput(attrs={}))
-    service = forms.ChoiceField(label='Service Required', choices=SERVICE_CHOICES, 
-                                                          widget=forms.HiddenInput(attrs={'id':'form_service'}))
-    content = forms.CharField(label='Description of Work',widget=forms.Textarea(attrs={'placeholder': "Please give us an idea of what you're looking to do so we can respond in greater detail.",
-                                                                                        'rows':'3'
-                                                                                      }), required=False)
+    name    = forms.CharField(label='Name', 
+                              widget=forms.TextInput(attrs={}))
+    email   = forms.EmailField(label='Email', 
+                               widget=forms.TextInput(attrs={}))
+    phone   = PhoneNumberField(label= 'Phone', 
+                               region="CA", 
+                               widget=forms.TextInput(attrs={}))
+    address = forms.CharField(label='Address', 
+                              widget=forms.TextInput(attrs={}))
+    service = forms.ChoiceField(label='Service Required', 
+                                choices=SERVICE_CHOICES, 
+                                widget=forms.HiddenInput(attrs={
+                                    'id':'form_service'}))
+    content = forms.CharField(label='Message',
+                              widget=forms.Textarea(attrs={
+                                'placeholder': "Describe your project here.",
+                                'rows':'3'
+                              }), 
+                              required=False)
+    images = forms.ImageField(label='Images (Max 5)',
+                              widget=forms.ClearableFileInput(attrs={
+                                'multiple': True,
+                                'accept': 'image/*'
+                              }),
+                              required=False,
+                              help_text=mark_safe("Send us some photos to give a better idea about your project. <br> \
+                                         Upload up to 5 images (max size: 10MB each).") 
+                             )
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
-    #captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
 class ContactPageContactForm(forms.Form):
-    name    = forms.CharField(label='Name', widget=forms.TextInput(attrs={}))
-    email   = forms.EmailField(label='Email', widget=forms.TextInput(attrs={}))
-    phone   = PhoneNumberField(label= 'Phone', region="CA", widget=forms.TextInput(attrs={}))
-    address = forms.CharField(label='Address', widget=forms.TextInput(attrs={}))
-    service = forms.ChoiceField(label='Service Required', choices=SERVICE_CHOICES, 
-                                                          widget=forms.Select(attrs={'id':'form_service'}))
-    content = forms.CharField(label='Description of Work',widget=forms.Textarea(attrs={'placeholder': "Please give us an idea of what you're looking to do so we can respond in greater detail.",
-                                                                                        'rows':'3'
-                                                                                      }), required=False)
+    name    = forms.CharField(label='Name', 
+                              widget=forms.TextInput(attrs={}))
+    email   = forms.EmailField(label='Email', 
+                               widget=forms.TextInput(attrs={}))
+    phone   = PhoneNumberField(label= 'Phone', 
+                               region="CA", 
+                               widget=forms.TextInput(attrs={}))
+    address = forms.CharField(label='Address', 
+                              widget=forms.TextInput(attrs={}))
+    service = forms.ChoiceField(label='Service Required', 
+                                choices=SERVICE_CHOICES, 
+                                widget=forms.Select(attrs={
+                                    'id':'form_service'}))
+    content = forms.CharField(label='Message',
+                              widget=forms.Textarea(attrs={
+                                'placeholder': "Describe your project here.",
+                                'rows':'3'
+                              }), 
+                              required=False)
+    images = forms.ImageField(label='Images (Max 5)',
+                              widget=forms.ClearableFileInput(attrs={
+                                'multiple': True,
+                                'accept': 'image/*'
+                              }),
+                              required=False,
+                              help_text=mark_safe("Send us some photos to give a better idea about your project. <br> \
+                                         Upload up to 5 images (max size: 10MB each).") 
+                             )
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
-    #captcha = ReCaptchaField(widget=CustomReCaptchaV2Checkbox)  
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
 
 YARD_CHOICES = (

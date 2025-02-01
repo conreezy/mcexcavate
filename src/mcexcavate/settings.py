@@ -32,6 +32,9 @@ EMAIL_PORT = 587
 #EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
 #EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"]
 
+# Max uploaded file size
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10 MB
+
 ALLOWED_HOSTS = ['172.105.25.80', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
 
 # PhoneNumberField Settings
@@ -45,6 +48,7 @@ RECAPTCHA_PRIVATE_KEY = '6LfG1aIqAAAAAHcIJyPfaZ4_9L92OuoMEl0G1rEO'
 
 # Application definition
 INSTALLED_APPS = [
+    'django_recaptcha',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.sites',
@@ -57,9 +61,6 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'ckeditor',
     'ckeditor_uploader',
-    #'django_recaptcha',
-    #'captcha',
-
 
     # my app
     'gallery',

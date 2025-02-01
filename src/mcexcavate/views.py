@@ -4,19 +4,104 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRe
 from django.template.loader import get_template
 from django.contrib import messages
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 import requests
 from requests import Request, Session
 import json
 from project.models import SodEstimate, PavingEstimate
 from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm, PavingPriceForm
 from blog.models import BlogPost
+import os
+from PIL import Image
+from django.core.exceptions import ValidationError
+
+MAX_UPLOAD_IMAGES = 5  # Limit to 5 images
+
+def is_image(image):
+    try:
+        img = Image.open(image)
+        img.verify()  # This will raise an error if the file is not a valid image
+        return True
+    except (IOError, SyntaxError):
+        return False
+
+def handle_uploaded_files(images, request):
+    # Check if the number of files is within the allowed limit
+    if len(images) > MAX_UPLOAD_IMAGES:
+        messages.error(request, f"Error: Only {MAX_UPLOAD_IMAGES} images are allowed. You tried to upload {len(images)}.")
+        return None
+
+    # Define a directory where you want to save the uploaded files
+    upload_dir = "static/image/formuploads/"
+    if not os.path.exists(upload_dir):
+        os.makedirs(upload_dir)
+    
+    # Save the uploaded file to the directory
+    file_paths = []
+    for i in images:
+        print(f"Processing file: {i.name}")  # Debugging statement
+        if not is_image(i):
+            messages.error(request, f"The file {i.name} is not a valid image.")
+            return False
+
+        file_path = os.path.join(upload_dir, i.name)
+        try:
+            with open(file_path, 'wb+') as destination:
+                for chunk in i.chunks():
+                    destination.write(chunk)
+            file_paths.append(file_path)
+            print(f"Saved file: {file_path}")  # Debugging statement
+        except Exception as e:
+            print(f"Failed to save file {i.name}: {e}")  # Debugging statement
+            return None
+
+    return file_paths if file_paths else None
+
+def send_email_with_attachments(form_data, file_paths):
+    # Construct the email body with the form data
+    email_body = f"""
+    Name: {form_data['name']}
+    Email: {form_data['email']}
+    Phone: {form_data['phone']}
+    Address: {form_data['address']}
+    Marketing: {form_data['marketing']}
+    Service: {form_data['service']}
+    Message: {form_data['content']}
+    
+    """
+
+    # Create the email message
+    email = EmailMessage(
+        subject=f"{form_data['service']} Lead | Contact Page",
+        body=email_body,
+        from_email=settings.EMAIL_HOST_USER,
+        to=['mcexcavate.ottawa@gmail.com'],
+    )
+
+    # Attach images only if there are valid files
+    if file_paths:
+        for file_path in file_paths:
+            try:
+                print(f"Attaching file: {file_path}")  # Debugging statement
+                with open(file_path, 'rb') as attachment:
+                    email.attach(os.path.basename(file_path), attachment.read(), 'application/octet-stream')
+            except Exception as e:
+                print(f"Error attaching file {file_path}: {e}")
+
+    # Attach each Image
+    # for file_path in file_paths:
+    #     with open(file_path, 'rb') as attachment:
+    #         email.attach(os.path.basename(file_path), attachment.read(), 'application/octet-stream')
+    
+    # Send the email
+    email.send()
+    print("Email sent successfully!")  # Debugging statement
 
 def home_page(request):
     title = "Crusader Concrete"
     meta_title = "Crusader Concrete | Ottawa Concrete Contractor"
-    meta_description = "Crusader Concrete is an Ottawa based concrete contractor specializing in stamped concrete. \
-                        Beautify your space with custom colours and patterns! Since 2013…"
+    meta_description =  "Discover Ottawa's top stamped concrete solutions for patios, driveways, and walkways. \
+                         Enhance your home with durable, stylish designs."
     meta_keywords = "ottawa concrete company, concrete company ottawa, ottawa concrete contractor, \
                      concrete contractor ottawa"
     meta_robots = "index, follow"
@@ -99,30 +184,28 @@ def interlock_page(request):
     og_image = "https://mcexcavate.com/static/image/interlock/black with grey border interlock front step and walkway.jpg"
     og_type = "website"
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
 
-        # send the contact form to mcexcavate email 
-        subject = f"Interlock Lead | Interlock Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            # save the uploaded images after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
 
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/interlock/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/interlock/")
+
+    else:
         form = ServicePageContactForm()
 
     # Blog Posts section
@@ -209,30 +292,28 @@ def re_sodding_page(request):
 
     #     messages.success(request, f"{ price } to re-sod { area } square feet in your { yard } yard.")
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
 
-        # send the contact form to mcexcavate email 
-        subject = f"Sod Lead | Re-Sodding Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
 
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/sod-installation/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/sod-installation/")
+
+    else:
         form = ServicePageContactForm()
 
     # Blog Posts section
@@ -264,32 +345,32 @@ def stamped_concrete_page(request):
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST':
+        print("Form submission received!")  # Debugging statement
+        print(request.FILES)  # This will show if images are being sent
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            print("Form is valid!")
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
+            print(f"Number of images received: {len(images)}")  # Debugging statement
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request) if images else []
 
-        # send the contact form to mcexcavate email 
-        subject = f"Stamped Concrete Lead | Stamped Concrete Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            if images and file_paths is None:
+                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
+                return redirect(request.path)  # Stay on the same page
 
+            # Send email with or without images
+            send_email_with_attachments(form_data, file_paths)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+            return HttpResponseRedirect("/concrete/") # Redirect on success
+
+        else:
+            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
+    else:
         form = ServicePageContactForm()
-        return HttpResponseRedirect('success/')
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Concrete")    
@@ -339,30 +420,28 @@ def concrete_repairs_page(request):
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
 
-        # send the contact form to mcexcavate email 
-        subject = f"Concrete Repair Lead | Concrete Repair Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
 
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/contact/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/contact/")
+
+    else:
         form = ServicePageContactForm()
 
     # Blog Posts section
@@ -394,30 +473,28 @@ def concrete_resurfacing_page(request):
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
 
-        # send the contact form to mcexcavate email 
-        subject = f"Concrete Resurfacing Lead | Concrete Resurfacing Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
 
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/contact/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/contact/")
+
+    else:
         form = ServicePageContactForm()
 
     # Blog Posts section
@@ -449,30 +526,28 @@ def concrete_sealing_page(request):
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/sealing-stamped-concrete.jpg"
     og_type = "website"
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service') 
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
 
-        # send the contact form to mcexcavate email 
-        subject = f"Sealing Lead | Concrete Sealing Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
 
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/contact/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/contact/")
+
+    else:
         form = ServicePageContactForm()
 
     # Blog Posts section
@@ -504,30 +579,28 @@ def concrete_slabs_page(request):
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/smoothfinish.jpg"
     og_type = "website"
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
 
-        # send the contact form to mcexcavate email 
-        subject = f"Concrete Slabs Lead | Concrete Slabs Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
 
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/contact/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/contact/")
+
+    else:
         form = ServicePageContactForm()
 
     # Blog Posts section
@@ -559,30 +632,28 @@ def concrete_steps_page(request):
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
 
-        # send the contact form to mcexcavate email 
-        subject = f"Concrete Steps Lead | Concrete Steps Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
 
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/contact/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/contact/")
+
+    else:
         form = ServicePageContactForm()
 
     # Blog Posts section
@@ -614,30 +685,28 @@ def bollard_page(request):
     og_image = "https://mcexcavate.com/static/image/bollards/man_bollard11.jpg"
     og_type = "website"
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
 
-        # send the contact form to mcexcavate email 
-        subject = f"Bollard Lead | Bollard Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
 
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/contact/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/contact/")
+
+    else:
         form = ServicePageContactForm()
 
     # Blog Posts section
@@ -668,30 +737,28 @@ def parging_page(request):
     og_image = "https://mcexcavate.com/static/image/parging/white_parging.jpg"
     og_type = "website"
 
-    form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
 
-        # send the contact form to mcexcavate email 
-        subject = f"Parging Lead | Parging Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
 
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/contact/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/contact/")
+
+    else:
         form = ServicePageContactForm()
 
     # Blog Posts section
@@ -758,7 +825,7 @@ def about_page(request):
                'og_image' : og_image,
                'og_type' : og_type,} 
     return render(request, template_name, context)
-
+    
 def contact_page(request):
     title = "CONTACT US"
     breadcrumbs_title = "Contact Us"
@@ -771,31 +838,29 @@ def contact_page(request):
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
 
-    form = ContactPageContactForm(request.POST or None)
-    if form.is_valid():
-        name = form.cleaned_data.get("name")
-        email = form.cleaned_data.get("email")
-        phone = form.cleaned_data.get("phone")
-        address = form.cleaned_data.get("address")
-        service = form.cleaned_data.get("service")
-        marketing = form.cleaned_data.get("marketing")
-        content = form.cleaned_data.get("content")
 
-        # send the confirmation email  
-        subject = f'{service} Lead | Contact Page'
-        message =  f'Name: {name} \
-                     \n\n Email: {email} \
-                     \n\n Phone: {phone} \
-                     \n\n Address: {address} \
-                     \n\n Service: {service} \
-                     \n\n Marketing: {marketing} \
-                     \n\n content: {content}'
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
+    if request.method == 'POST':
+        form = ContactPageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            print("Form is valid!")
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request) if images else []
 
-        messages.success(request, f"Thank you for contacting us { name }. We will get back to you quickly about your {service} project.")
+            if images and file_paths is None:
+                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
+                return redirect(request.path)  # Stay on the same page
 
+            # Send email with or without images
+            send_email_with_attachments(form_data, file_paths)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+            return HttpResponseRedirect("/concrete/") # Redirect on success
+
+        else:
+            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
+    else:
         form = ContactPageContactForm()
 
     template_name = "contact.html"
