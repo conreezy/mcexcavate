@@ -73,7 +73,7 @@ class ServicePageContactForm(forms.Form):
                                          Upload up to 5 images (max size: 10MB each).") 
                              )
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
-    captcha = ReCaptchaField(widget=CustomReCaptchaV2Checkbox)
+    captcha = ReCaptchaField(label='', widget=CustomReCaptchaV2Checkbox)
 
 class ContactPageContactForm(forms.Form):
     name    = forms.CharField(label='Name', 
@@ -105,7 +105,7 @@ class ContactPageContactForm(forms.Form):
                                          Upload up to 5 images (max size: 10MB each).") 
                              )
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
-    captcha = ReCaptchaField(widget=CustomReCaptchaV2Checkbox)
+    captcha = ReCaptchaField(label='', widget=CustomReCaptchaV2Checkbox)
 
 
 YARD_CHOICES = (
