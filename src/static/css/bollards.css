@@ -1,0 +1,33 @@
+.bollard_box{
+  box-shadow: 3px 3px 15px grey;
+  padding: 10px 10px 10px 10px;
+  margin: 10px 0px 10px 0px;
+  width:inherit;
+}
+.bollard_image_col{
+  width:15%;
+}
+.bollard_image_col img{
+ width:100%;
+ padding: 10px 10px 10px 10px;
+}
+.bollard_content_col{
+ width:85%;
+ padding: 10px 10px 10px 10px;
+}
+.bollard_content_title{
+ color:black;
+ padding:0px 0px 10px 0px;
+}
+.bollard_content_p{
+
+}
+.hidden_bollard_content{
+display:none;
+padding:10px 0px 0px 0px;
+}
+.bollard_see_more{
+padding:10px 0px 0px 0px;
+color:blue;
+cursor: pointer;
+}

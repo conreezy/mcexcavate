@@ -676,9 +676,9 @@ def concrete_steps_page(request):
     return render(request, template_name, context)
 
 def bollard_page(request):
-    title = "SECURITY BOLLARDS"
+    title = "Ottawa Bollards"
     breadcrumbs_title = "Bollards"
-    meta_title = 'Security Bollards Ottawa | Crusader Concrete'
+    meta_title = 'Ottawa Bollards | Crusader Concrete'
     meta_description = "Crusader Concrete installs bollards for commercial, residential and government clients. \
                         One of Ottawa's leading installers of bollards since 2013."
     meta_keywords = "ottawa bollards, bollards ottawa, security bollards ottawa, ottawa security bollards"
