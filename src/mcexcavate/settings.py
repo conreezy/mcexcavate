@@ -34,6 +34,7 @@ EMAIL_PORT = 587
 
 # Max uploaded file size
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10 MB
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
 
 ALLOWED_HOSTS = ['172.105.25.80', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
 

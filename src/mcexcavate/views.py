@@ -123,7 +123,7 @@ def home_page(request):
     return render(request, template_name, context)
 
 def services_page(request):
-    title = "OUR SERVICES"
+    title = "Our Services"
     meta_title = 'Our Services | Crusader Concrete'
     meta_description = "We are stamped concrete experts, we also do plain concrete, steps, sidewalks and curbs. \
                         Additionaly we do sod installation, interlock and excavation"
@@ -145,7 +145,7 @@ def services_page(request):
     return render(request, template_name, context)
 
 def excavation_page(request):
-    title = "EXCAVATION OTTAWA"
+    title = "Excavation"
     breadcrumbs_title = "Excavation"
     meta_title = 'Ottawa Excavation Services | Crusader Concrete'
     meta_description = "Crusader Concrete provides Ottawa Excavation services to commercial, residential \
@@ -572,10 +572,10 @@ def concrete_sealing_page(request):
 def concrete_slabs_page(request):
     title = "PLAIN CONCRETE"
     breadcrumbs_title = "Plain Concrete"
-    meta_title = 'Ottawa Concrete | Crusader Concrete'
+    meta_title = 'Plain Concrete | Crusader Concrete'
     meta_description = "We build concrete slabs from excavation to forming and pouring. \
                         Commercial and residential. Basement and garage floors, shed pads, hot tub pads..."
-    meta_keywords = "conrete slabs, concrete slabs ottawa, ottawa concrete slabs"
+    meta_keywords = "plain concrete, plain concrete slabs ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete-slabs/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/smoothfinish.jpg"

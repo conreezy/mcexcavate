@@ -39,7 +39,8 @@ def gallery_create_view(request):
 def gallery_list_view(request):
     title = "OUR PROJECTS"
     meta_title = 'Our Projects | Crusader Construction Inc.'
-    meta_description = "Visit our projects gallery to see photos of work we have done over the years. Stamped concrete, sodding, and interlock project photos..."
+    meta_description = "Visit our projects gallery to see photos of work we have done. \
+                        Stamped concrete, sodding, and interlock project photos..."
     meta_keywords = "concrete photos, interlock photos, sodding photos"
     meta_robots = "index, follow"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"

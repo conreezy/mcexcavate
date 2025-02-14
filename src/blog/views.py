@@ -59,7 +59,10 @@ def blog_post_list_view(request):
 def blog_post_detail_view(request, slug):
     blogs = BlogPost.objects.all().published()
     blog_post = get_object_or_404(BlogPost, slug=slug)
-    og_image = blog_post.image.url
+    if blog_post.image:
+        og_image = blog_post.image.url
+    else:
+        og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "article"
 
     meta_title = blog_post.title
