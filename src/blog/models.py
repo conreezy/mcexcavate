@@ -44,6 +44,7 @@ class BlogPost(models.Model):
     id = models.AutoField(primary_key=True)
     user    = models.ForeignKey(User, default=1, null=True, on_delete=models.SET_NULL)
     image   = models.ImageField(upload_to='blog_images/', blank=True, null=True)
+    image_alt = models.CharField(max_length = 340, blank=True, null=True)
     title   = models.CharField(max_length = 120)
     slug    = models.SlugField(unique=True)
     content = RichTextUploadingField(null=True, blank=True)

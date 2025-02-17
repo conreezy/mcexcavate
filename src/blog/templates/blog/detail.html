@@ -46,7 +46,9 @@
 					<div class='col-3' style='margin-right:auto; width:100%; overflow:hidden;'>
 						{% if blog_post.image %}
 							<a href="{{ blog_post.get_absolute_url }}">
-								<img src="{{ blog_post.image.url }}" style='padding:20px 0px 20px 5px; margin-right:auto; height:125px; overflow:hidden;'/>
+								<img src="{{ blog_post.image.url }}" 
+								     alt="{{ blog_post.image_alt }}"
+								     style='padding:20px 0px 20px 5px; margin-right:auto; height:125px; overflow:hidden;'/>
 							</a>
 						{% endif %}
 					</div>

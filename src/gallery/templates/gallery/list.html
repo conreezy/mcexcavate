@@ -1,6 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-{% include "gallery/projects_breadcrumbs.html" %}
+<div class='container-fluid pt-3'>
+	<div class='row'>
+		<div class='col-12'>
+			<h1 class='blog_h2'>Our Projects</h1>
+			<a href="/">
+				<p style='display: inline'>Home</p>
+			</a>
+			<p style='display: inline'> --> </p>
+			<a href="/gallery/">
+				<p style='display: inline'>Projects</p>
+			</a>
+			{% if obj.title %}
+			<p style='display: inline'> --></p>
+			<p style='display: inline'>{{ obj.title }}</p>
+			{% endif %}
+		</div>
+		<div class='col-12'>
+			<hr class='mb-2 mx-auto'>
+		</div>
+	</div>
+</div>
 {% load static %} 
 <div class='container'>
 	<div class='row my-3'>
@@ -13,7 +33,7 @@
 					<div class='col-md-6 mb-3'>
 						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
 				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
-				   			<img src= "{{ gallery.image.url }}" alt="" style="width: inherit">
+				   			<img src= "{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
 				   		</a>
 						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
 					</div>
@@ -22,7 +42,7 @@
 					<div class='col-md-6 mb-3'>
 						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
 				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
-				   			<img src= "{{ gallery.image.url }}" alt="" style="width: inherit">
+				   			<img src= "{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
 				   		</a>
 						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
 					</div>
@@ -31,7 +51,7 @@
 					<div class='col-md-6 mb-3'>
 						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
 				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
-				   			<img src= "{{ gallery.image.url }}" alt="" style="width: inherit">
+				   			<img src= "{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
 				   		</a>
 						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
 					</div>
@@ -40,7 +60,7 @@
 					<div class='col-md-6 mb-3'>
 						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
 				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
-				   			<img src= "{{ gallery.image.url }}" alt="" style="width: inherit">
+				   			<img src= "{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
 				   		</a>
 						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
 					</div>

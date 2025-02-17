@@ -13,6 +13,7 @@ class Gallery(models.Model):
     id = models.AutoField(primary_key=True)
     title   = models.CharField(max_length=50, blank=False, null=True)
     image   = models.FileField(upload_to='image/gallery/', blank=False, null=True)
+    image_alt = models.CharField(max_length = 340, blank=True, null=True)
     slug    = models.SlugField(unique=True, blank=False, null=True) 
     description = models.TextField(null=True, blank=False)
     meta_title  = models.CharField(max_length=55, blank=False, null=True)
