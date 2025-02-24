@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 #from django.contrib.sitemaps import Sitemap
+import datetime
 
 
 
@@ -14,6 +15,7 @@ from .forms import BlogPostModelForm
 def blog_post_create_view(request):
     my_title = 'New Blog Post'
     meta_robots = "noindex, nofollow"
+    date = datetime.datetime.now()
 
     form = BlogPostModelForm(request.POST or None, request.FILES or None)
     if form.is_valid():
@@ -27,7 +29,8 @@ def blog_post_create_view(request):
     template_name = 'blog/create.html'
     context = {'title': my_title, 
                'form': form, 
-               "meta_robots":meta_robots}
+               "meta_robots":meta_robots,
+               "date": date,}
 
     return render (request , template_name, context)  
 
@@ -37,6 +40,7 @@ def blog_post_list_view(request):
     meta_robots = "index, follow"
     #og_image = blog_post.img.url
     og_type = "website"
+    date = datetime.datetime.now()
 
     blogs = BlogPost.objects.all().published()
 
@@ -52,11 +56,13 @@ def blog_post_list_view(request):
                "meta_robots":meta_robots,
                'meta_title': meta_title,
                'meta_description' : meta_description,
-               'meta_keywords': meta_keywords}
+               'meta_keywords': meta_keywords,
+               "date": date,}
 
     return render (request , template_name, context)
 
 def blog_post_detail_view(request, slug):
+    date = datetime.datetime.now()
     blogs = BlogPost.objects.all().published()
     blog_post = get_object_or_404(BlogPost, slug=slug)
     if blog_post.image:
@@ -81,7 +87,8 @@ def blog_post_detail_view(request, slug):
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
-               "meta_title":meta_title}
+               "meta_title":meta_title,
+               "date": date,}
 
     return render (request , template_name, context)    
 
@@ -90,6 +97,7 @@ def blog_post_update_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     form = BlogPostModelForm(request.POST or None, request.FILES or None, instance=obj)
     meta_robots = "noindex, nofollow"
+    date = datetime.datetime.now()
 
     # if request.method == 'POST':
     #     if form.is_valid():
@@ -105,7 +113,8 @@ def blog_post_update_view(request, slug):
     template_name = 'blog/update.html'
     context = {'form' : form, 
                'title':f"Editing: {obj.title}",
-               "meta_robots":meta_robots,}
+               "meta_robots":meta_robots,
+               "date": date,}
 
     return render (request , template_name, context)    
 
@@ -113,13 +122,15 @@ def blog_post_update_view(request, slug):
 def blog_post_delete_view(request, slug):
     obj = get_object_or_404(BlogPost, slug=slug)
     meta_robots = "noindex, nofollow" 
+    date = datetime.datetime.now()
 
     template_name = 'blog/delete.html'
     if request.method == "POST":
         obj.delete()
         return redirect('/blog')
     context = {'object':obj, 
-               "meta_robots":meta_robots,}
+               "meta_robots":meta_robots,
+               "date": date,}
     return render (request , template_name, context)
 
 # class blog_sitemap(Sitemap):

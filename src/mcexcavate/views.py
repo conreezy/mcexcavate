@@ -15,6 +15,7 @@ import os
 from PIL import Image
 from django.core.exceptions import ValidationError
 from .settings import MEDIA_ROOT
+import datetime
 
 MAX_UPLOAD_IMAGES = 5  # Limit to 5 images
 
@@ -109,7 +110,7 @@ def home_page(request):
     canonical = "https://mcexcavate.com"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
-    print(MEDIA_ROOT)
+    date = datetime.datetime.now()
 
     template_name = "index.html"
     context = {"title": title, 
@@ -119,7 +120,8 @@ def home_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               'date': date,}
     return render(request, template_name, context)
 
 def services_page(request):
@@ -132,6 +134,7 @@ def services_page(request):
     canonical = "https://mcexcavate.com/services/"
     og_image = "https://mcexcavate.com/static/image/excavation/large yellow komatsu excavator.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     template_name = "services.html"
     context = {"title": title, 
@@ -141,7 +144,8 @@ def services_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "date": date,}
     return render(request, template_name, context)
 
 def excavation_page(request):
@@ -156,6 +160,7 @@ def excavation_page(request):
     canonical = "https://mcexcavate.com/excavation/"
     og_image = "https://mcexcavate.com/static/image/excavation/large yellow komatsu excavator.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Excavation")  
@@ -170,7 +175,8 @@ def excavation_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title" : breadcrumbs_title}
+               "breadcrumbs_title" : breadcrumbs_title,
+               "date": date,}
     return render(request, template_name, context)
 
 def interlock_page(request):
@@ -185,6 +191,7 @@ def interlock_page(request):
     canonical = "https://mcexcavate.com/interlock/"
     og_image = "https://mcexcavate.com/static/image/interlock/black with grey border interlock front step and walkway.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     if request.method == 'POST' and request.FILES.get('images'):
         form = ServicePageContactForm(request.POST, request.FILES)
@@ -223,7 +230,8 @@ def interlock_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,}
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
     return render(request, "interlock.html", context)
 
 def re_sodding_page(request):
@@ -238,6 +246,7 @@ def re_sodding_page(request):
     canonical = "https://mcexcavate.com/sod-installation/"
     og_image = "https://mcexcavate.com/static/image/sod/1_sod_gallery.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     # price = 0 
 
@@ -332,7 +341,8 @@ def re_sodding_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,}
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
     return render(request, template_name, context)
 
 def stamped_concrete_page(request):
@@ -346,6 +356,7 @@ def stamped_concrete_page(request):
     canonical = "https://mcexcavate.com/concrete/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     if request.method == 'POST':
         print("Form submission received!")  # Debugging statement
@@ -388,7 +399,8 @@ def stamped_concrete_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,}
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
     return render(request, template_name, context)
 
 def concrete_success_page(request):
@@ -400,6 +412,7 @@ def concrete_success_page(request):
     meta_keywords = ""
     meta_robots = "noindex, nofollow" 
     canonical = "https://mcexcavate.com/concrete/success/"
+    date = datetime.datetime.now()
       
     template_name = "concrete-success.html"
     context = {"title": title,
@@ -407,7 +420,8 @@ def concrete_success_page(request):
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "canonical":canonical}
+               "canonical":canonical,
+               "date": date,}
     return render(request, template_name, context) 
 
 def concrete_repairs_page(request):
@@ -421,6 +435,7 @@ def concrete_repairs_page(request):
     canonical = "https://mcexcavate.com/concrete-repair/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     if request.method == 'POST' and request.FILES.get('images'):
         form = ServicePageContactForm(request.POST, request.FILES)
@@ -460,7 +475,8 @@ def concrete_repairs_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,}
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
     return render(request, template_name, context)
 
 def concrete_resurfacing_page(request):
@@ -474,6 +490,7 @@ def concrete_resurfacing_page(request):
     canonical = "https://mcexcavate.com/concrete-resurfacing/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     if request.method == 'POST' and request.FILES.get('images'):
         form = ServicePageContactForm(request.POST, request.FILES)
@@ -513,7 +530,8 @@ def concrete_resurfacing_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,}
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
     return render(request, template_name, context)
 
 def concrete_sealing_page(request):
@@ -527,6 +545,7 @@ def concrete_sealing_page(request):
     canonical = "https://mcexcavate.com/concrete-sealing/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/sealing-stamped-concrete.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     if request.method == 'POST' and request.FILES.get('images'):
         form = ServicePageContactForm(request.POST, request.FILES)
@@ -566,7 +585,8 @@ def concrete_sealing_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,}
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
     return render(request, template_name, context)
 
 def concrete_slabs_page(request):
@@ -580,6 +600,7 @@ def concrete_slabs_page(request):
     canonical = "https://mcexcavate.com/concrete-slabs/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/smoothfinish.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     if request.method == 'POST' and request.FILES.get('images'):
         form = ServicePageContactForm(request.POST, request.FILES)
@@ -619,7 +640,8 @@ def concrete_slabs_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,}
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
     return render(request, template_name, context)
 
 def concrete_steps_page(request):
@@ -633,6 +655,7 @@ def concrete_steps_page(request):
     canonical = "https://mcexcavate.com/concrete-steps/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     if request.method == 'POST' and request.FILES.get('images'):
         form = ServicePageContactForm(request.POST, request.FILES)
@@ -672,7 +695,8 @@ def concrete_steps_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,}
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
     return render(request, template_name, context)
 
 def bollard_page(request):
@@ -686,6 +710,7 @@ def bollard_page(request):
     canonical = "https://mcexcavate.com/bollards/"
     og_image = "https://mcexcavate.com/static/image/bollards/man_bollard11.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     if request.method == 'POST' and request.FILES.get('images'):
         form = ServicePageContactForm(request.POST, request.FILES)
@@ -724,7 +749,8 @@ def bollard_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "form" : form,}
+               "form" : form,
+               "date": date,}
     return render(request, template_name, context)
 
 def parging_page(request):
@@ -738,6 +764,7 @@ def parging_page(request):
     canonical = "https://mcexcavate.com/parging/"
     og_image = "https://mcexcavate.com/static/image/parging/white_parging.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     if request.method == 'POST' and request.FILES.get('images'):
         form = ServicePageContactForm(request.POST, request.FILES)
@@ -776,7 +803,8 @@ def parging_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "form" : form,}
+               "form" : form,
+               "date": date,}
     return render(request, template_name, context)
 
 def careers_page(request):
@@ -791,6 +819,7 @@ def careers_page(request):
     canonical = "https://mcexcavate.com/careers/"
     og_image = "https://mcexcavate.com/static/image/careers/concrete-finisher.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     template_name = "careers.html"
     context = {"title": title,
@@ -801,7 +830,8 @@ def careers_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "date": date,}
     return render(request, template_name, context)
 
 def about_page(request):
@@ -815,6 +845,7 @@ def about_page(request):
     canonical = "https://mcexcavate.com/about/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     template_name = "about.html"
     context = {"title": title,
@@ -825,7 +856,8 @@ def about_page(request):
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
                'og_image' : og_image,
-               'og_type' : og_type,} 
+               'og_type' : og_type,
+               "date": date,} 
     return render(request, template_name, context)
     
 def contact_page(request):
@@ -839,6 +871,7 @@ def contact_page(request):
     canonical = "https://mcexcavate.com/contact/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
 
     if request.method == 'POST':
@@ -876,7 +909,8 @@ def contact_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}    
+               'og_type' : og_type,
+               "date": date,}    
     return render(request, template_name, context)
 
     # def dashboard_view(request):
@@ -919,7 +953,7 @@ class DashboardView(TemplateView):
                   "meta_keywords":meta_keywords,
                   "meta_title":meta_title,
                   "sod_estimates":sod_estimates,
-                  } 
+                  "date": date,} 
 
         return context
 
@@ -935,6 +969,7 @@ def asphalt_page(request):
     canonical = "https://mcexcavate.com/asphalt-paving/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -1023,7 +1058,8 @@ def asphalt_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "date": date,}
     return render(request, template_name, context)
 
 def asphalt_repairs_page(request):
@@ -1036,6 +1072,7 @@ def asphalt_repairs_page(request):
     canonical = "https://mcexcavate.com/asphalt-repairs/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     form = ServicePageContactForm(request.POST or None)
     if form.is_valid():
@@ -1076,5 +1113,6 @@ def asphalt_repairs_page(request):
                "meta_title":meta_title,
                "canonical":canonical,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "date": date,}
     return render(request, template_name, context)

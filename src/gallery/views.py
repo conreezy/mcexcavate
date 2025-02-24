@@ -5,11 +5,13 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib import messages
+import datetime
 
 @login_required
 def gallery_create_view(request):
     title = 'Create New Gallery'
     meta_robots = 'noindex, nofollow'
+    date = datetime.datetime.now()
 
     if request.method == 'POST':
         gallery_form = GalleryForm(request.POST, request.FILES)
@@ -33,7 +35,8 @@ def gallery_create_view(request):
     context = {"title": title, 
               'gallery_form': gallery_form, 
               'gallery_images_form': gallery_images_form,
-              "meta_robots":meta_robots}
+              "meta_robots":meta_robots,
+              "date": date,}
     return render(request, template_name, context)
 
 def gallery_list_view(request):
@@ -45,6 +48,7 @@ def gallery_list_view(request):
     meta_robots = "index, follow"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
+    date = datetime.datetime.now()
 
     stamped_gallery = Gallery.objects.filter(title="Stamped Concrete")
     plain_gallery = Gallery.objects.filter(title="Plain Concrete")
@@ -62,7 +66,8 @@ def gallery_list_view(request):
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "date": date,}
     return render(request, template_name, context)
 
 def gallery_detail_view(request, slug):
@@ -75,6 +80,7 @@ def gallery_detail_view(request, slug):
     meta_keywords = obj.meta_keywords
     meta_description = obj.description
     meta_robots = "index, follow"
+    date = datetime.datetime.now()
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -93,13 +99,15 @@ def gallery_detail_view(request, slug):
                "page_obj":page_obj,
                "slug":slug,
                'og_image' : og_image,
-               'og_type' : og_type,}
+               'og_type' : og_type,
+               "date": date,}
     return render(request, template_name, context)
 
 @login_required
 def gallery_edit_view(request, slug):
     title = "Edit This Gallery"
     meta_robots = "noindex, nofollow"
+    date = datetime.datetime.now()
     form = GalleryEditForm(request.POST or None, request.FILES or None)
 
     if request.method == 'POST':
@@ -119,14 +127,16 @@ def gallery_edit_view(request, slug):
     context = {"title": title, 
                "meta_robots":meta_robots,
                "form":form,
-               "slug":slug}
+               "slug":slug,
+               "date": date,}
     return render(request, template_name, context)
 
 @login_required
 def gallery_delete_view(request):
     title = "Delete This Gallery"
     meta_robots = "noindex, nofollow"
+    date = datetime.datetime.now()
 
     template_name = 'gallery/delete.html'
-    context = {"title": title, "meta_robots":meta_robots}
+    context = {"title": title, "meta_robots":meta_robots, "date": date,}
     return render(request, template_name, context)

@@ -5,7 +5,7 @@
 			<div class="fdiv fdiv1">
 				<a href='/'>
 				{% load static %}
-				<img src="{% static 'image/logos/crusader_yellow.png' %}" alt="mcexcavate footer logo" style='height:50px;'>
+				<img src="{% static 'image/logos/crusader_logo_yellow.png' %}" alt="crusader concrete logo yellow" style='height:50px;'>
 				</a>
 				<hr class='footer-hr'>
 				<div class="">
@@ -68,7 +68,7 @@
 			</div>
 			<div class="col-12">
 				<hr class="footer-hr">
-				<h5 class='fh5'>&copy; Crusader Concrete Inc. 2025</h5>
+				<h5 class='fh5'>&copy; Crusader Concrete Inc.  {{ date|date:"Y" }}</h5>
 			</div>
 		</div>
 	</div>	
