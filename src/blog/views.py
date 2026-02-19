@@ -17,17 +17,36 @@ def blog_post_create_view(request):
     meta_robots = "noindex, nofollow"
     date = datetime.datetime.now()
 
+    breadcrumbs_title = "Create New Blog Post"
+    crumb_1 = "Blog"
+    crumb_1_link = "/blog"
+    crumb_2 = "Create New Blog Post"
+
     form = BlogPostModelForm(request.POST or None, request.FILES or None)
+
+    print("🚀 POST data:", request.POST.dict())  # Convert QueryDict to regular dict for clarity
+    print("🖼️ FILES data:", request.FILES.dict())
+    
     if form.is_valid():
         print("form is valid")
         obj = form.save(commit=False)
         obj.user = request.user
         obj.save()
-        form = BlogPostModelForm()
+        print(f"Saved BlogPost ID: {obj.id}")
         messages.success(request, f"Your new blog has been posted.")
+        return redirect(obj.get_absolute_url())  # Redirect to avoid duplicate submissions
+    else:
+        print("Form errors:", form.errors.as_json())  # Print full JSON error details
+        messages.error(request, f"Form submission failed: {form.errors.as_json()}")  # Display errors in the template
+
+
 
     template_name = 'blog/create.html'
     context = {'title': my_title, 
+               "crumb_1":crumb_1,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2":crumb_2,
+               "breadcrumbs_title":breadcrumbs_title, 
                'form': form, 
                "meta_robots":meta_robots,
                "date": date,}
@@ -42,6 +61,9 @@ def blog_post_list_view(request):
     og_type = "website"
     date = datetime.datetime.now()
 
+    breadcrumbs_title = "Crusader Concrete Blog"
+    crumb_1 = "Blog"
+
     blogs = BlogPost.objects.all().published()
 
     meta_description = "Read about various construction topics here on our blog. We've got some useful information about concrete, interlock and much more..."
@@ -52,6 +74,8 @@ def blog_post_list_view(request):
                 
     template_name = 'blog/blog.html'
     context = {'object_list':blogs,
+               "crumb_1":crumb_1,
+               "breadcrumbs_title":breadcrumbs_title,
                'title':title,
                "meta_robots":meta_robots,
                'meta_title': meta_title,
@@ -71,6 +95,11 @@ def blog_post_detail_view(request, slug):
         og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "article"
 
+    breadcrumbs_title = blog_post.title
+    crumb_1 = "Blog"
+    crumb_1_link = "/blog"
+    crumb_2 = blog_post.title
+
     meta_title = blog_post.title
     meta_description = (blog_post.content[:147]) + '...'
     meta_keywords = []
@@ -82,6 +111,10 @@ def blog_post_detail_view(request, slug):
                 
     context = {'og_image' : og_image,
                'og_type' : og_type,
+               "crumb_1":crumb_1,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2":crumb_2,
+               "breadcrumbs_title":breadcrumbs_title,
                'blog_post' : blog_post, 
                'object_list':blogs,
                "meta_description":meta_description,
@@ -99,6 +132,11 @@ def blog_post_update_view(request, slug):
     meta_robots = "noindex, nofollow"
     date = datetime.datetime.now()
 
+    breadcrumbs_title = "Blog Post Edit"
+    crumb_1 = "Blog"
+    crumb_1_link = "/blog"
+    crumb_2 = obj.title
+
     # if request.method == 'POST':
     #     if form.is_valid():
     #         form.save()
@@ -111,7 +149,11 @@ def blog_post_update_view(request, slug):
         messages.success(request, f"This blog post has been updated.")
 
     template_name = 'blog/update.html'
-    context = {'form' : form, 
+    context = {'form' : form,
+               "crumb_1":crumb_1,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2":crumb_2,
+               "breadcrumbs_title":breadcrumbs_title, 
                'title':f"Editing: {obj.title}",
                "meta_robots":meta_robots,
                "date": date,}
@@ -124,11 +166,20 @@ def blog_post_delete_view(request, slug):
     meta_robots = "noindex, nofollow" 
     date = datetime.datetime.now()
 
+    breadcrumbs_title = "Delete Blog Post"
+    crumb_1 = "Blog"
+    crumb_1_link = "/blog"
+    crumb_2 = obj.title
+
     template_name = 'blog/delete.html'
     if request.method == "POST":
         obj.delete()
         return redirect('/blog')
-    context = {'object':obj, 
+    context = {'object':obj,
+               "crumb_1":crumb_1,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2":crumb_2,
+               "breadcrumbs_title":breadcrumbs_title, 
                "meta_robots":meta_robots,
                "date": date,}
     return render (request , template_name, context)

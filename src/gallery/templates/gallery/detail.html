@@ -1,15 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-{% include "gallery/projects_breadcrumbs.html" %}
+{% include "breadcrumbs.html" %}
 {% load crispy_forms_tags %}
 {% load static %} 
 
-<div class='container-fluid'>
-	<div class='row my-2'>
-
-		<div class='gallery_col'>
-			<h1>{{ title }}</h1>
-		</div>
+<div class='container-fluid gallery_detail_wrapper'>
+	<div class='row'>
 
 		<div class="pagination">
 		    <span class="step-links">

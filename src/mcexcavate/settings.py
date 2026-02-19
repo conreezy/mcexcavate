@@ -13,7 +13,7 @@ SECRET_KEY = 'dc578pv-t)gq+k)yw+rd^2(pd)pji*x5til*kzdjb1@byr3+)h'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -33,8 +33,9 @@ EMAIL_PORT = 587
 #EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"] 
 
 # Max uploaded file size
-FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10 MB
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10 MB
+
 
 ALLOWED_HOSTS = ['172.105.25.80', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
 

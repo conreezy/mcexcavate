@@ -2,25 +2,27 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% include 'top_banner.html' %}
+{% include "breadcrumbs.html" %}
 <div class='container'>
-	<div class='row mb-3'>
+	<div class='row about_row'>
 
-		<div class='col-12' style='margin-bottom:50px;'>
+		<div class='about_col'>
+			<h1>About Crusader Concrete</h1>
 			<hr>
-			<br>
-			<p>Crusader Concrete is an Ottawa based residential and commercial concrete company founded in 2013. Specializing in decorative concrete work we create beautiful, functional and low maintenance landscapes that will stand the test of time.</p>
+			<p>Crusader Concrete has delivered professional concrete, excavation, and bollard installation services to residential, commercial, and municipal clients across the Ottawa area since 2020. Built on a commitment to quality workmanship, reliability and clear communication, our company has grown steadily through repeat business and trusted relationships.</p>
 		</div>
 
-		<div class='col-md-6 p-3'>
-			<img src= "{% static 'image/about/conor_ethan.jpg' %}" alt="digging with mini excavator" style="width: inherit; box-shadow:5px 5px 20px grey;">
+		<div class="about_img_layout">
+			<div class='about_img_col'>
+				<img src= "{% static 'image/about/conor_ethan.jpg' %}" alt="crusader concrete team pouring concrete">
 
-			<img class="pt-3"src= "{% static 'image/about/conor_mark.jpg' %}" alt="digging with mini excavator" style="width: inherit; box-shadow:5px 5px 20px grey;">
-		</div>
-		<div class='col-md-6 p-3'>
-			<img src= "{% static 'image/about/meagan_ethan.jpg' %}" alt="excavating for concrete" style="width: inherit; box-shadow:5px 5px 20px grey;">
+				<img src= "{% static 'image/about/conor_mark.jpg' %}" alt="crusader employees finishing concrete">
+			</div>
+			<div class='about_img_col'>
+				<img src= "{% static 'image/about/meagan_ethan.jpg' %}" alt="crusader employees having fun">
+			</div>
 		</div>
 
 	</div>
 </div>
-{% endblock %}
+{% endblock %} 

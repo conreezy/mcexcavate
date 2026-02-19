@@ -1,0 +1,42 @@
+.contact_info_row{
+margin:30px 0px 0px 0px;
+padding:0px 15px 0px 15px;
+}
+
+.contact_info_col{
+width:100%;
+}
+
+.contact_info_col h3{
+color: black;
+}
+
+.contact_email{
+margin:15px 0px 10px 0px;
+}
+
+.contact_email i{
+display: inline;
+margin-right: 10px;
+}
+
+.contact_email p{
+display: inline;
+}
+
+.contact_phone i{
+display: inline;
+margin-right: 10px;
+}
+
+.contact_phone p{
+display: inline;
+}
+
+.contact_form_row{
+padding:0px 15px 0px 15px;
+margin:30px 0px 30px 0px;
+}
+.contact_form_col{
+width: 100%;
+}

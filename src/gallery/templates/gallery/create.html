@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-{% include "top_banner.html" %}
+{% include "breadcrumbs.html" %}
 {% load crispy_forms_tags %}
 {% load static %} 
 
@@ -9,7 +9,7 @@
 
 		<div class='col-sm-12'>
 			<div class='container'>
-				<form method='POST' action='.' enctype='multipart/form-data'> {% csrf_token %}
+				<form method='POST' action='' enctype='multipart/form-data'> {% csrf_token %}
 					{{ gallery_form|crispy }}
 					{{ gallery_images_form|crispy }}
 					<button class="btn btn-primary mt-2">  Submit  </button>

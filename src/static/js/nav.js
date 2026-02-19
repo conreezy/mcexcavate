@@ -39,3 +39,18 @@ document.getElementById("nav_project_mobile").addEventListener("click", function
   var project_dropdown_mobile = document.getElementById("project_dropdown_mobile");
   project_dropdown_mobile.classList.toggle('show_block');
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const concreteTrigger = document.getElementById("mobile_concrete_trigger");
+  const concreteMenu = document.getElementById("concrete_dropdown_mobile");
+
+  if (concreteTrigger && concreteMenu) {
+    concreteTrigger.addEventListener("click", (e) => {
+      // prevent navigating to /concrete-services/ when you're just expanding
+      // If you want the link to still work, remove the next line and add a separate caret button instead.
+      e.preventDefault();
+
+      concreteMenu.classList.toggle("show_block"); // you already have .show_block {display:block !important;} :contentReference[oaicite:3]{index=3}
+    });
+  }
+});

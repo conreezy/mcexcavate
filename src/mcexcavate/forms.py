@@ -6,19 +6,13 @@ from django_recaptcha.widgets import ReCaptchaV2Checkbox, ReCaptchaV2Invisible
 
 Default = "---"
 Excavation = "Excavation"
-SodInstallation =  "Sod Installation"
-Interlock =  "Interlock"
 Concrete =  "Concrete"
-Parging =  "Parging"
 Bollards = "Bollards"
 
 SERVICE_CHOICES = (
   (Default, '---'),
   (Concrete, 'Concrete'),
-  (SodInstallation, 'Sod Installation'),
-  (Interlock, 'Interlock'),
   (Excavation, 'Excavation'),
-  (Parging, 'Parging'),
   (Bollards, 'Bollards'),
   )
 

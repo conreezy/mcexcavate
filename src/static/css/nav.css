@@ -4,22 +4,26 @@ background-color: #ffd100;
 }
 
 .logo_phone_top{
-margin: 0px 0px 0px 0px;
+margin: 0;
+padding: 15px 15px;
+display: flex;
+align-items: center;   /* vertical center */
 }
 
 .nav_logo{
-padding:13px 0px 15px 0px;
+padding:0px 0px 0px 0px;
 width:75%;
 }
 
 .nav_number{
 width:25%;
-padding:30px 0px 0px 0px;
+display: flex;
+justify-content: flex-end; /* push phone right */
+align-items: center;       /* vertical center */
 }
 
 .phone_number {
-float: right;
-clear: both;
+float: none;
 }
 
 .phone_number p{
@@ -82,11 +86,10 @@ padding:15px 40px 14px 40px;
 margin:0px auto 0px auto;
 font-size: 17px;
 color: white;
-}
-
-.nav_service{
 cursor:pointer;
 }
+
+
 
 .nav_service:hover > .service_dropdown{
 display: block !important;
@@ -149,6 +152,44 @@ color:black;
 background-color: white;
 }
 
+/* --- Nested submenu (Desktop) --- */
+
+/* make the first-level dropdown a positioning context */
+.service_dropdown_content {
+  position: relative; /* already relative in your css, keeping it explicit */
+}
+
+/* li that owns the submenu */
+.service_dropdown_content li.has_submenu{
+  position: relative;
+}
+
+/* the nested dropdown container */
+.service_sub_dropdown{
+  display: none;
+  position: absolute;
+  top: 0;
+  left: calc(100%);
+  min-width: max-content;
+  white-space: nowrap;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 0px 3px 3px 3px;
+  z-index: 100;
+  padding: 5px;
+}
+
+/* show submenu on hover */
+.service_dropdown_content li.has_submenu:hover > .service_sub_dropdown{
+  display: block;
+}
+
+/* small caret */
+.submenu_caret{
+  float: right;
+}
+/* concrete submenu end */
+
 /* MOBILE NAV */
 .mobile_nav{
 display: none;
@@ -199,11 +240,8 @@ cursor: pointer;
 .service_dropdown_mobile{
 display: none;
 width: 100%;
-background-color: white;
-border-top:1px solid rgba(0,0,0,0.3);
-border-left:1px solid rgba(0,0,0,0.3);
-border-right:1px solid rgba(0,0,0,0.3);
-border-bottom:1px solid rgba(0,0,0,0.3);
+background-color:white;
+
 margin:5px 0px 5px 0px;
 padding:5px;
 }
@@ -223,40 +261,26 @@ text-align: center;
 }
 
 .service_dropdown_mobile a:hover {
-background-color: #cecece;
-color:black;
-}
-
-/*mobile project dropdown*/
-.project_dropdown_mobile{
-display: none;
-width: 100%;
 background-color: white;
-border-top:1px solid rgba(0,0,0,0.3);
-border-left:1px solid rgba(0,0,0,0.3);
-border-right:1px solid rgba(0,0,0,0.3);
-border-bottom:1px solid rgba(0,0,0,0.3);
-margin:5px 0px 5px 0px;
-padding:5px;
-}
-
-.project_dropdown_mobile ul{
-list-style-type: none;
-padding:0px;
-}
-
-.project_dropdown_mobile a{
-float: none;
-color: black;
-padding:4px;
-text-decoration: none;
-display: block;
-text-align: center;
-}
-
-.project_dropdown_mobile a:hover {
-background-color: #cecece;
 color:black;
+}
+
+/* --- Nested submenu (Mobile) --- */
+.concrete_dropdown_mobile{
+  display: none;
+  list-style-type: none;
+  padding: 0;
+  margin: 6px 0 0 0;
+  background-color: #e6e6e6;
+}
+
+.concrete_dropdown_mobile a{
+  padding: 6px 4px;
+  text-align: center;
+}
+
+.concrete_dropdown_mobile a:hover{
+  background-color: #e6e6e6;
 }
 
 @media only screen and (max-width: 1400px) {

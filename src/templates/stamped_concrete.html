@@ -1,72 +1,68 @@
 {% extends "base.html" %}
-<head>
-<link rel="canonical" href="http://mcexcavate.com/concrete/"/>
-</head>
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
-<div class='container-fluid py-3'>
-	<div class='row'>
-		<div class='col-12'>
-			<h2 class='blog_h2'>Our Services</h2>
-			<a href="/">
-				<p style='display: inline'>Home</p>
-			</a>
-			<p style='display: inline'> --> </p>
-			<a href="/services/">
-				<p style='display: inline'>Services</p>
-			</a>
-			<p style='display: inline'> --></p>
-			<p style='display: inline'>Stamped Concrete</p>
+
+{% include "breadcrumbs.html" %}
+
+<div class='container'>
+	<div class="row service_top_row">
+		<div class="service_top_content_col">
+			<h1>{{title}}</h1>
+			<p class='service_top_paragraph'>Hire us for your stamped concrete project because we have the expertise to make sure your project is completed correctly and will stand the test of time.</p>
+			<p class='service_hero_col_bullets'>• Driveways</p>
+			<p class='service_hero_col_bullets'>• Patios</p>
+			<p class='service_hero_col_bullets'>• Walkways</p>
+			<p class='service_hero_col_bullets'>• Pool Surrounds</p>
+			<p class='service_hero_col_bullets'>• Steps</p>
+			<a href="#contactform"><button class="quote_button">REQUEST A QUOTE!</button></a>
+		</div>
+		<div class="service_top_img_col">
+			<img src= "{% static 'image/stamped-concrete/stamped-concrete-banner-448evered.jpg' %}" 
+			     alt="ottawa stamped conrete back patio classic wood stamp in brown">
 		</div>
 	</div>
-</div>
-<div class='container-fluid p-0'>
-	<div class='row service_hero'>
-		<div class='container'>
-			<div class='row'>
-				<div class='col-lg-6 service_hero_col'>
-					<div class='container-fluid'>
-						<div class='row'>
-							<div class='col-12'>
-								<div class="row service_hero_text">
-									<div class='col-12'>
-										<h1>{{title}}</h1>
-										<p class='service_hero_col_p'>Hire us for your stamped concrete project because we have the expertise to make sure your project is completed correctly and will stand the test of time.</p>
-										<p class='service_hero_col_bullets'>• Driveways</p>
-										<p class='service_hero_col_bullets'>• Patios</p>
-										<p class='service_hero_col_bullets'>• Walkways</p>
-										<p class='service_hero_col_bullets'>• Pool Surrounds</p>
-										<p class='service_hero_col_bullets'>• Steps</p>
-									</div> 
-								</div>
-								<img src= "{% static 'image/stamped-concrete/stamped-concrete-banner-448evered.jpg' %}" 
-								     alt="ottawa stamped conrete back patio classic wood stamp in brown">
-								<p class='service_img_caption_white'>Stamped concrete back patio in Westboro.</p>
-							</div>
-						</div>
+	<div class="row service_tri_image_wrapper">
+		<div class="service_tri_image">
+			<div class="service_tri_image_layout">
+
+				<div class="service_tri_image_col">
+					<div class="service_tri_image">
+						<img src="{% static 'image/stamped-concrete/stamped_tri_image_1.jpg' %}" alt="black and grey coloured stamped concrete front walkway">
 					</div>
 				</div>
-				<div class='col-lg-6 service_hero_col'>
-					{% include "services_contact_form.html" %}
+
+				<div class="service_tri_image_col">
+					<div class="service_tri_image">
+						<img src="{% static 'image/stamped-concrete/stamped_tri_image_2.jpg' %}" alt="grey stamped concrete walkway with random stone stamp">
+					</div>
 				</div>
+
+				<div class="service_tri_image_col">
+					<div class="service_tri_image">
+						<img src="{% static 'image/stamped-concrete/stamped_tri_image_3.jpg' %}" alt="red and brown stamped concrete walkway">
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
+	
+	<div class="row service_form_row">
+		<div class="service_form_col">
+			{% include "services_contact_form.html" %}
+		</div>
+	</div>
+	
 </div>
+
+
 
 <div class='container'>
 	<div class='row'>
 		<div class='col-12'>
-			<h2 style='color:black;' class="pt-5">What is Stamped Concrete?</h2>
-			<div class='container-fluid'>
-				<div class='row mt-4 mb-3'>
-					<div class='col-md-12 mb-2'>
-						<p>Stamped concrete is concrete that has been textured, patterned or imprinted to resemble brick, interlock, slate, flagstone, stone, or even wood. This stamped look is created by placing heavy stamps into concrete while it is still wet. Stamped concrete is often coloured and with an integral colour added to the concrete mix and a secondary colour added after pouring that helps highlight the textures and patterns. The wide variety of patterns and colour choices make it popular for beautifying patios, pool decks, driveways, walkways and more. Additionally, it is often more affordable, longer lasting, and requires less maintenance than other materials</p>
-					</div>
-					<br>
-				</div>
-			</div>
+			<h2 style='color:black;'>What is Stamped Concrete?</h2>
+			<p>Stamped concrete is concrete that has been textured, patterned or imprinted to resemble brick, interlock, slate, flagstone, stone, or even wood. This stamped look is created by placing heavy stamps into concrete while it is still wet. Stamped concrete is often coloured and with an integral colour added to the concrete mix and a secondary colour added after pouring that helps highlight the textures and patterns. The wide variety of patterns and colour choices make it popular for beautifying patios, pool decks, driveways, walkways and more. Additionally, it is often more affordable, longer lasting, and requires less maintenance than other materials</p>
 		</div>
 
 		<div class='col-12'>
@@ -311,7 +307,17 @@
 					</div>
 					<div class='col-md-12 mt-1 mb-2'>
 						<h3>Watch:</h3>
-					<iframe width="800" height="450" src="https://www.youtube.com/embed/7AWzeQnCrPA?si=FPKOOhlsJUTEt27_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+						<div class="video-wrapper">
+						    <iframe
+						        src="https://www.youtube.com/embed/7AWzeQnCrPA?si=FPKOOhlsJUTEt27_"
+						        title="YouTube video player"
+						        frameborder="0"
+						        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						        referrerpolicy="strict-origin-when-cross-origin"
+						        allowfullscreen>
+						    </iframe>
+						</div>
+					</div>
 					<br>
 				</div>
 			</div>
@@ -346,52 +352,6 @@
 						<p>We pour walkways and patios at a minimum of 4" thick. We use concrete with a 28 day compressive strength of 30 MPa, with 8% entrained air and fibre mesh.</p>
 					</div>
 					<br>
-				</div>
-			</div>
-		</div>
-
-		<div class='col-12'>
-			<hr>
-			<h2 style='color:black;' class="pt-3">Testimonials</h2>
-			<div class='container-fluid'>
-				<div class='row my-3'>
-
-					<div class='col-md-6 p-2'>
-						<div class='home_page_services'>
-					   		<img src= "{% static 'image/stamped-concrete/1510Carsonby-Sealed-768x576.jpg' %}" alt="stamped concrete patio wood stamp" style="width: inherit; box-shadow:5px 5px 20px grey;">
-							<p class='mt-3'>"The new walkway and steps look great. Work was completed promptly and to good standards.  Quality of concrete finish is exceptional.  Job site was left clean and tidy.  I would do business with Crusader again."</p>
-							<br> 
-							<p><b>- H. Finney, Barrhaven</b></p>
-						</div>
-					</div>
-
-					<div class='col-md-6 p-2'>
-						<div class='home_page_services'>
-							<img src= "{% static 'image/stamped-concrete/stamped-concrete-cottage-1.jpg' %}" alt="stamped concrete cottage deck" style="width: inherit; box-shadow:5px 5px 20px grey;">
-							<p class='mt-3'>"We were totally impressed with the fantastic job that Conor and his crew did for us.  They were punctual, efficient, knowledgeable and most of all the patio and deck looked absolutely beautiful. A few of our neighbours decided to get stamped concrete as well after seeing our wonderful result."</p>
-							<br> 
-							<p><b>- M. O'Dell, Calabogie</b></p>
-						</div>
-					</div>
-
-					<div class='col-md-6 p-2'>
-						<div class='home_page_services'>
-							<img src= "{% static 'image/stamped-concrete/stamped-concrete-front-steps-montclair.jpg' %}" alt="stamped concrete steps and garden wall in smoke grey with slate texture stamp" style="width: inherit; box-shadow:5px 5px 20px grey;">
-							<p class='mt-3'>“Great service. The guys worked hard and were quick to do it. The driveway, front steps and garden wall look great. Thank you to Conor and the guys. We're very pleased.”</p>
-							<br> 
-							<p><b>- J. Song, Greely</b></p>
-						</div>
-					</div>
-
-					<div class='col-md-6 p-2'>
-						<div class='home_page_services'>
-							<img src= "{% static 'image/stamped-concrete/stamped-concrete-front-walkway-garden-12clay.jpg' %}" alt="stamped concrete walkway ashlar slate in smoke grey close up" style="width: inherit; box-shadow:5px 5px 20px grey;">
-							<p class='mt-3'>“Had my walkway done two weeks ago by Crusader. These guys did a great job. The crew was very nice and courteous. I would recommend.”</p>
-							<br> 
-							<p><b>- P. Todd, Westboro</b></p>
-						</div>
-					</div>
-
 				</div>
 			</div>
 		</div>
@@ -444,12 +404,10 @@
 			<div class='container-fluid'>
 				<div class='row mt-4 mb-5'>
 					<div class='col-md-12 mb-2'>
-						<a href="/concrete-slabs/"><p>Plain Concrete</p></a>
-					  	<a href="/concrete-steps/"><p>Concrete Steps</p></a>
-					  	<a href="/concrete-repair/"><p>Concrete Repairs</p></a>
-					  	<a href="/concrete-resurfacing/"><p>Concrete Resurfacing</p></a>
-					  	<a href="/concrete-sealing/"><p>Concrete Sealing</p></a>
-					  	<a href="/parging/"><p>Parging</p></a>
+						<a href="/concrete-slabs/"><p style="margin:0px 0px 2px 0px;">Concrete Slabs</p></a>
+					  	<a href="/concrete-steps/"><p style="margin:0px 0px 2px 0px;">Concrete Steps</p></a>
+					  	<a href="/concrete-repair/"><p style="margin:0px 0px 2px 0px;">Concrete Repairs</p></a>
+					  	<a href="/concrete-resurfacing/"><p style="margin:0px 0px 2px 0px;">Concrete Resurfacing</p></a>
 					</div>
 					<br>
 				</div>
@@ -464,57 +422,29 @@
 {% block javascript %}
 <script>
 
-// ---- Prevent form submit then add / update service value
-document.getElementById("service_contact_form").addEventListener("submit", function(event){
-  event.preventDefault();
-  document.getElementById('form_service').value="Concrete"
-  document.getElementById("service_contact_form").submit();
-});
+// Form Upload Spinner and Set Hidden Service
+const form = document.getElementById("service_contact_form");
+  const overlay = document.getElementById("uploadOverlay");
 
-// Integral Colours Modal
-// Get the modals
-var modal = document.getElementById("ColourModal");
+  if (form) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-// Get the image and insert it inside the modal - use its "alt" text as a caption
-var img = document.getElementById("integralcolour");
-var modalImg = document.getElementById("integralcolour2");
-var captionText = document.getElementById("modal_caption");
-img.onclick = function(){
-  modal.style.display = "block";
-  modalImg.src = this.src;
-  captionText.innerHTML = this.alt;
-}
-// Get the <span> element that closes the modal
-var span = document.getElementById("close1");
+      // show overlay immediately
+      if (overlay) {
+        overlay.classList.add("is-visible");
+        overlay.setAttribute("aria-hidden", "false");
+      }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+      // disable submit button (prevents double-clicks)
+      const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
 
-// Accent Colours Modal
-// Get the modal
-var modal2 = document.getElementById("ColourModal2");
-
-// Get the image and insert it inside the modal - use its "alt" text as a caption
-var img2 = document.getElementById("accentcolour");
-var modalImg2 = document.getElementById("accentcolour2");
-var captionText2 = document.getElementById("modal_caption2");
-img2.onclick = function(){
-  modal2.style.display = "block";
-  modalImg2.src = this.src;
-  captionText2.innerHTML = this.alt;
-}
-
-// Get the <span> element that closes the modal
-var span2 = document.getElementById("close2");
-
-// When the user clicks on <span> (x), close the modal
-span2.onclick = function() {
-  modal2.style.display = "none";
-}
-
-
+      // your existing behavior: set hidden service then submit
+      document.getElementById("form_service").value = "Concrete";
+      form.submit(); // programmatic submit (won’t re-trigger this listener)
+    });
+  }
 
 </script>
 {% endblock javascript %}

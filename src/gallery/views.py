@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Gallery, GalleryImages
 from .forms import GalleryForm, GalleryImagesForm, GalleryEditForm
 from django.shortcuts import get_object_or_404
@@ -13,6 +13,13 @@ def gallery_create_view(request):
     meta_robots = 'noindex, nofollow'
     date = datetime.datetime.now()
 
+    breadcrumbs_title = "Projects"
+    crumb_1 = "Projects"
+    crumb_2 = "Concrete"
+    crumb_3 = "Stamped Concrete"
+    crumb_1_link = "/services"
+    crumb_2_link = "/concrete-services"
+
     if request.method == 'POST':
         gallery_form = GalleryForm(request.POST, request.FILES)
         gallery_images_form = GalleryImagesForm(request.POST, request.FILES)
@@ -23,8 +30,9 @@ def gallery_create_view(request):
             for img in images:
                 image_instance = GalleryImages(images=img, gallery=gallery_instance)
                 image_instance.save()
-            gallery_form = GalleryForm()
-            gallery_images_form = GalleryImagesForm()
+            return redirect(gallery_instance.get_absolute_url())  # Redirect to avoid duplicate submissions
+            #gallery_form = GalleryForm()
+            #gallery_images_form = GalleryImagesForm()
         else:
             print("error not valid")
     else:
@@ -33,6 +41,11 @@ def gallery_create_view(request):
 
     template_name  = 'gallery/create.html'
     context = {"title": title, 
+               "crumb_1_link":crumb_1_link,
+               "crumb_2_link":crumb_2_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "crumb_3":crumb_3, 
               'gallery_form': gallery_form, 
               'gallery_images_form': gallery_images_form,
               "meta_robots":meta_robots,
@@ -50,17 +63,18 @@ def gallery_list_view(request):
     og_type = "website"
     date = datetime.datetime.now()
 
+    breadcrumbs_title = "Projects"
+    crumb_1 = "Projects"
+
     stamped_gallery = Gallery.objects.filter(title="Stamped Concrete")
     plain_gallery = Gallery.objects.filter(title="Plain Concrete")
-    sod_gallery = Gallery.objects.filter(title="Re-sodding")
-    interlock_gallery = Gallery.objects.filter(title="Interlock")
 
     template_name = 'gallery/list.html'
-    context = {"title": title, 
+    context = {"title": title,
+               "breadcrumbs_title":breadcrumbs_title, 
+               "crumb_1":crumb_1,
                "stamped_gallery": stamped_gallery,
                "plain_gallery": plain_gallery,
-               "sod_gallery": sod_gallery,
-               "interlock_gallery": interlock_gallery,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -82,6 +96,11 @@ def gallery_detail_view(request, slug):
     meta_robots = "index, follow"
     date = datetime.datetime.now()
 
+    breadcrumbs_title = "Projects"
+    crumb_1 = "Projects"
+    crumb_2 = obj.title
+    crumb_1_link = "/gallery"
+
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -89,7 +108,11 @@ def gallery_detail_view(request, slug):
     og_type = "website"
     
     template_name = "gallery/detail.html"
-    context = {"title": title, 
+    context = {"title": title,
+               "breadcrumbs_title":title, 
+               "crumb_1_link":crumb_1_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
                "gallery":gallery,
                "obj":obj,
                "meta_description":meta_description,
@@ -110,6 +133,13 @@ def gallery_edit_view(request, slug):
     date = datetime.datetime.now()
     form = GalleryEditForm(request.POST or None, request.FILES or None)
 
+    breadcrumbs_title = "Projects"
+    crumb_1 = "Projects"
+    crumb_2 = "Concrete"
+    crumb_3 = "Stamped Concrete"
+    crumb_1_link = "/services"
+    crumb_2_link = "/concrete-services"
+
     if request.method == 'POST':
         form = GalleryEditForm(request.POST or None, request.FILES or None)
         images = request.FILES.getlist('images') #field name in model
@@ -124,7 +154,12 @@ def gallery_edit_view(request, slug):
         form = GalleryEditForm()
 
     template_name = 'gallery/edit.html'
-    context = {"title": title, 
+    context = {"title": title,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2_link":crumb_2_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "crumb_3":crumb_3,  
                "meta_robots":meta_robots,
                "form":form,
                "slug":slug,

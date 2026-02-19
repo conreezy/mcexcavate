@@ -13,16 +13,13 @@ from .views import (
     #services
     services_page,
     excavation_page,
-    interlock_page,
-    re_sodding_page,
+    concrete_services_page,
     stamped_concrete_page,
     concrete_repairs_page,
     concrete_resurfacing_page,
-    concrete_sealing_page,
     concrete_steps_page,
     concrete_slabs_page,
     bollard_page,
-    parging_page,
 
     #form fill
     concrete_success_page,
@@ -54,17 +51,14 @@ urlpatterns = [
 
     # -- Services
     path('services/', services_page, name='services'),
-    path('excavation/', excavation_page, name='excavation'),
-    path('interlock/', interlock_page, name='interlock'),
-    path('sod-installation/', re_sodding_page, name='sod-installation'),
+    path('concrete-services/', concrete_services_page, name='concrete_services_page'),
     path('concrete/', stamped_concrete_page, name='concrete'),
     path('concrete-repair/', concrete_repairs_page, name='concrete_repairs_page'),
     path('concrete-resurfacing/', concrete_resurfacing_page, name='concrete_resurfacing_page'),
-    path('concrete-sealing/', concrete_sealing_page, name='concrete_sealing_page'),
     path('concrete-steps/', concrete_steps_page, name='concrete_steps_page'),
     path('concrete-slabs/', concrete_slabs_page, name='concrete_slabs_page'),
+    path('excavation/', excavation_page, name='excavation'),
     path('bollards/', bollard_page, name='bollards'),
-    path('parging/', parging_page, name='parging'),
     path('concrete/success/', concrete_success_page, name='concrete_success_page'),
 
     # -- Gallery 

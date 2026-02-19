@@ -1,113 +1,152 @@
-/* Service Hero */
-.service_hero{
-margin: 0px 0px 0px 0px !important;
-padding: 55px 5px 75px 5px !important;
-background-image: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)), url("/static/image/stamped-concrete/2064Haig-Banner-1200x501.jpg");
-height:inherit;
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
-width: 100%;
+.service_page_wrapper{
+margin:20px 0px 20px 0px;
 }
 
-.service_hero_col{
-margin: 0px 0px 0px 0px;
-padding: 0px 5px 0px 5px !important;
+/* Service Page Box */
+.services_box{
+  box-shadow: 3px 3px 15px grey;
+  padding: 20px 20px 20px 20px;
+  margin: 10px 0px 10px 0px;
+  width:inherit;
 }
 
-.service_hero_col h1{
+.services_box h2{
+ color:black;
+}
+
+.services_box p{
+margin:0px;
+}
+
+.services_box img{
+ width:inherit;
+ margin: 20px 0px 0px 0px;
+}
+
+/* Service Detail Top Section */
+.service_top_row{
+margin:30px 0px 30px 0px;
+padding:0px 15px 0px 15px;
+}
+
+.service_top_content_col{
+width:50%;
+background-color: #F4F4F4;
+padding:40px;
+}
+
+.service_top_paragraph{
 margin:0px 0px 20px 0px;
-color: black;
-font-size: 30px;
-}
-
-.service_hero_text{
-margin: 0px 0px 0px 0px!important;
-padding: 20px 10px 25px 10px;
-background-color: rgba(255, 255, 255, 0.90);;
-width: inherit;
-}
-
-.service_hero_col_p{
-font-size: 18px;
-color: black;
-margin:0px 0px 15px 0px !important;
-padding: 0px 0px 0px 0px;
 }
 
 .service_hero_col_bullets{
-font-size: 18px;
-color: black;
+margin:0px 0px 3px 0px;  
 }
 
-.service_hero_col img{
-width: inherit; 
-box-shadow: 5px 5px 20px grey;
-margin:30px 0px 5px 0px;
+.service_top_content_col button{
+margin:27px 0px 30px 0px;
 }
 
-/* Service Top Row */
-.service_title{
-margin:25px 0px 25px 0px;
-}
-.service_top_row{
-padding-left: 0px !important;
-padding-right: 0px !important;
-}
-.service_top_row img{
-width: inherit; 
-box-shadow: 5px 5px 20px grey;
-}
-.service_top_row_p{
-
-}
-.service_top_row_bullets{
-margin: 10px 0px 20px 0px; 
-}
-.service_img_caption_white{
-font-size: 14px;
-font-style: italic;
-color: white;
-margin:0px 0px 35px 0px !important;
-padding: 0px 0px 0px 0px;
+.service_top_img_col{
+display: flex;
+width:50%;
 }
 
-.service_img_caption_black{
-font-size: 14px;
-font-style: italic;
-color: black;
-margin:7px 0px 35px 0px !important;
-padding: 0px 0px 0px 0px; 
+.service_top_img_col img{
+width: 100%;
+height: 100%;
+object-fit: cover
 }
 
-/* Service Pages */
-
-
-.service_page_button{
-margin:15px 0px 20px 0px;
+/* Service Tri Image */
+.service_tri_image_wrapper{
+margin:0px 0px 40px 0px;
+padding:0px 15px 0px 15px;
 }
 
-.top_testimonial{
-position: absolute;
-margin:0px 0px 50px 0px;
+.service_tri_image{
+width:100%;
 }
 
-.top_testimonial_content{
-position: absolute;
-bottom: 0;
+.service_tri_image_layout{
+display: flex;
+flex-wrap: wrap;
+gap: 20px; /* 0px between all items */
 }
 
-.services_contact_form_row{
-padding:0x;
+.service_tri_image_col{
+width: calc((100% - 40px) / 3);
+display: flex;
+flex-direction: column;
 }
 
-.services_contact_form{
+.service_tri_image{
+display: flex;
+width: 100%;
+}
+
+.service_tri_image img{
+width: 100%;  
+}
+
+/* Service Form */
+.service_form_row{
+padding:0px 15px 0px 15px;
+margin-bottom: 30px;
+}
+.service_form_col{
+width: 100%;
+}
+
+/* Services Contact Form */
+.service_contact_form{
   box-shadow: 3px 3px 15px grey;
   padding: 20px 20px 20px 20px;
   margin: 0px 0px 10px 0px;
   overflow: hidden;
   width:inherit;
   background-color: white;
+}
+
+/* Steps Page */
+.steps_type_wrapper{
+padding:0px 15px 0px 15px;
+margin:0px 0px 50px 0px;
+}
+
+.steps_type_title_col{
+width:100%;
+}
+
+.steps_type_title_col h2{
+color:black;
+margin-bottom: 15px;
+}
+
+.steps_type_layout{
+display: flex;
+flex-wrap: wrap;
+gap: 20px; /* 0px between all items */
+}
+
+.step_type_col{
+width: calc((100% - 60px) / 4);
+display: flex;
+flex-direction: column;
+box-shadow: 3px 3px 15px grey;
+}
+
+.step_image_box{
+
+}
+
+.step_image_box img{
+width:100%;
+}
+
+.step_image_box p{
+margin:10px 0px 10px 15px;
+font-weight: bold;
 }
 
 @media only screen and (max-width: 1400px) {
@@ -127,13 +166,25 @@ margin:700px 0px 50px 0px;
 
 
 @media only screen and (max-width: 768px) {
-.service_hero_col h1{
-font-size: 32px;
+/* Services Page */
+.service_page_wrapper{
+padding:0px 15px 0px 15px;
+}
+/* Service Detial Pages */
+.service_top_wrapper {
+flex-direction: column;
+}
+.service_top_content_col{ 
+width:100%;
+}
+.service_top_img_col{
+width:100%;
+}
+.service_top_img_col img {
+height: auto;
 }
 }
 
 @media only screen and (max-width: 576px) {
-.service_hero_col h1{
-font-size: 26px;
-}
+
 }

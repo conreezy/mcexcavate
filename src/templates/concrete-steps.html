@@ -2,75 +2,95 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
-{% include "service_breadcrumbs.html" %}
+{% include "breadcrumbs.html" %}
+
 <div class='container'>
-	<div class='row mb-5'>
-		<div class='col-lg-6 '>
-			<div class='container-fluid'>
-				<div class='row'>
-					<div class='col-12 service_top_row'>
-						<h1>{{title}}</h1>
-						<div class='service_top_row_bullets'>
-						<p style="font-size: 18px;">Whether you are looking to build basic or very intricate, decorative steps we can help you. Concrete steps are more affordable than interlock steps and more durable than wooden ones. Since concrete steps can also be connected to the foundation of your home with rebar they will last longer than interlock steps since they won't heave and shift. Your concrete steps can be made to look like natural stone, wood and other building materials. Contact us today to discuss your project.</p>
-						<br>
-						<p style="font-size: 18px;">Concrete steps are:</p>
-						<p style="font-size: 18px;">• Long lasting.</p>
-						<p style="font-size: 18px;">• Less expensive than interlock.</p>
-						<p style="font-size: 18px;">• More durable than wood.</p>
-						<p style="font-size: 18px;">• Customizable colour, texture and shape.</p>
-						<br>
-						</div>
-						<img src= "{% static 'image/stamped-concrete/concrete_steps_link.jpg' %}" alt="black stamped concrete steps">
-						<p class='service_img_caption_black'>Stamepd concrete steps in dark grey with black highlights.</p>
+	<div class="row service_top_row">
+		<div class="service_top_content_col">
+			<h1>{{title}}</h1>
+			<p class='service_top_paragraph'>Hire us for your stamped concrete project because we have the expertise to make sure your project is completed correctly and will stand the test of time.</p>
+			<p class='service_hero_col_bullets'>• Driveways</p>
+			<p class='service_hero_col_bullets'>• Patios</p>
+			<p class='service_hero_col_bullets'>• Walkways</p>
+			<p class='service_hero_col_bullets'>• Pool Surrounds</p>
+			<p class='service_hero_col_bullets'>• Steps</p>
+			<a href="#contactform"><button class="quote_button">REQUEST A QUOTE!</button></a>
+		</div>
+		<div class="service_top_img_col">
+			<img src= "{% static 'image/steps/concrete_steps_page_main.jpg' %}" 
+			     alt="broom finished concrete step and entryway">
+		</div>
+	</div>
+	<div class="row service_tri_image_wrapper">
+		<div class="service_tri_image">
+			<div class="service_tri_image_layout">
+
+				<div class="service_tri_image_col">
+					<div class="service_tri_image">
+						<img src="{% static 'image/steps/steps_tri_image_1.jpg' %}" alt="broom finished concrete step and railing">
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class='col-lg-6 service_top_row'>
-			{% include "services_contact_form.html" %}
-		</div>
-		<div class='col-12'>
-			<hr>
-			<h2 style='color:black;' class="pt-3">Concrete Step Options</h2>
-			<div class='container-fluid'>
-				<div class='row my-3'>
 
-					<div class='col-lg-3 col-sm-6 p-2'>
-						<div class='small_photo_box'>
-					   		<img src= "{% static 'image/steps/plain_broom_finished_steps.jpg' %}" alt="broom finished concrete steps">
-							<br> 
-							<p><b>Plain Broom Finish</b></p>
-						</div>
+				<div class="service_tri_image_col">
+					<div class="service_tri_image">
+						<img src="{% static 'image/steps/steps_tri_image_2.jpg' %}" alt="stamped concrete steps with textured face">
 					</div>
-
-					<div class='col-lg-3 col-sm-6 p-2'>
-						<div class='small_photo_box'>
-							<img src= "{% static 'image/steps/beveled_edge_concrete_steps.jpg' %}" alt="concrete steps with beveled edge">
-							<br> 
-							<p><b>Beveled Broom Finish</b></p>
-						</div>
-					</div>
-
-					<div class='col-lg-3 col-sm-6 p-2'>
-						<div class='small_photo_box'>
-							<img src= "{% static 'image/steps/plain_face_stamped_tread_steps.jpg' %}" alt="concrete steps with plain face and stamped tread">
-							<br> 
-							<p><b>Plain Face & Stamped Tread</b></p>
-						</div>
-					</div>
-
-					<div class='col-lg-3 col-sm-6 p-2'>
-						<div class='small_photo_box'>
-							<img src= "{% static 'image/steps/textured_face_stamped_concrete_steps.jpg' %}" alt="concrete steps with textures face and stamped tread">
-							<br> 
-							<p><b>Textured Face & Stamped Tread</b></p>
-						</div>
-					</div>
-					
 				</div>
+
+				<div class="service_tri_image_col">
+					<div class="service_tri_image">
+						<img src="{% static 'image/steps/steps_tri_image_3.jpg' %}" alt="broom finished concrete steps with landing and railing">
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
+	
+	<div class='row steps_type_wrapper'>
+
+		<div class="steps_type_title_col">
+			<h2>Concrete Step Types</h2>
+		</div>
+
+		<div class="steps_type_layout">
+			<div class='step_type_col'>
+				<div class='step_image_box'>
+			   		<img src= "{% static 'image/steps/plain_broom_finished_steps.jpg' %}" alt="broom finished concrete steps">
+					  <p>Plain Broom Finish</p>
+				</div>
+			</div>
+
+			<div class='step_type_col'>
+				<div class='step_image_box'>
+					<img src= "{% static 'image/steps/beveled_edge_concrete_steps.jpg' %}" alt="concrete steps with beveled edge">
+					<p>Beveled Broom Finish</p>
+				</div>
+			</div>
+
+			<div class='step_type_col'>
+				<div class='step_image_box'>
+					<img src= "{% static 'image/steps/plain_face_stamped_tread_steps.jpg' %}" alt="concrete steps with plain face and stamped tread">
+					<p>Plain Face & Stamped Tread</p>
+				</div>
+			</div>
+
+			<div class='step_type_col'>
+				<div class='step_image_box'>
+					<img src= "{% static 'image/steps/textured_face_stamped_concrete_steps.jpg' %}" alt="concrete steps with textures face and stamped tread">
+					<p>Textured Face & Stamped Tread</p>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="row service_form_row">
+		<div class="service_form_col">
+			{% include "services_contact_form.html" %}
+		</div>
+	</div>
+
 </div>
 
 {% endblock %}
@@ -78,12 +98,29 @@
 {% block javascript %}
 <script>
 
-// ---- Prevent form submit then add / update service value
-document.getElementById("service_contact_form").addEventListener("submit", function(event){
-  event.preventDefault();
-  document.getElementById('form_service').value="Concrete"
-  document.getElementById("service_contact_form").submit();
-});
+// Form Upload Spinner and Set Hidden Service
+const form = document.getElementById("service_contact_form");
+  const overlay = document.getElementById("uploadOverlay");
+
+  if (form) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      // show overlay immediately
+      if (overlay) {
+        overlay.classList.add("is-visible");
+        overlay.setAttribute("aria-hidden", "false");
+      }
+
+      // disable submit button (prevents double-clicks)
+      const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      // your existing behavior: set hidden service then submit
+      document.getElementById("form_service").value = "Concrete";
+      form.submit(); // programmatic submit (won’t re-trigger this listener)
+    });
+  }
 
 </script>
 {% endblock javascript %}

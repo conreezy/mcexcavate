@@ -59,7 +59,7 @@ def handle_uploaded_files(images, request):
 
     return file_paths if file_paths else None
 
-def send_email_with_attachments(form_data, file_paths):
+def send_email_with_attachments(form_data, file_paths, breadcrumbs_title):
     # Construct the email body with the form data
     email_body = f"""
     Name: {form_data['name']}
@@ -74,7 +74,7 @@ def send_email_with_attachments(form_data, file_paths):
 
     # Create the email message
     email = EmailMessage(
-        subject=f"{form_data['service']} Lead | Contact Page",
+        subject=f"{form_data['service']} Lead | {breadcrumbs_title}",
         body=email_body,
         from_email=settings.EMAIL_HOST_USER,
         to=['mcexcavate.ottawa@gmail.com'],
@@ -136,8 +136,13 @@ def services_page(request):
     og_type = "website"
     date = datetime.datetime.now()
 
+    breadcrumbs_title = "Services"
+    crumb_1 = "Services"
+
     template_name = "services.html"
     context = {"title": title, 
+               "crumb_1":crumb_1,
+               "breadcrumbs_title":breadcrumbs_title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -148,81 +153,29 @@ def services_page(request):
                "date": date,}
     return render(request, template_name, context)
 
-def excavation_page(request):
-    title = "Excavation"
-    breadcrumbs_title = "Excavation"
-    meta_title = 'Ottawa Excavation Services | Crusader Concrete'
-    meta_description = "Crusader Concrete provides Ottawa Excavation services to commercial, residential \
-                        and government clients. One of Ottawa's leading excavation companies since 2013."
-    meta_keywords = "ottawa excavation, excavation ottawa, excavating ottawa, ottawa excavating, \
-                    excavation services, ottawa excavation services, excavation, excavating"
+def concrete_services_page(request):
+    title = "Concrete Services"
+    meta_title = 'Concrete Services | Crusader Concrete'
+    meta_description = "We offer a variety of concrete services such as stamped concrete, broom finished concrete, \
+                        stairs, repairs and resurfacing"
+    meta_keywords = "Concrete services"
     meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/excavation/"
+    canonical = "https://mcexcavate.com/concrete-services/"
     og_image = "https://mcexcavate.com/static/image/excavation/large yellow komatsu excavator.jpg"
     og_type = "website"
     date = datetime.datetime.now()
 
-    # Blog Posts section
-    blogs = BlogPost.objects.filter(service="Excavation")  
+    breadcrumbs_title = "Concrete Services"
+    crumb_1 = "Services"
+    crumb_2 = "Concrete"
+    crumb_1_link = "/services"
 
-    template_name = "excavation.html"
-    context = {"title": title, 
-               "blogs":blogs,
-               "meta_description":meta_description,
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title,
-               "canonical":canonical,
-               'og_image' : og_image,
-               'og_type' : og_type,
-               "breadcrumbs_title" : breadcrumbs_title,
-               "date": date,}
-    return render(request, template_name, context)
-
-def interlock_page(request):
-    title = "INTERLOCK OTTAWA"
-    breadcrumbs_title = "Interlock"
-    meta_title = 'Ottawa Interlock | Crusader Concrete'
-    meta_description = "Crusader Concrete produces high quality interlock and hardscape projects to commercial, \
-                        residential and government clients in Ottawa."
-    meta_keywords = "ottawa interlock, interlock ottawa, interlock pathways ottawa, ottawa interlock patio, \
-                     interlock driveway, ottawa interlock repair, "
-    meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/interlock/"
-    og_image = "https://mcexcavate.com/static/image/interlock/black with grey border interlock front step and walkway.jpg"
-    og_type = "website"
-    date = datetime.datetime.now()
-
-    if request.method == 'POST' and request.FILES.get('images'):
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-
-            # save the uploaded images after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request)
-
-            if file_paths:
-                # Send the uploaded images and form data via email
-                send_email_with_attachments(form_data, file_paths)
-                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-                form = ServicePageContactForm()
-                return HttpResponseRedirect("/interlock/")
-
-            else:
-                # If files are not valid or failed validation, we don't proceed
-                return HttpResponseRedirect("/interlock/")
-
-    else:
-        form = ServicePageContactForm()
-
-    # Blog Posts section
-    blogs = BlogPost.objects.filter(service="Interlock")  
-
+    template_name = "concrete-services.html"
     context = {"title": title,
-               "blogs":blogs,
-               "form":form,
+               "crumb_1_link":crumb_1_link, 
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "breadcrumbs_title":breadcrumbs_title, 
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -230,118 +183,6 @@ def interlock_page(request):
                "canonical":canonical,
                'og_image' : og_image,
                'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,
-               "date": date,}
-    return render(request, "interlock.html", context)
-
-def re_sodding_page(request):
-    title = "SOD INSTALLATION OTTAWA"
-    breadcrumbs_title = "Sod Installation"
-    meta_title = "Sod Installation Ottawa | Crusader Concrete"
-    meta_description = "Crusader Concrete has been providing sod installation in Ottawa since 2013. \
-                        We use high quality top soil and make sure the lawn is perfectly graded before laying sod."
-    meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, \
-                     re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
-    meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/sod-installation/"
-    og_image = "https://mcexcavate.com/static/image/sod/1_sod_gallery.jpg"
-    og_type = "website"
-    date = datetime.datetime.now()
-
-    # price = 0 
-
-    # form = SodPriceForm(request.POST or None)
-    # if form.is_valid():
-    #     print(form.cleaned_data)
-    #     name_ = form.cleaned_data.get('name')
-    #     email = form.cleaned_data.get('email')
-    #     yard = form.cleaned_data.get('yard').lower()
-    #     length = int(form.cleaned_data.get('length'))
-    #     width = int(form.cleaned_data.get('width'))
-    #     area = int(form.cleaned_data.get('area'))
-        
-    #     if yard == "front" and area < 750:
-    #         price = 1687.50
-    #     elif yard == "back" and area < 750:
-    #         price = 1940.63
-    #     elif yard == "front & back" and area < 750:
-    #         price = 1814.06
-    #     elif yard == "front" and area < 3000:
-    #         price = area * 2.25
-    #     elif yard == "back" and area < 3000:
-    #         price = area * 2.59
-    #     elif yard == "front & back" and area < 3000:
-    #         price = area * 2.42
-    #     elif yard == "front" and area >= 3000:
-    #         price = area * 2
-    #     elif yard == "back" and area >= 3000:
-    #         price = area * 2.3
-    #     elif yard == "front & back" and area >= 3000:
-    #         price = area * 2.15
-    #     else:
-    #         price = 9999999
-
-    #     sod_estimate = SodEstimate.objects.create(**form.cleaned_data)
-    #     sod_estimate.price = price
-    #     sod_estimate.save()
-
-    #     price = '${:,.2f}'.format(price)       
-
-    #     # send the confirmation email 
-    #     subject = f"McExcavate | Re-Sodding Price Quote"
-    #     message =  f"Hello {name_}, \
-    #                  \n\nThank you for using our pricing calculator. \
-    #                  \n\nRe-Sodding an area of {area} square feet ({length}' x {width}') in your {yard} yard will cost aproximately {price} (accurate to within 10% - 15%). \
-    #                  \n\nFor more information or to book an an in person estimate contact us today. \
-    #                  \n\nMcExcavate \
-    #                  \nOttawa, ON \
-    #                  \n613-608-7722"
-    #     from_address = settings.EMAIL_HOST_USER
-    #     to_address = email
-    #     send_mail(subject, message, from_address, [to_address], fail_silently=False)
-    #     send_mail(subject, message, from_address, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
-
-    #     messages.success(request, f"{ price } to re-sod { area } square feet in your { yard } yard.")
-
-    if request.method == 'POST' and request.FILES.get('images'):
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request)
-
-            if file_paths:
-                # Send the uploaded images and form data via email
-                send_email_with_attachments(form_data, file_paths)
-                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-                form = ServicePageContactForm()
-                return HttpResponseRedirect("/sod-installation/")
-
-            else:
-                # If files are not valid or failed validation, we don't proceed
-                return HttpResponseRedirect("/sod-installation/")
-
-    else:
-        form = ServicePageContactForm()
-
-    # Blog Posts section
-    blogs = BlogPost.objects.filter(service="Re-Sodding")
-
-    template_name = "re-sodding.html"
-    context = {"title":title, 
-               "blogs":blogs,
-               "form":form,
-               "meta_description":meta_description,
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title,
-               "canonical":canonical,
-               'og_image' : og_image,
-               'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,
                "date": date,}
     return render(request, template_name, context)
 
@@ -357,6 +198,13 @@ def stamped_concrete_page(request):
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
     date = datetime.datetime.now()
+
+    breadcrumbs_title = "Stamped Concrete"
+    crumb_1 = "Services"
+    crumb_2 = "Concrete"
+    crumb_3 = "Stamped Concrete"
+    crumb_1_link = "/services"
+    crumb_2_link = "/concrete-services"
 
     if request.method == 'POST':
         print("Form submission received!")  # Debugging statement
@@ -376,9 +224,11 @@ def stamped_concrete_page(request):
                 return redirect(request.path)  # Stay on the same page
 
             # Send email with or without images
-            send_email_with_attachments(form_data, file_paths)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-            return HttpResponseRedirect("/concrete/") # Redirect on success
+            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
+                                      f"We will get back to you shortly about your {form_data['service']} project."
+                            )
+            return HttpResponseRedirect("/concrete/#contactform") # Redirect on success
 
         else:
             messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
@@ -388,196 +238,16 @@ def stamped_concrete_page(request):
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Concrete")    
       
-    template_name = "stamped_concrete.html"
+    template_name = "stamped_concrete.html"  
     context = {"title": title,
                "form": form,
                "blogs": blogs,
-               "meta_description":meta_description,
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title,
-               "canonical":canonical,
-               'og_image' : og_image,
-               'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,
-               "date": date,}
-    return render(request, template_name, context)
-
-def concrete_success_page(request):
-    title = "Thank you! \
-             You are one step closer to becoming another happy customer!"
-    meta_title = 'Thank you for contacting us! -Crusader Concrete'
-    meta_description = "Thank you for contacting us about your stamped concrete project! \
-                        We will be in touch soon to answer your questions or set up an estimate."
-    meta_keywords = ""
-    meta_robots = "noindex, nofollow" 
-    canonical = "https://mcexcavate.com/concrete/success/"
-    date = datetime.datetime.now()
-      
-    template_name = "concrete-success.html"
-    context = {"title": title,
-               "meta_description":meta_description,
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title,
-               "canonical":canonical,
-               "date": date,}
-    return render(request, template_name, context) 
-
-def concrete_repairs_page(request):
-    title = "CONCRETE REPAIR OTTAWA"
-    breadcrumbs_title = "Concrete Repair"
-    meta_title = 'Concrete Repair Ottawa | Crusader Concrete'
-    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been building \
-                        stamped concrete patios, walkways and driveways since 2013."
-    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
-    meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete-repair/"
-    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
-    og_type = "website"
-    date = datetime.datetime.now()
-
-    if request.method == 'POST' and request.FILES.get('images'):
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request)
-
-            if file_paths:
-                # Send the uploaded images and form data via email
-                send_email_with_attachments(form_data, file_paths)
-                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-                form = ServicePageContactForm()
-                return HttpResponseRedirect("/contact/")
-
-            else:
-                # If files are not valid or failed validation, we don't proceed
-                return HttpResponseRedirect("/contact/")
-
-    else:
-        form = ServicePageContactForm()
-
-    # Blog Posts section
-    blogs = BlogPost.objects.filter(service="Concrete")    
-      
-    template_name = "concrete-repairs.html"
-    context = {"title": title,
-               "form": form,
-               "blogs": blogs,
-               "meta_description":meta_description,
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title,
-               "canonical":canonical,
-               'og_image' : og_image,
-               'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,
-               "date": date,}
-    return render(request, template_name, context)
-
-def concrete_resurfacing_page(request):
-    title = "CONCRETE RESURFACING OTTAWA"
-    breadcrumbs_title = "Concrete Resurfacing"
-    meta_title = 'Concrete Resurfacing Ottawa'
-    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been building \
-                        stamped concrete patios, walkways and driveways since 2013."
-    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
-    meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete-resurfacing/"
-    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
-    og_type = "website"
-    date = datetime.datetime.now()
-
-    if request.method == 'POST' and request.FILES.get('images'):
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request)
-
-            if file_paths:
-                # Send the uploaded images and form data via email
-                send_email_with_attachments(form_data, file_paths)
-                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-                form = ServicePageContactForm()
-                return HttpResponseRedirect("/contact/")
-
-            else:
-                # If files are not valid or failed validation, we don't proceed
-                return HttpResponseRedirect("/contact/")
-
-    else:
-        form = ServicePageContactForm()
-
-    # Blog Posts section
-    blogs = BlogPost.objects.filter(service="Concrete")    
-      
-    template_name = "concrete-resurfacing.html"
-    context = {"title": title,
-               "form": form,
-               "blogs": blogs,
-               "meta_description":meta_description,
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title,
-               "canonical":canonical,
-               'og_image' : og_image,
-               'og_type' : og_type,
-               "breadcrumbs_title": breadcrumbs_title,
-               "date": date,}
-    return render(request, template_name, context)
-
-def concrete_sealing_page(request):
-    title = "CONCRETE SEALING OTTAWA"
-    breadcrumbs_title = "Concrete Sealing"
-    meta_title = 'Concrete Sealing Ottawa'
-    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been \
-                        building stamped concrete patios, walkways and driveways since 2013."
-    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
-    meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/concrete-sealing/"
-    og_image = "https://mcexcavate.com/static/image/stamped-concrete/sealing-stamped-concrete.jpg"
-    og_type = "website"
-    date = datetime.datetime.now()
-
-    if request.method == 'POST' and request.FILES.get('images'):
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request)
-
-            if file_paths:
-                # Send the uploaded images and form data via email
-                send_email_with_attachments(form_data, file_paths)
-                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-                form = ServicePageContactForm()
-                return HttpResponseRedirect("/contact/")
-
-            else:
-                # If files are not valid or failed validation, we don't proceed
-                return HttpResponseRedirect("/contact/")
-
-    else:
-        form = ServicePageContactForm()
-
-    # Blog Posts section
-    blogs = BlogPost.objects.filter(service="Concrete")    
-      
-    template_name = "concrete-sealing.html"
-    context = {"title": title,
-               "form": form,
-               "blogs": blogs,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2_link":crumb_2_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "crumb_3":crumb_3,
+               "breadcrumbs_title":breadcrumbs_title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -590,39 +260,50 @@ def concrete_sealing_page(request):
     return render(request, template_name, context)
 
 def concrete_slabs_page(request):
-    title = "PLAIN CONCRETE"
-    breadcrumbs_title = "Plain Concrete"
-    meta_title = 'Plain Concrete | Crusader Concrete'
+    title = "CONCRETE SLABS"
+    meta_title = 'Concrete Slabs | Crusader Concrete'
     meta_description = "We build concrete slabs from excavation to forming and pouring. \
                         Commercial and residential. Basement and garage floors, shed pads, hot tub pads..."
-    meta_keywords = "plain concrete, plain concrete slabs ottawa"
+    meta_keywords = "concrete slabs ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete-slabs/"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/smoothfinish.jpg"
     og_type = "website"
     date = datetime.datetime.now()
 
-    if request.method == 'POST' and request.FILES.get('images'):
+    breadcrumbs_title = "Concrete Slabs"
+    crumb_1 = "Services"
+    crumb_2 = "Concrete"
+    crumb_3 = "Concrete Slabs"
+    crumb_1_link = "/services"
+    crumb_2_link = "/concrete-services"
+
+    if request.method == 'POST':
+        print("Form submission received!")  # Debugging statement
+        print(request.FILES)  # This will show if images are being sent
         form = ServicePageContactForm(request.POST, request.FILES)
         if form.is_valid():
+            print("Form is valid!")
             # Extract the form data
             form_data = form.cleaned_data
             images = request.FILES.getlist('images')
-
+            print(f"Number of images received: {len(images)}")  # Debugging statement
             # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request)
+            file_paths = handle_uploaded_files(images, request) if images else []
 
-            if file_paths:
-                # Send the uploaded images and form data via email
-                send_email_with_attachments(form_data, file_paths)
-                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-                form = ServicePageContactForm()
-                return HttpResponseRedirect("/contact/")
+            if images and file_paths is None:
+                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
+                return redirect(request.path)  # Stay on the same page
 
-            else:
-                # If files are not valid or failed validation, we don't proceed
-                return HttpResponseRedirect("/contact/")
+            # Send email with or without images
+            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
+                                      f"We will get back to you shortly about your {form_data['service']} project."
+                            )
+            return HttpResponseRedirect("/concrete-slabs/#contactform") # Redirect on success
 
+        else:
+            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
     else:
         form = ServicePageContactForm()
 
@@ -631,6 +312,12 @@ def concrete_slabs_page(request):
       
     template_name = "concrete-slabs.html"
     context = {"title": title,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2_link":crumb_2_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "crumb_3":crumb_3,
+               "breadcrumbs_title":breadcrumbs_title,
                "form": form,
                "blogs": blogs,
                "meta_description":meta_description,
@@ -657,27 +344,39 @@ def concrete_steps_page(request):
     og_type = "website"
     date = datetime.datetime.now()
 
-    if request.method == 'POST' and request.FILES.get('images'):
+    breadcrumbs_title = "Concrete Steps"
+    crumb_1 = "Services"
+    crumb_2 = "Concrete"
+    crumb_3 = "Concrete Steps"
+    crumb_1_link = "/services"
+    crumb_2_link = "/concrete-services"
+
+    if request.method == 'POST':
+        print("Form submission received!")  # Debugging statement
+        print(request.FILES)  # This will show if images are being sent
         form = ServicePageContactForm(request.POST, request.FILES)
         if form.is_valid():
+            print("Form is valid!")
             # Extract the form data
             form_data = form.cleaned_data
             images = request.FILES.getlist('images')
-
+            print(f"Number of images received: {len(images)}")  # Debugging statement
             # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request)
+            file_paths = handle_uploaded_files(images, request) if images else []
 
-            if file_paths:
-                # Send the uploaded images and form data via email
-                send_email_with_attachments(form_data, file_paths)
-                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-                form = ServicePageContactForm()
-                return HttpResponseRedirect("/contact/")
+            if images and file_paths is None:
+                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
+                return redirect(request.path)  # Stay on the same page
 
-            else:
-                # If files are not valid or failed validation, we don't proceed
-                return HttpResponseRedirect("/contact/")
+            # Send email with or without images
+            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
+                                      f"We will get back to you shortly about your {form_data['service']} project."
+                            )
+            return HttpResponseRedirect("/concrete-steps/#contactform") # Redirect on success
 
+        else:
+            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
     else:
         form = ServicePageContactForm()
 
@@ -686,6 +385,12 @@ def concrete_steps_page(request):
       
     template_name = "concrete-steps.html"
     context = {"title": title,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2_link":crumb_2_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "crumb_3":crumb_3,
+               "breadcrumbs_title":breadcrumbs_title,
                "form": form,
                "blogs": blogs,
                "meta_description":meta_description,
@@ -697,6 +402,222 @@ def concrete_steps_page(request):
                'og_type' : og_type,
                "breadcrumbs_title": breadcrumbs_title,
                "date": date,}
+    return render(request, template_name, context)
+
+def concrete_repairs_page(request):
+    title = "CONCRETE REPAIR OTTAWA"
+    breadcrumbs_title = "Concrete Repair"
+    meta_title = 'Concrete Repair Ottawa | Crusader Concrete'
+    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been building \
+                        stamped concrete patios, walkways and driveways since 2013."
+    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
+    meta_robots = "index, follow"
+    canonical = "https://mcexcavate.com/concrete-repair/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
+    date = datetime.datetime.now()
+
+    breadcrumbs_title = "Concrete Repair"
+    crumb_1 = "Services"
+    crumb_2 = "Concrete"
+    crumb_3 = "Concrete Repair"
+    crumb_1_link = "/services"
+    crumb_2_link = "/concrete-services"
+
+    if request.method == 'POST':
+        print("Form submission received!")  # Debugging statement
+        print(request.FILES)  # This will show if images are being sent
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            print("Form is valid!")
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
+            print(f"Number of images received: {len(images)}")  # Debugging statement
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request) if images else []
+
+            if images and file_paths is None:
+                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
+                return redirect(request.path)  # Stay on the same page
+
+            # Send email with or without images
+            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
+                                      f"We will get back to you shortly about your {form_data['service']} project."
+                            )
+            return HttpResponseRedirect("/concrete-repair/#contactform") # Redirect on success
+
+        else:
+            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
+    else:
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete")    
+      
+    template_name = "concrete-repairs.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2_link":crumb_2_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "crumb_3":crumb_3,
+               "breadcrumbs_title":breadcrumbs_title,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title,
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
+    return render(request, template_name, context)
+
+def concrete_resurfacing_page(request):
+    title = "CONCRETE RESURFACING OTTAWA"
+    breadcrumbs_title = "Concrete Resurfacing"
+    meta_title = 'Concrete Resurfacing Ottawa'
+    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been building \
+                        stamped concrete patios, walkways and driveways since 2013."
+    meta_keywords = "ottawa stamped conrete, concrete ottawa, stamped concrete ottawa, ottawa concrete"
+    meta_robots = "index, follow"
+    canonical = "https://mcexcavate.com/concrete-resurfacing/"
+    og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
+    og_type = "website"
+    date = datetime.datetime.now()
+
+    breadcrumbs_title = "Concrete Resurfacing"
+    crumb_1 = "Services"
+    crumb_2 = "Concrete"
+    crumb_3 = "Concrete Resurfacing"
+    crumb_1_link = "/services"
+    crumb_2_link = "/concrete-services"
+
+    if request.method == 'POST':
+        print("Form submission received!")  # Debugging statement
+        print(request.FILES)  # This will show if images are being sent
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            print("Form is valid!")
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
+            print(f"Number of images received: {len(images)}")  # Debugging statement
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request) if images else []
+
+            if images and file_paths is None:
+                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
+                return redirect(request.path)  # Stay on the same page
+
+            # Send email with or without images
+            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
+                                      f"We will get back to you shortly about your {form_data['service']} project."
+                            )
+            return HttpResponseRedirect("/concrete-resurfacing/#contactform") # Redirect on success
+
+        else:
+            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
+    else:
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Concrete")    
+      
+    template_name = "concrete-resurfacing.html"
+    context = {"title": title,
+               "form": form,
+               "blogs": blogs,
+               "crumb_1_link":crumb_1_link,
+               "crumb_2_link":crumb_2_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "crumb_3":crumb_3,
+               "breadcrumbs_title":breadcrumbs_title,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title,
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
+    return render(request, template_name, context)
+
+def excavation_page(request):
+    title = "Excavation"
+    breadcrumbs_title = "Excavation"
+    meta_title = 'Ottawa Excavation Services | Crusader Concrete'
+    meta_description = "Crusader Concrete provides Ottawa Excavation services to commercial, residential \
+                        and government clients. One of Ottawa's leading excavation companies since 2013."
+    meta_keywords = "ottawa excavation, excavation ottawa, excavating ottawa, ottawa excavating, \
+                    excavation services, ottawa excavation services, excavation, excavating"
+    meta_robots = "index, follow"
+    canonical = "https://mcexcavate.com/excavation/"
+    og_image = "https://mcexcavate.com/static/image/excavation/large yellow komatsu excavator.jpg"
+    og_type = "website"
+    date = datetime.datetime.now()
+
+    breadcrumbs_title = "Excavation"
+    crumb_1 = "Services"
+    crumb_2 = "Excavation"
+    crumb_1_link = "/services"
+
+    if request.method == 'POST':
+        print("Form submission received!")  # Debugging statement
+        print(request.FILES)  # This will show if images are being sent
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            print("Form is valid!")
+            # Extract the form data 
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
+            print(f"Number of images received: {len(images)}")  # Debugging statement
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request) if images else []
+
+            if images and file_paths is None:
+                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
+                return redirect(request.path)  # Stay on the same page
+
+            # Send email with or without images
+            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
+                                      f"We will get back to you shortly about your {form_data['service']} project."
+                            )
+            return HttpResponseRedirect("/excavation/#contactform") # Redirect on success
+
+        else:
+            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
+    else:
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Excavation")  
+
+    template_name = "excavation.html"
+    context = {"title": title, 
+               "blogs":blogs,
+               "crumb_1_link":crumb_1_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "breadcrumbs_title":breadcrumbs_title, 
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title,
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,
+               "breadcrumbs_title" : breadcrumbs_title,
+               "date": date,
+               "form":form,}
     return render(request, template_name, context)
 
 def bollard_page(request):
@@ -712,27 +633,37 @@ def bollard_page(request):
     og_type = "website"
     date = datetime.datetime.now()
 
-    if request.method == 'POST' and request.FILES.get('images'):
+    breadcrumbs_title = "Bollards"
+    crumb_1 = "Services"
+    crumb_2 = "Bollards"
+    crumb_1_link = "/services"
+
+    if request.method == 'POST':
+        print("Form submission received!")  # Debugging statement
+        print(request.FILES)  # This will show if images are being sent
         form = ServicePageContactForm(request.POST, request.FILES)
         if form.is_valid():
+            print("Form is valid!")
             # Extract the form data
             form_data = form.cleaned_data
             images = request.FILES.getlist('images')
-
+            print(f"Number of images received: {len(images)}")  # Debugging statement
             # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request)
+            file_paths = handle_uploaded_files(images, request) if images else []
 
-            if file_paths:
-                # Send the uploaded images and form data via email
-                send_email_with_attachments(form_data, file_paths)
-                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-                form = ServicePageContactForm()
-                return HttpResponseRedirect("/contact/")
+            if images and file_paths is None:
+                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
+                return redirect(request.path)  # Stay on the same page
 
-            else:
-                # If files are not valid or failed validation, we don't proceed
-                return HttpResponseRedirect("/contact/")
+            # Send email with or without images
+            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
+                                      f"We will get back to you shortly about your {form_data['service']} project."
+                            )
+            return HttpResponseRedirect("/bollards/#contactform") # Redirect on success
 
+        else:
+            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
     else:
         form = ServicePageContactForm()
 
@@ -741,6 +672,10 @@ def bollard_page(request):
 
     template_name = "bollards.html"
     context = {"title": title,
+               "crumb_1_link":crumb_1_link,
+               "crumb_1":crumb_1,
+               "crumb_2":crumb_2,
+               "breadcrumbs_title":breadcrumbs_title,
                "breadcrumbs_title": breadcrumbs_title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
@@ -750,87 +685,6 @@ def bollard_page(request):
                'og_image' : og_image,
                'og_type' : og_type,
                "form" : form,
-               "date": date,}
-    return render(request, template_name, context)
-
-def parging_page(request):
-    title = "PARGING"
-    breadcrumbs_title = "Parging"
-    meta_title = 'Parging Ottawa | Crusader Concrete'
-    meta_description = "Crusader Concrete provides parging services to commercial, residential \
-                        and government clients. One of Ottawa's leading parging service providers since 2013."
-    meta_keywords = "ottawa parging, parging ottawa"
-    meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/parging/"
-    og_image = "https://mcexcavate.com/static/image/parging/white_parging.jpg"
-    og_type = "website"
-    date = datetime.datetime.now()
-
-    if request.method == 'POST' and request.FILES.get('images'):
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request)
-
-            if file_paths:
-                # Send the uploaded images and form data via email
-                send_email_with_attachments(form_data, file_paths)
-                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-                form = ServicePageContactForm()
-                return HttpResponseRedirect("/contact/")
-
-            else:
-                # If files are not valid or failed validation, we don't proceed
-                return HttpResponseRedirect("/contact/")
-
-    else:
-        form = ServicePageContactForm()
-
-    # Blog Posts section
-    blogs = BlogPost.objects.filter(service="AsphaltRepairs")
-
-    template_name = "parging.html"
-    context = {"title": title,
-               "breadcrumbs_title": breadcrumbs_title,
-               "meta_description":meta_description,
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title,
-               "canonical":canonical,
-               'og_image' : og_image,
-               'og_type' : og_type,
-               "form" : form,
-               "date": date,}
-    return render(request, template_name, context)
-
-def careers_page(request):
-    title = "OTTAWA CONSTRUCTION JOBS"
-    breadcrumbs_title = "Careers"
-    meta_title = 'Ottawa Construction Jobs | Careers With Crusader Concrete'
-    meta_description = "Crusader has been employing people in the construction industry since 2013. \
-                        We pride ourselves on providing a professional, rewarding and fun environment."
-    meta_keywords = "ottawa construction jobs, construction jobs ottawa, equipment operator job ottawa, \
-                     landscaping jobs ottawa, construction careers ottawa, construction foreman job ottawa, landscape foreman ottawa"
-    meta_robots = "index, follow"
-    canonical = "https://mcexcavate.com/careers/"
-    og_image = "https://mcexcavate.com/static/image/careers/concrete-finisher.jpg"
-    og_type = "website"
-    date = datetime.datetime.now()
-
-    template_name = "careers.html"
-    context = {"title": title,
-               "breadcrumbs_title": breadcrumbs_title,
-               "meta_description":meta_description,
-               "meta_robots":meta_robots,
-               "meta_keywords":meta_keywords,
-               "meta_title":meta_title,
-               "canonical":canonical,
-               'og_image' : og_image,
-               'og_type' : og_type,
                "date": date,}
     return render(request, template_name, context)
 
@@ -847,8 +701,13 @@ def about_page(request):
     og_type = "website"
     date = datetime.datetime.now()
 
+    breadcrumbs_title = "About"
+    crumb_1 = "About"
+
     template_name = "about.html"
     context = {"title": title,
+               "crumb_1":crumb_1,
+               "breadcrumbs_title":breadcrumbs_title,
                "breadcrumbs_title": breadcrumbs_title,
                "canonical":canonical,
                "meta_description":meta_description,
@@ -859,7 +718,38 @@ def about_page(request):
                'og_type' : og_type,
                "date": date,} 
     return render(request, template_name, context)
-    
+
+def careers_page(request):
+    title = "OTTAWA CONSTRUCTION JOBS"
+    meta_title = 'Ottawa Construction Jobs | Careers With Crusader Concrete'
+    meta_description = "Crusader has been employing people in the construction industry since 2013. \
+                        We pride ourselves on providing a professional, rewarding and fun environment."
+    meta_keywords = "ottawa construction jobs, construction jobs ottawa, equipment operator job ottawa, \
+                     landscaping jobs ottawa, construction careers ottawa, construction foreman job ottawa, landscape foreman ottawa"
+    meta_robots = "index, follow"
+    canonical = "https://mcexcavate.com/careers/"
+    og_image = "https://mcexcavate.com/static/image/careers/concrete-finisher.jpg"
+    og_type = "website"
+    date = datetime.datetime.now()
+
+    breadcrumbs_title = "Careers"
+    crumb_1 = "Careers"
+
+    template_name = "careers.html"
+    context = {"title": title,
+               "crumb_1":crumb_1,
+               "breadcrumbs_title":breadcrumbs_title,
+               "breadcrumbs_title": breadcrumbs_title,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title,
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,
+               "date": date,}
+    return render(request, template_name, context)
+
 def contact_page(request):
     title = "CONTACT US"
     breadcrumbs_title = "Contact Us"
@@ -872,6 +762,9 @@ def contact_page(request):
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
     og_type = "website"
     date = datetime.datetime.now()
+
+    breadcrumbs_title = "Contact"
+    crumb_1 = "Contact"
 
 
     if request.method == 'POST':
@@ -889,9 +782,11 @@ def contact_page(request):
                 return redirect(request.path)  # Stay on the same page
 
             # Send email with or without images
-            send_email_with_attachments(form_data, file_paths)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
-            return HttpResponseRedirect("/contact/") # Redirect on success
+            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
+                                      f"We will get back to you shortly about your {form_data['service']} project."
+                            )
+            return HttpResponseRedirect("/contact/#contactform") # Redirect on success
 
         else:
             messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
@@ -902,7 +797,8 @@ def contact_page(request):
     context = {
                "title": title, 
                "form": form,
-               "breadcrumbs_title": breadcrumbs_title,
+               "crumb_1":crumb_1,
+               "breadcrumbs_title":breadcrumbs_title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -1116,3 +1012,191 @@ def asphalt_repairs_page(request):
                'og_type' : og_type,
                "date": date,}
     return render(request, template_name, context)
+
+def interlock_page(request):
+    title = "INTERLOCK OTTAWA"
+    breadcrumbs_title = "Interlock"
+    meta_title = 'Ottawa Interlock | Crusader Concrete'
+    meta_description = "Crusader Concrete produces high quality interlock and hardscape projects to commercial, \
+                        residential and government clients in Ottawa."
+    meta_keywords = "ottawa interlock, interlock ottawa, interlock pathways ottawa, ottawa interlock patio, \
+                     interlock driveway, ottawa interlock repair, "
+    meta_robots = "index, follow"
+    canonical = "https://mcexcavate.com/interlock/"
+    og_image = "https://mcexcavate.com/static/image/interlock/black with grey border interlock front step and walkway.jpg"
+    og_type = "website"
+    date = datetime.datetime.now()
+
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
+
+            # save the uploaded images after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
+
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/interlock/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/interlock/")
+
+    else:
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Interlock")  
+
+    context = {"title": title,
+               "blogs":blogs,
+               "form":form,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title,
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
+    return render(request, "interlock.html", context)
+
+def re_sodding_page(request):
+    title = "SOD INSTALLATION OTTAWA"
+    breadcrumbs_title = "Sod Installation"
+    meta_title = "Sod Installation Ottawa | Crusader Concrete"
+    meta_description = "Crusader Concrete has been providing sod installation in Ottawa since 2013. \
+                        We use high quality top soil and make sure the lawn is perfectly graded before laying sod."
+    meta_keywords = "sod installation ottawa, ottawa sod installation, ottawa sod install, sod install ottawa, \
+                     re-sodding ottawa, ottawa re-sodding, re-sodding, sod installation,"
+    meta_robots = "index, follow"
+    canonical = "https://mcexcavate.com/sod-installation/"
+    og_image = "https://mcexcavate.com/static/image/sod/1_sod_gallery.jpg"
+    og_type = "website"
+    date = datetime.datetime.now()
+
+    # price = 0 
+
+    # form = SodPriceForm(request.POST or None)
+    # if form.is_valid():
+    #     print(form.cleaned_data)
+    #     name_ = form.cleaned_data.get('name')
+    #     email = form.cleaned_data.get('email')
+    #     yard = form.cleaned_data.get('yard').lower()
+    #     length = int(form.cleaned_data.get('length'))
+    #     width = int(form.cleaned_data.get('width'))
+    #     area = int(form.cleaned_data.get('area'))
+        
+    #     if yard == "front" and area < 750:
+    #         price = 1687.50
+    #     elif yard == "back" and area < 750:
+    #         price = 1940.63
+    #     elif yard == "front & back" and area < 750:
+    #         price = 1814.06
+    #     elif yard == "front" and area < 3000:
+    #         price = area * 2.25
+    #     elif yard == "back" and area < 3000:
+    #         price = area * 2.59
+    #     elif yard == "front & back" and area < 3000:
+    #         price = area * 2.42
+    #     elif yard == "front" and area >= 3000:
+    #         price = area * 2
+    #     elif yard == "back" and area >= 3000:
+    #         price = area * 2.3
+    #     elif yard == "front & back" and area >= 3000:
+    #         price = area * 2.15
+    #     else:
+    #         price = 9999999
+
+    #     sod_estimate = SodEstimate.objects.create(**form.cleaned_data)
+    #     sod_estimate.price = price
+    #     sod_estimate.save()
+
+    #     price = '${:,.2f}'.format(price)       
+
+    #     # send the confirmation email 
+    #     subject = f"McExcavate | Re-Sodding Price Quote"
+    #     message =  f"Hello {name_}, \
+    #                  \n\nThank you for using our pricing calculator. \
+    #                  \n\nRe-Sodding an area of {area} square feet ({length}' x {width}') in your {yard} yard will cost aproximately {price} (accurate to within 10% - 15%). \
+    #                  \n\nFor more information or to book an an in person estimate contact us today. \
+    #                  \n\nMcExcavate \
+    #                  \nOttawa, ON \
+    #                  \n613-608-7722"
+    #     from_address = settings.EMAIL_HOST_USER
+    #     to_address = email
+    #     send_mail(subject, message, from_address, [to_address], fail_silently=False)
+    #     send_mail(subject, message, from_address, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
+
+    #     messages.success(request, f"{ price } to re-sod { area } square feet in your { yard } yard.")
+
+    if request.method == 'POST' and request.FILES.get('images'):
+        form = ServicePageContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Extract the form data
+            form_data = form.cleaned_data
+            images = request.FILES.getlist('images')
+
+            # save the uploaded image after validating they are images and max of 5
+            file_paths = handle_uploaded_files(images, request)
+
+            if file_paths:
+                # Send the uploaded images and form data via email
+                send_email_with_attachments(form_data, file_paths)
+                messages.success(request, f"Thank you for contacting us {form_data['name']}. We will get back to you quickly about your {form_data['service']} project.")
+                form = ServicePageContactForm()
+                return HttpResponseRedirect("/sod-installation/")
+
+            else:
+                # If files are not valid or failed validation, we don't proceed
+                return HttpResponseRedirect("/sod-installation/")
+
+    else:
+        form = ServicePageContactForm()
+
+    # Blog Posts section
+    blogs = BlogPost.objects.filter(service="Re-Sodding")
+
+    template_name = "re-sodding.html"
+    context = {"title":title, 
+               "blogs":blogs,
+               "form":form,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title,
+               "canonical":canonical,
+               'og_image' : og_image,
+               'og_type' : og_type,
+               "breadcrumbs_title": breadcrumbs_title,
+               "date": date,}
+    return render(request, template_name, context)
+
+
+def concrete_success_page(request):
+    title = "Thank you! \
+             You are one step closer to becoming another happy customer!"
+    meta_title = 'Thank you for contacting us! -Crusader Concrete'
+    meta_description = "Thank you for contacting us about your stamped concrete project! \
+                        We will be in touch soon to answer your questions or set up an estimate."
+    meta_keywords = ""
+    meta_robots = "noindex, nofollow" 
+    canonical = "https://mcexcavate.com/concrete/success/"
+    date = datetime.datetime.now()
+      
+    template_name = "concrete-success.html"
+    context = {"title": title,
+               "meta_description":meta_description,
+               "meta_robots":meta_robots,
+               "meta_keywords":meta_keywords,
+               "meta_title":meta_title,
+               "canonical":canonical,
+               "date": date,}
+    return render(request, template_name, context) 

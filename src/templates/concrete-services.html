@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %} 
+{% include "breadcrumbs.html" %}
+<div class='container service_page_wrapper'>
+	<div class='row'>
+		<div class='col-12 services_page_box_wrapper'>
+			<div class='services_box'>
+				<a href='/concrete/'><h2>Stamped Concrete</h2></a>
+				<a href='/concrete/'><p>Learn more...</p></a>
+				<a href='/concrete/' style='width:inherit;'><img class="" src="{% static 'image/concrete_services/concrete_services_page_stamped_concrete.jpg' %}" alt="link to stamped concrete page"></a>
+			</div>
+		</div>
+
+		<div class='col-12 services_page_box_wrapper'>
+			<div class='services_box'>
+				<a href='/concrete-slabs/'><h2>Concrete Slabs</h2></a>
+				<a href='/concrete-slabs/'><p>Learn more...</p></a>
+				<a href='/concrete-slabs/' style='width:inherit;'><img class="" src="{% static 'image/concrete_services/concrete_services_page_plain_concrete.jpg' %}" alt="link to concrete slabs"></a>
+			</div>
+		</div>
+
+		<div class='col-12 services_page_box_wrapper'>
+			<div class='services_box'>
+				<a href='/concrete-steps/'><h2>Concrete Steps</h2></a>
+				<a href='/concrete-steps/'><p>Learn more...</p></a>
+				<a href='/concrete-steps/' style='width:inherit;'><img class="" src="{% static 'image/concrete_services/concrete_services_page_steps.jpg' %}" alt="link to concrete steps"></a>
+			</div>
+		</div>
+
+		<div class='col-12 services_page_box_wrapper'>
+			<div class='services_box'>
+				<a href='/concrete-repair/'><h2>Concrete Repair</h2></a>
+				<a href='/concrete-repair/'><p>Learn more...</p></a>
+				<a href='/concrete-repair/' style='width:inherit;'><img class="" src="{% static 'image/concrete_services/concrete_services_page_repair.jpg' %}" alt="link to other concrete services"></a>
+			</div>
+		</div>
+
+		<div class='col-12 services_page_box_wrapper'>
+			<div class='services_box'>
+				<a href='/concrete-resurfacing/'><h2>Concrete Resurfacing</h2></a>
+				<a href='/concrete-resurfacing/'><p>Learn more...</p></a>
+				<a href='/concrete-resurfacing/' style='width:inherit;'><img class="" src="{% static 'image/concrete_services/concrete_services_page_resurfacing.jpg' %}" alt="link to concrete resurfacing page"></a>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock javascript %}

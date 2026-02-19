@@ -28,6 +28,10 @@ color:black;
 color:#591a8c;
 }
 
+.gallery_detail_wrapper{
+margin:10px 0px 10px 0px;
+}
+
 .pagination{
 width:100%;
 text-align:center;

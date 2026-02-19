@@ -10,6 +10,36 @@
 .footer-hr{
   background-color: #adadad;
 }
+
+.footer_address{
+margin-bottom: 20px;
+}
+
+.footer_address p{
+margin:0px 0px 1px 0px;
+}
+
+.footer_email{
+}
+.footer_email i{
+display:inline;
+margin-right: 10px;
+}
+.footer_email p{
+display:inline;
+}
+
+.footer_phone{
+margin-top: 15px;
+}
+.footer_phone i{
+display:inline;
+margin-right: 10px;
+}
+.footer_phone p{
+display:inline;
+}
+
 .footer a{
   color: #ffffff;
 }
@@ -27,6 +57,10 @@ padding:0px 15px 0px 15px;
 }
 .linkdiv a:hover{
 color:#6193e2;
+}
+
+.linkdiv p{
+margin:2px 0px 0px 0px;
 }
 
 .fdiv1{

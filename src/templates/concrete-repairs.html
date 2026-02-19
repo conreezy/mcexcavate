@@ -2,29 +2,52 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load static %} 
-{% include "service_breadcrumbs.html" %}
+{% include "breadcrumbs.html" %}
+
 <div class='container'>
-	<div class='row mb-5'>
-		<div class='col-lg-6 '>
-			<div class='container-fluid'>
-				<div class='row'>
-					<div class='col-12 service_top_row'>
-						<h1>{{title}}</h1>
-						<div class='service_top_row_bullets'>
-						<p style="font-size: 18px;">Your our old concrete doesn't need to be completely removed and replaced. Parts of it can be removed and replaced with new concrete to make it functional again. We can also advise as to whether a repair will suffice or if you should replace the entire piece. Contact us today to talk about your project.</p>
-						<br>
-						</div>
-						<img src= "{% static 'image/stamped-concrete/concrete_repair_link.jpg' %}" alt="Cutout and replace concrete repair">
-						<p class='service_img_caption_black'>Cutout and replace concrete repair.</p>
+	<div class="row service_top_row">
+		<div class="service_top_content_col">
+			<h1>{{title}}</h1>
+			<p class='service_top_paragraph'>Your our old concrete doesn't need to be completely removed and replaced. Parts of it can be cut out and replaced with new concrete to make it functional again. We can advise as to whether a repair will suffice or if you should replace the entire slab. Contact us today to talk about your project.</p>
+			<a href="#contactform"><button class="quote_button">REQUEST A QUOTE!</button></a>
+		</div>
+		<div class="service_top_img_col">
+			<img src= "{% static 'image/repair/repair_page_main.jpg' %}" 
+			     alt="concrete step repair">
+		</div>
+	</div>
+	<div class="row service_tri_image_wrapper">
+		<div class="service_tri_image">
+			<div class="service_tri_image_layout">
+
+				<div class="service_tri_image_col">
+					<div class="service_tri_image">
+						<img src="{% static 'image/repair/repair_tri_image_1.jpg' %}" alt="concrete curb repair">
 					</div>
 				</div>
+
+				<div class="service_tri_image_col">
+					<div class="service_tri_image">
+						<img src="{% static 'image/repair/repair_tri_image_4.jpg' %}" alt="concrete garage floor repair">
+					</div>
+				</div>
+
+				<div class="service_tri_image_col">
+					<div class="service_tri_image">
+						<img src="{% static 'image/repair/repair_tri_image_3.jpg' %}" alt="concrete sidewalk patch repair around hydro pole">
+					</div>
+				</div>
+
 			</div>
 		</div>
-		<div class='col-lg-6 service_top_row'>
+	</div>
+	
+	<div class="row service_form_row">
+		<div class="service_form_col">
 			{% include "services_contact_form.html" %}
 		</div>
-
 	</div>
+	
 </div>
 
 {% endblock %}
@@ -32,12 +55,29 @@
 {% block javascript %}
 <script>
 
-// ---- Prevent form submit then add / update service value
-document.getElementById("service_contact_form").addEventListener("submit", function(event){
-  event.preventDefault();
-  document.getElementById('form_service').value="Concrete"
-  document.getElementById("service_contact_form").submit();
-});
+// Form Upload Spinner and Set Hidden Service
+const form = document.getElementById("service_contact_form");
+  const overlay = document.getElementById("uploadOverlay");
+
+  if (form) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      // show overlay immediately
+      if (overlay) {
+        overlay.classList.add("is-visible");
+        overlay.setAttribute("aria-hidden", "false");
+      }
+
+      // disable submit button (prevents double-clicks)
+      const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      // your existing behavior: set hidden service then submit
+      document.getElementById("form_service").value = "Concrete";
+      form.submit(); // programmatic submit (won’t re-trigger this listener)
+    });
+  }
 
 </script>
 {% endblock javascript %}

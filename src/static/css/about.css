@@ -1,0 +1,30 @@
+.about_row{
+margin:30px 0px;
+padding:0px 15px;
+}
+
+.about_col{
+width:100%;
+margin:0px 0px 30px 0px;
+}
+
+.about_col p{
+margin:0;
+}
+
+.about_img_layout{
+display: flex;
+flex-wrap: wrap;
+gap: 20px; /* 0px between all items */
+}
+
+.about_img_col{
+width: calc((100% - 20px) / 2);
+display: flex;
+flex-direction: column;
+}
+
+.about_img_col img{
+width: 100%; 
+box-shadow:5px 5px 20px grey;
+}

@@ -1,29 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<div class='container-fluid pt-3'>
-	<div class='row'>
-		<div class='col-12'>
-			<h1 class='blog_h2'>Our Projects</h1>
-			<a href="/">
-				<p style='display: inline'>Home</p>
-			</a>
-			<p style='display: inline'> --> </p>
-			<a href="/gallery/">
-				<p style='display: inline'>Projects</p>
-			</a>
-			{% if obj.title %}
-			<p style='display: inline'> --></p>
-			<p style='display: inline'>{{ obj.title }}</p>
-			{% endif %}
-		</div>
-		<div class='col-12'>
-			<hr class='mb-2 mx-auto'>
-		</div>
-	</div>
-</div>
+{% include "breadcrumbs.html" %}
 {% load static %} 
-<div class='container'>
-	<div class='row my-3'>
+<div class='container service_page_wrapper'>
+	<div class='row'>
 
 		<div class='col-sm-12'>
 			<div class='container'>
@@ -39,24 +19,6 @@
 					</div>
 					{% endfor %}
 					{% for gallery in plain_gallery %}
-					<div class='col-md-6 mb-3'>
-						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
-				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
-				   			<img src= "{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
-				   		</a>
-						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
-					</div>
-					{% endfor %}
-					{% for gallery in sod_gallery %}
-					<div class='col-md-6 mb-3'>
-						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
-				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
-				   			<img src= "{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
-				   		</a>
-						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
-					</div>
-					{% endfor %}
-					{% for gallery in interlock_gallery %}
 					<div class='col-md-6 mb-3'>
 						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
 				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">

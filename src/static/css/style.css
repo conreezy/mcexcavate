@@ -88,13 +88,20 @@ html h1 {
   color: black;
 }
 p { 
-  margin: 0 !important; 
-  text-decoration: 
+
 }
+
 .alert-error {
     background-color: #f8d7da;
     color: #721c24;
     border-color: #f5c6cb;
+}
+.line {
+  width: 50px;
+  height: 0;
+  border: 1px solid #ffd100;
+  margin: 10px 0px 5px 0px;
+  display:inline-block;
 }
 .top-banner {
   display: flex;
@@ -168,6 +175,90 @@ p {
  margin: 0px 0px 10px 0px;
 }
 
+.video-wrapper {
+width: 100%;
+aspect-ratio: 16 / 9;
+}
+
+.video-wrapper iframe {
+width: 100%;
+height: 100%;
+display: block;
+}
+
+.quote_button{
+background-color: #ffd100;
+color:black;
+padding:15px;
+border:none;
+transition: box-shadow .3s ease;
+}
+
+.quote_button:focus,
+.quote_button:active{
+border:none;
+outline:none;
+}
+
+.quote_button:hover{
+box-shadow: 3px 3px 3px grey;
+}
+
+.submit_button{
+background-color: #ffd100;
+color:black;
+padding:10px 15px 10px 15px;
+border:none;
+transition: box-shadow .3s ease;
+}
+
+.submit_button:focus,
+.submit_button:active{
+border:none;
+outline:none;
+}
+
+.submit_button:hover{
+box-shadow: 3px 3px 3px grey;
+}
+
+/* Form Loader */
+.upload-overlay{
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.55);
+    z-index: 9999;
+    padding: 20px;
+  }
+  .upload-overlay.is-visible{ display: flex; }
+
+  .upload-overlay__card{
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,.25);
+  }
+  .upload-overlay__title{ font-weight: 700; margin-bottom: 2px; }
+  .upload-overlay__sub{ opacity: .8; font-size: 14px; }
+
+  .upload-spinner{
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 4px solid rgba(0,0,0,.15);
+    border-top-color: rgba(0,0,0,.65);
+    animation: spin .9s linear infinite;
+    flex: 0 0 auto;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
 
 /* Optional: Style the caret down icon */

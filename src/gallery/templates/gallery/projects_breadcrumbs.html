@@ -1,21 +1,52 @@
-<div class='container-fluid pt-3'>
-	<div class='row'>
-		<div class='col-12'>
-			<h2 class='blog_h2'>Our Projects</h2>
-			<a href="/">
-				<p style='display: inline'>Home</p>
-			</a>
-			<p style='display: inline'> --> </p>
-			<a href="/gallery/">
-				<p style='display: inline'>Projects</p>
-			</a>
-			{% if obj.title %}
-			<p style='display: inline'> --></p>
-			<p style='display: inline'>{{ obj.title }}</p>
-			{% endif %}
-		</div>
-		<div class='col-12'>
-			<hr class='mb-2 mx-auto'>
-		</div>
-	</div>
+<div class='container-fluid breadcrumbs'>
+  <div class='row'>
+  	<div class="col-12 p-0">
+	    <div class='container'>
+	      <div class='row'>
+
+	      	{% if crumb_1 and crumb_2 and crumb_3 %}
+            <div class="breadcrumbs_col">
+              <h1>{{breadcrumbs_title}}</h1>
+              <a href="/">
+	          		<p style='display: inline'>Home</p>
+		          </a>
+		          <p style='display: inline'> &gt </p>
+		          <a href="/services">
+		            <p style='display: inline'>{{crumb_1}}</p>
+		          </a>
+		          <p style='display: inline'> &gt</p>
+		          <a href={{crumb_2_link}}>
+		            <p style='display: inline'>{{crumb_2}}</p>
+		          </a>
+		          <p style='display: inline'> &gt</p>
+		          <p style='display: inline'>{{crumb_3}}</p>
+            </div>
+            {% elif crumb_1 and crumb_2 %}
+            <div class="breadcrumbs_col">
+              <h1>{{breadcrumbs_title}}</h1>
+              <a href="/">
+	          		<p style='display: inline'>Home</p>
+		          </a>
+		          <p style='display: inline'> &gt </p>
+		          <a href={{crumb_1_link}}>
+		            <p style='display: inline'>{{crumb_1}}</p>
+		          </a>
+		          <p style='display: inline'> &gt</p>
+		          <p style='display: inline'>{{crumb_2}}</p>
+            </div>
+            {% elif crumb_1 %}
+            <div class="breadcrumbs_col">
+              <h1>{{breadcrumbs_title}}</h1>
+              <a href="/">
+	          		<p style='display: inline'>Home</p>
+		          </a>
+		          <p style='display: inline'> &gt </p>
+		          <p style='display: inline'>{{crumb_1}}</p>
+            </div>
+          {% endif %}
+
+	      </div>
+	    </div>
+	  </div>
+  </div>
 </div>

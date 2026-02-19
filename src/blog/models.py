@@ -48,7 +48,6 @@ class BlogPost(models.Model):
     title   = models.CharField(max_length = 120)
     slug    = models.SlugField(unique=True)
     content = RichTextUploadingField(null=True, blank=True)
-    #content = models.TextField(null = True, blank = True)
     publish_date = models.DateTimeField(default=timezone.now)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
