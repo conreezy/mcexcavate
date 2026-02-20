@@ -5,7 +5,7 @@ background-color: #ffd100;
 
 .logo_phone_top{
 margin: 0;
-padding: 15px 15px;
+padding: 25px 15px;
 display: flex;
 align-items: center;   /* vertical center */
 }
@@ -27,9 +27,8 @@ float: none;
 }
 
 .phone_number p{
-padding-top: 7px;
 font-size: 25px;
-/*text-shadow: -.5px 0 yellow, 0 .5px yellow, .5px 0 yellow, 0 -.5px yellow;*/
+margin:0;
 color:black;
 font-weight: bold;
 }
@@ -302,7 +301,7 @@ margin: 0px 0px 0px 0px;
 }
 .nav_logo{
 	width:100%;
-	padding:20px 0px 0px 0px;
+	padding:10px 0px 0px 0px;
 }
 .nav_logo a img{
 	display: block;
@@ -310,13 +309,15 @@ margin: 0px 0px 0px 0px;
 }
 .nav_number{
 	width:100%;
-	padding:0px 0px 10px 0px;
+  margin:0px auto 0px auto;
+	padding:0px 0px 0px 0px;
 }
 .phone_number {
+margin:0px auto 0px auto;
 float: none;
 }
 .phone_number p{
-padding:15px 0px 5px 0px;
+padding:25px 0px 5px 0px;
 text-align: center;
 }
 

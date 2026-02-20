@@ -1,5 +1,7 @@
 /* HOME PAGE */
-
+.home_content_wrapper{
+margin-bottom: 30px;
+}
 /*Top Home Banner*/
 .img-ban-1 {
   display: flex;

@@ -145,7 +145,8 @@ width:100%;
 }
 
 .step_image_box p{
-margin:10px 0px 10px 15px;
+padding:10px 15px 10px 15px;
+margin:0;
 font-weight: bold;
 }
 
@@ -158,12 +159,10 @@ font-weight: bold;
 }
 
 @media only screen and (max-width: 992px) {
-
-.top_testimonial_content{
-margin:700px 0px 50px 0px;
+.step_type_col{
+width: calc((100% - 20px) / 2);
 }
 }
-
 
 @media only screen and (max-width: 768px) {
 /* Services Page */
