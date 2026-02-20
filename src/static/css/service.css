@@ -64,10 +64,6 @@ margin:0px 0px 40px 0px;
 padding:0px 15px 0px 15px;
 }
 
-.service_tri_image{
-width:100%;
-}
-
 .service_tri_image_layout{
 display: flex;
 flex-wrap: wrap;
