@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRe
 from django.template.loader import get_template
 from django.contrib import messages
 from django.conf import settings
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail, EmailMessage, BadHeaderError
 import requests
 from requests import Request, Session
 import json
@@ -13,9 +13,11 @@ from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm,
 from blog.models import BlogPost
 import os
 from PIL import Image
-from django.core.exceptions import ValidationError
 from .settings import MEDIA_ROOT
 import datetime
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from typing import Optional
 
 MAX_UPLOAD_IMAGES = 5  # Limit to 5 images
 
@@ -59,45 +61,76 @@ def handle_uploaded_files(images, request):
 
     return file_paths if file_paths else None
 
-def send_email_with_attachments(form_data, file_paths, breadcrumbs_title):
-    # Construct the email body with the form data
-    email_body = f"""
-    Name: {form_data['name']}
-    Email: {form_data['email']}
-    Phone: {form_data['phone']}
-    Address: {form_data['address']}
-    Marketing: {form_data['marketing']}
-    Service: {form_data['service']}
-    Message: {form_data['content']}
-    
+def _reject_header_injection(value: str, field_name: str = "value") -> str:
     """
+    Prevent CRLF/newline header injection.
+    Any header value containing \r or \n is unsafe.
+    """
+    if value and ("\r" in value or "\n" in value):
+        raise ValueError(f"Invalid {field_name}: header injection attempt.")
+    return value
 
-    # Create the email message
+def _clean_reply_to_email(raw_email: str) -> Optional[str]:
+    """
+    Returns a validated email or None if invalid/blank.
+    Also rejects newline characters (header injection).
+    """
+    if not raw_email:
+        return None
+
+    email = raw_email.strip()
+    _reject_header_injection(email, "email")
+
+    try:
+        validate_email(email)
+        return email
+    except ValidationError:
+        return None
+
+def send_email_with_attachments(form_data, file_paths, breadcrumbs_title):
+    # Build body (body isn't a header, so newline checks aren't required here)
+    email_body = f"""
+Name: {form_data.get('name', '')}
+Email: {form_data.get('email', '')}
+Phone: {form_data.get('phone', '')}
+Address: {form_data.get('address', '')}
+Marketing: {form_data.get('marketing', '')}
+Service: {form_data.get('service', '')}
+Message: {form_data.get('content', '')}
+"""
+
+    # Protect header fields you control/compose
+    service = _reject_header_injection(str(form_data.get("service", "")).strip(), "service")
+    breadcrumbs_title = _reject_header_injection(str(breadcrumbs_title).strip(), "breadcrumbs_title")
+
+    reply_to_email = _clean_reply_to_email(form_data.get("email", ""))
+
     email = EmailMessage(
-        subject=f"{form_data['service']} Lead | {breadcrumbs_title}",
+        subject=f"{service} Lead | {breadcrumbs_title}",
         body=email_body,
         from_email=settings.EMAIL_HOST_USER,
         to=['mcexcavate.ottawa@gmail.com'],
+        reply_to=[reply_to_email] if reply_to_email else None,
     )
 
-    # Attach images only if there are valid files
+    # Your existing attachment logic
     if file_paths:
         for file_path in file_paths:
             try:
-                print(f"Attaching file: {file_path}")  # Debugging statement
                 with open(file_path, 'rb') as attachment:
-                    email.attach(os.path.basename(file_path), attachment.read(), 'application/octet-stream')
+                    email.attach(
+                        os.path.basename(file_path),
+                        attachment.read(),
+                        'application/octet-stream'
+                    )
             except Exception as e:
                 print(f"Error attaching file {file_path}: {e}")
 
-    # Attach each Image
-    # for file_path in file_paths:
-    #     with open(file_path, 'rb') as attachment:
-    #         email.attach(os.path.basename(file_path), attachment.read(), 'application/octet-stream')
-    
-    # Send the email
-    email.send()
-    print("Email sent successfully!")  # Debugging statement
+    try:
+        email.send(fail_silently=False)
+    except BadHeaderError:
+        # Django detected a bad header (often CRLF injection). Log + handle appropriately.
+        raise
 
 def home_page(request):
     title = "Crusader Concrete"
