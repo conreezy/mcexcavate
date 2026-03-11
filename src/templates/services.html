@@ -6,25 +6,25 @@
 	<div class='row'>
 		<div class='col-12 services_page_box_wrapper'>
 			<div class='services_box'>
-				<a href='/concrete-services/'><h2>Concrete</h2></a>
-				<a href='/concrete-services/'><p>Learn more...</p></a>
-				<a href='/concrete-services/' style='width:inherit;'><img class="" src="{% static 'image/services/services_page_concrete.jpg' %}" alt="link to stamped concrete page"></a>
+				<a href="{% url 'concrete_services_page' %}"><h2>Concrete</h2></a>
+				<a href="{% url 'concrete_services_page' %}"><p>Learn more...</p></a>
+				<a href="{% url 'concrete_services_page' %}" style='width:inherit;'><img class="" src="{% static 'image/services/services_page_concrete.jpg' %}" alt="link to stamped concrete page"></a>
 			</div>
 		</div>
 
 		<div class='col-12 services_page_box_wrapper'>
 			<div class='services_box'>
-				<a href='/excavation/'><h2>Excavation</h2></a>
-				<a href='/excavation/'><p>Learn more...</p></a>
-				<a href='/excavation/' style='width:inherit;'><img class="" src="{% static 'image/services/services_page_excavation.jpg' %}" alt="ottawa excavation services"></a>
+				<a href="{% url 'excavation' %}"><h2>Excavation</h2></a>
+				<a href="{% url 'excavation' %}"><p>Learn more...</p></a>
+				<a href="{% url 'excavation' %}" style='width:inherit;'><img class="" src="{% static 'image/services/services_page_excavation.jpg' %}" alt="ottawa excavation services"></a>
 			</div>
 		</div> 
 
 		<div class='col-12 services_page_box_wrapper'>
 			<div class='services_box'>
-				<a href='/bollards/'><h2>Bollards</h2></a>
-				<a href='/bollards/'><p>Learn more...</p></a>
-				<a href='/bollards/' style='width:inherit;'><img class="" src="{% static 'image/services/services_page_bollard.jpg' %}" alt="link to bollard page"></a>
+				<a href="{% url 'bollards' %}"><h2>Bollards</h2></a>
+				<a href="{% url 'bollards' %}"><p>Learn more...</p></a>
+				<a href="{% url 'bollards' %}" style='width:inherit;'><img class="" src="{% static 'image/services/services_page_bollard.jpg' %}" alt="link to bollard page"></a>
 			</div>
 		</div>
 

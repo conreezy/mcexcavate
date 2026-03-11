@@ -1,68 +1,67 @@
 <!--- Footer -->
+{% load static %}
 <footer>
-	<div class="container-fluid">
-		<div class="row text-center footer">
-			<div class="fdiv fdiv1">
-				<a href='/'>
-				{% load static %}
-				<img src="{% static 'image/logos/crusader_text_logo_yellow.png' %}" alt="crusader concrete logo yellow" style='height:49px;'>
-				</a>
-				<hr class='footer-hr'>
-				<div class="footer_address">
-					<p>Crusader Concrete</p>
-					<p>1503 Gilles St.</p>
-					<p>Ottawa, ON K1H 8E2</p>
-				</div>
-				<div class="footer_email">
-					<i class="fa fa-envelope"></i><a href='mailto:mcexcavate.ottawa@gmail.com' target='.'><p>info@crusaderconcrete.ca</p></a><br>
-				</div>
-				<div class='footer_phone'>
-					<i class="fa fa-phone"></i><a href='tel:6136087722'><p>613-608-7722</p></a>
-				</div>
-				<div class='socials'>
- 					<div>
-						<a href='https://www.youtube.com/channel/UCrd0DHcyU4-aNgGU28R0QAw' target="."><i class="fab fa-youtube fa-2x"></i></a>
-					</div>
-					<div style='margin:auto;'>
-						<a href='https://www.instagram.com/crusader_concrete/' target="."><i class="fab fa-instagram fa-2x"></i></a>
-					</div>
-				    <div>
-						<a id='facebook_link' href='https://www.facebook.com/people/crusaderconcrete/61552469951476/' target="."><i class="fab fa-facebook fa-2x"></i></a>
-					</div>
-				</div>
-			</div>
-			<div class="fdiv linkdiv">
-				<hr class="footer-hr">
-				<h5>Concrete</h5>
-				<hr class="footer-hr">
-				<a href="/concrete/"><p>Stamped Concrete</p></a>
-			  	<a href="/concrete-slabs/"><p>Concrete Slabs</p></a>
-			  	<a href="/concrete-steps/"><p>Concrete Steps</p></a>
-			  	<a href="/concrete-repair/"><p>Concrete Repair</p></a>
-			  	<a href="/concrete-resurfacing/"><p>Concrete Resurfacing</p></a>
-			</div>
-			<div class="fdiv linkdiv">
-				<hr class="footer-hr">
-				<h5>Other Services</h5>
-				<hr class="footer-hr">
-				<a href='/excavation/'><p>Excavation</p></a>
-				<a href="/bollards/"><p>Bollards</p></a>
-				
-			</div>
-			<div class="fdiv linkdiv">
-				<hr class="footer-hr">
-				<h5>About</h5>
-				<hr class="footer-hr">
-				<a href='/gallery/'><p>Projects</p></a>
-				<a href='/careers/'><p>Careers</p></a>
-				<a href='/about/'><p>About</p></a>
-				<a href='/blog/'><p>Blog</p></a>
-				<a href='/contact/'><p>Contact</p></a>
-			</div>
-			<div class="col-12">
-				<hr class="footer-hr">
-				<h5 class='fh5'>&copy; Crusader Concrete Inc.  {{ date|date:"Y" }}</h5>
-			</div>
-		</div>
-	</div>	
+    <div class="container-fluid">
+        <div class="row text-center footer">
+            <div class="fdiv fdiv1">
+                <a href="{% url 'home' %}">
+                <img src="{% static 'image/logos/crusader_text_logo_yellow.png' %}" alt="crusader concrete logo yellow" style='height:49px;'>
+                </a>
+                <hr class='footer-hr'>
+                <div class="footer_address">
+                    <p>Crusader Concrete</p>
+                    <p>1503 Gilles St.</p>
+                    <p>Ottawa, ON K1H 8E2</p>
+                </div>
+                <div class="footer_email">
+                    <i class="fa fa-envelope"></i><a href='mailto:mcexcavate.ottawa@gmail.com' target='.'><p>info@crusaderconcrete.ca</p></a><br>
+                </div>
+                <div class='footer_phone'>
+                    <i class="fa fa-phone"></i><a href='tel:6136087722'><p>613-608-7722</p></a>
+                </div>
+                <div class='socials'>
+                    <div>
+                        <a href='https://www.youtube.com/channel/UCrd0DHcyU4-aNgGU28R0QAw' target='.'><i class="fab fa-youtube fa-2x"></i></a>
+                    </div>
+                    <div style='margin:auto;'>
+                        <a href='https://www.instagram.com/crusader_concrete/' target='.'><i class="fab fa-instagram fa-2x"></i></a>
+                    </div>
+                    <div>
+                        <a id='facebook_link' href='https://www.facebook.com/people/crusaderconcrete/61552469951476/' target='.'><i class="fab fa-facebook fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="fdiv linkdiv">
+                <hr class="footer-hr">
+                <h5>Concrete</h5>
+                <hr class="footer-hr">
+                <a href="{% url 'concrete' %}"><p>Stamped Concrete</p></a>
+                <a href="{% url 'concrete_slabs_page' %}"><p>Concrete Slabs</p></a>
+                <a href="{% url 'concrete_steps_page' %}"><p>Concrete Steps</p></a>
+                <a href="{% url 'concrete_repairs_page' %}"><p>Concrete Repair</p></a>
+                <a href="{% url 'concrete_resurfacing_page' %}"><p>Concrete Resurfacing</p></a>
+            </div>
+            <div class="fdiv linkdiv">
+                <hr class="footer-hr">
+                <h5>Other Services</h5>
+                <hr class="footer-hr">
+                <a href="{% url 'excavation' %}"><p>Excavation</p></a>
+                <a href="{% url 'bollards' %}"><p>Bollards</p></a>
+            </div>
+            <div class="fdiv linkdiv">
+                <hr class="footer-hr">
+                <h5>About</h5>
+                <hr class="footer-hr">
+                <a href="{% url 'gallery:list' %}"><p>Projects</p></a>
+                <a href="{% url 'careers' %}"><p>Careers</p></a>
+                <a href="{% url 'about' %}"><p>About</p></a>
+                <a href="{% url 'blog:list' %}"><p>Blog</p></a>
+                <a href="{% url 'contact' %}"><p>Contact</p></a>
+            </div>
+            <div class="col-12">
+                <hr class="footer-hr">
+                <h5 class='fh5'>&copy; Crusader Concrete Inc.  {{ date|date:"Y" }}</h5>
+            </div>
+        </div>
+    </div>
 </footer>

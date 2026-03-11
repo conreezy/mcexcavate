@@ -12,7 +12,7 @@ from project.models import SodEstimate, PavingEstimate
 from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm, PavingPriceForm
 from blog.models import BlogPost
 import os
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from .settings import MEDIA_ROOT
 import datetime
 from django.core.validators import validate_email
@@ -21,45 +21,54 @@ from typing import Optional
 
 MAX_UPLOAD_IMAGES = 5  # Limit to 5 images
 
-def is_image(image):
+def validate_uploaded_image(image):
     try:
-        img = Image.open(image)
-        img.verify()  # This will raise an error if the file is not a valid image
-        return True
-    except (IOError, SyntaxError):
-        return False
-
-def handle_uploaded_files(images, request):
-    # Check if the number of files is within the allowed limit
-    if len(images) > MAX_UPLOAD_IMAGES:
-        messages.error(request, f"Error: Only {MAX_UPLOAD_IMAGES} images are allowed. You tried to upload {len(images)}.")
+        image.seek(0)
+        with Image.open(image) as img:
+            img.verify()
+        image.seek(0)
         return None
+    except (UnidentifiedImageError, OSError, SyntaxError, ValueError):
+        image.seek(0)
+        return f"{image.name}: The file is not a valid image."
 
-    # Define a directory where you want to save the uploaded files
-    upload_dir = MEDIA_ROOT + "/form_uploads/"
-    if not os.path.exists(upload_dir):
-        os.makedirs(upload_dir)
-    
-    # Save the uploaded file to the directory
+
+def handle_uploaded_files(images):
+    if len(images) > MAX_UPLOAD_IMAGES:
+        return None, [
+            f"You can upload up to {MAX_UPLOAD_IMAGES} images, but you selected {len(images)}."
+        ]
+
+    upload_errors = []
+    for image in images:
+        validation_error = validate_uploaded_image(image)
+        if validation_error:
+            upload_errors.append(validation_error)
+
+    if upload_errors:
+        return None, upload_errors
+
+    upload_dir = os.path.join(MEDIA_ROOT, 'form_uploads')
+    os.makedirs(upload_dir, exist_ok=True)
+
     file_paths = []
-    for i in images:
-        print(f"Processing file: {i.name}")  # Debugging statement
-        if not is_image(i):
-            messages.error(request, f"The file {i.name} is not a valid image.")
-            return False
-
-        file_path = os.path.join(upload_dir, i.name)
+    for image in images:
+        file_path = os.path.join(upload_dir, image.name)
         try:
+            image.seek(0)
             with open(file_path, 'wb+') as destination:
-                for chunk in i.chunks():
+                for chunk in image.chunks():
                     destination.write(chunk)
             file_paths.append(file_path)
-            print(f"Saved file: {file_path}")  # Debugging statement
-        except Exception as e:
-            print(f"Failed to save file {i.name}: {e}")  # Debugging statement
-            return None
+        except OSError as exc:
+            for saved_path in file_paths:
+                try:
+                    os.remove(saved_path)
+                except OSError:
+                    pass
+            return None, [f"{image.name}: The file could not be uploaded. Please try again."]
 
-    return file_paths if file_paths else None
+    return file_paths, []
 
 def _reject_header_injection(value: str, field_name: str = "value") -> str:
     """
@@ -132,13 +141,67 @@ Message: {form_data.get('content', '')}
         # Django detected a bad header (often CRLF injection). Log + handle appropriately.
         raise
 
+
+def _build_form(form_class, request):
+    if request.method == 'POST':
+        return form_class(request.POST, request.FILES)
+    return form_class()
+
+
+def _process_contact_form_submission(request, form, breadcrumbs_title, redirect_url):
+    if request.method != 'POST':
+        return None
+
+    if not form.is_valid():
+        messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
+        return None
+
+    form_data = form.cleaned_data
+    images = request.FILES.getlist('images')
+    file_paths, upload_errors = handle_uploaded_files(images) if images else ([], [])
+
+    if upload_errors:
+        for upload_error in upload_errors:
+            form.add_error('images', upload_error)
+        messages.error(request, "Please correct the image upload errors below and try again.")
+        return None
+
+    send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+    messages.success(
+        request,
+        f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
+        f"We will get back to you shortly about your {form_data['service']} project.",
+    )
+    return HttpResponseRedirect(redirect_url)
+
+
+def _send_plain_lead_email(form_data, subject):
+    message = (
+        f"Name: {form_data.get('name')} "
+        f"\n\nEmail: {form_data.get('email')} "
+        f"\n\nPhone: {form_data.get('phone')} "
+        f"\n\nAddress: {form_data.get('address')} "
+        f"\n\nService: {form_data.get('service')} "
+        f"\n\nMarketing: {form_data.get('marketing')}"
+        f"\n\nMessage: {form_data.get('content')}"
+    )
+    send_mail(subject, message, settings.EMAIL_HOST_USER, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
+
+
+def _process_plain_lead_form_submission(request, form, subject):
+    if not form.is_valid():
+        return form
+
+    _send_plain_lead_email(form.cleaned_data, subject)
+    messages.success(request, "Thanks for contacting us. We will get back to you soon.")
+    return ServicePageContactForm()
+
+
 def home_page(request):
     title = "Crusader Concrete"
     meta_title = "Crusader Concrete | Ottawa Concrete Contractor"
-    meta_description =  "Discover Ottawa's top stamped concrete solutions for patios, driveways, and walkways. \
-                         Enhance your home with durable, stylish designs."
-    meta_keywords = "ottawa concrete company, concrete company ottawa, ottawa concrete contractor, \
-                     concrete contractor ottawa"
+    meta_description =  "Discover Ottawa's top stamped concrete solutions for patios, driveways, and walkways. Enhance your home with durable, stylish designs."
+    meta_keywords = "ottawa concrete company, concrete company ottawa, ottawa concrete contractor, concrete contractor ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com"
     og_image = "https://mcexcavate.com/static/image/stamped-concrete/stamped_service_link.jpg"
@@ -146,7 +209,7 @@ def home_page(request):
     date = datetime.datetime.now()
 
     template_name = "index.html"
-    context = {"title": title, 
+    context = {"title": title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -157,11 +220,11 @@ def home_page(request):
                'date': date,}
     return render(request, template_name, context)
 
+
 def services_page(request):
     title = "Our Services"
     meta_title = 'Our Services | Crusader Concrete'
-    meta_description = "We are stamped concrete experts, we also do plain concrete, steps, sidewalks and curbs. \
-                        Additionaly we do sod installation, interlock and excavation"
+    meta_description = "We are stamped concrete experts, we also do plain concrete, steps, sidewalks and curbs. Additionaly we do sod installation, interlock and excavation"
     meta_keywords = "Crusader Concrete services"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/services/"
@@ -173,7 +236,7 @@ def services_page(request):
     crumb_1 = "Services"
 
     template_name = "services.html"
-    context = {"title": title, 
+    context = {"title": title,
                "crumb_1":crumb_1,
                "breadcrumbs_title":breadcrumbs_title,
                "meta_description":meta_description,
@@ -186,11 +249,11 @@ def services_page(request):
                "date": date,}
     return render(request, template_name, context)
 
+
 def concrete_services_page(request):
     title = "Concrete Services"
     meta_title = 'Concrete Services | Crusader Concrete'
-    meta_description = "We offer a variety of concrete services such as stamped concrete, broom finished concrete, \
-                        stairs, repairs and resurfacing"
+    meta_description = "We offer a variety of concrete services such as stamped concrete, broom finished concrete, stairs, repairs and resurfacing"
     meta_keywords = "Concrete services"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete-services/"
@@ -205,10 +268,10 @@ def concrete_services_page(request):
 
     template_name = "concrete-services.html"
     context = {"title": title,
-               "crumb_1_link":crumb_1_link, 
+               "crumb_1_link":crumb_1_link,
                "crumb_1":crumb_1,
                "crumb_2":crumb_2,
-               "breadcrumbs_title":breadcrumbs_title, 
+               "breadcrumbs_title":breadcrumbs_title,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
@@ -219,12 +282,12 @@ def concrete_services_page(request):
                "date": date,}
     return render(request, template_name, context)
 
+
 def stamped_concrete_page(request):
     title = "STAMPED CONCRETE OTTAWA"
     breadcrumbs_title = "Stamped Concrete"
     meta_title = 'Stamped Concrete Ottawa | Crusader Concrete'
-    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been \
-                        building stamped concrete patios, walkways and driveways since 2013."
+    meta_description = "Crusader Concrete specializes in stamped concrete in Ottawa. We have been building stamped concrete patios, walkways and driveways since 2013."
     meta_keywords = "ottawa stamped conrete, stamped concrete, stamped concrete ottawa"
     meta_robots = "index, follow"
     canonical = "https://mcexcavate.com/concrete/"
@@ -239,39 +302,15 @@ def stamped_concrete_page(request):
     crumb_1_link = "/services"
     crumb_2_link = "/concrete-services"
 
-    if request.method == 'POST':
-        print("Form submission received!")  # Debugging statement
-        print(request.FILES)  # This will show if images are being sent
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("Form is valid!")
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-            print(f"Number of images received: {len(images)}")  # Debugging statement
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request) if images else []
-
-            if images and file_paths is None:
-                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
-                return redirect(request.path)  # Stay on the same page
-
-            # Send email with or without images
-            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
-                                      f"We will get back to you shortly about your {form_data['service']} project."
-                            )
-            return HttpResponseRedirect("/concrete/#contactform") # Redirect on success
-
-        else:
-            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
-    else:
-        form = ServicePageContactForm()
+    form = _build_form(ServicePageContactForm, request)
+    response = _process_contact_form_submission(request, form, breadcrumbs_title, "/concrete/#contactform")
+    if response:
+        return response
 
     # Blog Posts section
-    blogs = BlogPost.objects.filter(service="Concrete")    
-      
-    template_name = "stamped_concrete.html"  
+    blogs = BlogPost.objects.filter(service="Concrete")
+
+    template_name = "stamped_concrete.html"
     context = {"title": title,
                "form": form,
                "blogs": blogs,
@@ -292,6 +331,7 @@ def stamped_concrete_page(request):
                "date": date,}
     return render(request, template_name, context)
 
+
 def concrete_slabs_page(request):
     title = "CONCRETE SLABS"
     meta_title = 'Concrete Slabs | Crusader Concrete'
@@ -311,34 +351,10 @@ def concrete_slabs_page(request):
     crumb_1_link = "/services"
     crumb_2_link = "/concrete-services"
 
-    if request.method == 'POST':
-        print("Form submission received!")  # Debugging statement
-        print(request.FILES)  # This will show if images are being sent
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("Form is valid!")
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-            print(f"Number of images received: {len(images)}")  # Debugging statement
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request) if images else []
-
-            if images and file_paths is None:
-                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
-                return redirect(request.path)  # Stay on the same page
-
-            # Send email with or without images
-            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
-                                      f"We will get back to you shortly about your {form_data['service']} project."
-                            )
-            return HttpResponseRedirect("/concrete-slabs/#contactform") # Redirect on success
-
-        else:
-            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
-    else:
-        form = ServicePageContactForm()
+    form = _build_form(ServicePageContactForm, request)
+    response = _process_contact_form_submission(request, form, breadcrumbs_title, "/concrete-slabs/#contactform")
+    if response:
+        return response
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Concrete") 
@@ -384,34 +400,10 @@ def concrete_steps_page(request):
     crumb_1_link = "/services"
     crumb_2_link = "/concrete-services"
 
-    if request.method == 'POST':
-        print("Form submission received!")  # Debugging statement
-        print(request.FILES)  # This will show if images are being sent
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("Form is valid!")
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-            print(f"Number of images received: {len(images)}")  # Debugging statement
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request) if images else []
-
-            if images and file_paths is None:
-                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
-                return redirect(request.path)  # Stay on the same page
-
-            # Send email with or without images
-            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
-                                      f"We will get back to you shortly about your {form_data['service']} project."
-                            )
-            return HttpResponseRedirect("/concrete-steps/#contactform") # Redirect on success
-
-        else:
-            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
-    else:
-        form = ServicePageContactForm()
+    form = _build_form(ServicePageContactForm, request)
+    response = _process_contact_form_submission(request, form, breadcrumbs_title, "/concrete-steps/#contactform")
+    if response:
+        return response
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Concrete") 
@@ -457,34 +449,10 @@ def concrete_repairs_page(request):
     crumb_1_link = "/services"
     crumb_2_link = "/concrete-services"
 
-    if request.method == 'POST':
-        print("Form submission received!")  # Debugging statement
-        print(request.FILES)  # This will show if images are being sent
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("Form is valid!")
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-            print(f"Number of images received: {len(images)}")  # Debugging statement
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request) if images else []
-
-            if images and file_paths is None:
-                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
-                return redirect(request.path)  # Stay on the same page
-
-            # Send email with or without images
-            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
-                                      f"We will get back to you shortly about your {form_data['service']} project."
-                            )
-            return HttpResponseRedirect("/concrete-repair/#contactform") # Redirect on success
-
-        else:
-            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
-    else:
-        form = ServicePageContactForm()
+    form = _build_form(ServicePageContactForm, request)
+    response = _process_contact_form_submission(request, form, breadcrumbs_title, "/concrete-repair/#contactform")
+    if response:
+        return response
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Concrete")    
@@ -530,34 +498,10 @@ def concrete_resurfacing_page(request):
     crumb_1_link = "/services"
     crumb_2_link = "/concrete-services"
 
-    if request.method == 'POST':
-        print("Form submission received!")  # Debugging statement
-        print(request.FILES)  # This will show if images are being sent
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("Form is valid!")
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-            print(f"Number of images received: {len(images)}")  # Debugging statement
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request) if images else []
-
-            if images and file_paths is None:
-                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
-                return redirect(request.path)  # Stay on the same page
-
-            # Send email with or without images
-            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
-                                      f"We will get back to you shortly about your {form_data['service']} project."
-                            )
-            return HttpResponseRedirect("/concrete-resurfacing/#contactform") # Redirect on success
-
-        else:
-            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
-    else:
-        form = ServicePageContactForm()
+    form = _build_form(ServicePageContactForm, request)
+    response = _process_contact_form_submission(request, form, breadcrumbs_title, "/concrete-resurfacing/#contactform")
+    if response:
+        return response
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Concrete")    
@@ -602,34 +546,10 @@ def excavation_page(request):
     crumb_2 = "Excavation"
     crumb_1_link = "/services"
 
-    if request.method == 'POST':
-        print("Form submission received!")  # Debugging statement
-        print(request.FILES)  # This will show if images are being sent
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("Form is valid!")
-            # Extract the form data 
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-            print(f"Number of images received: {len(images)}")  # Debugging statement
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request) if images else []
-
-            if images and file_paths is None:
-                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
-                return redirect(request.path)  # Stay on the same page
-
-            # Send email with or without images
-            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
-                                      f"We will get back to you shortly about your {form_data['service']} project."
-                            )
-            return HttpResponseRedirect("/excavation/#contactform") # Redirect on success
-
-        else:
-            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
-    else:
-        form = ServicePageContactForm()
+    form = _build_form(ServicePageContactForm, request)
+    response = _process_contact_form_submission(request, form, breadcrumbs_title, "/excavation/#contactform")
+    if response:
+        return response
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="Excavation")  
@@ -671,34 +591,10 @@ def bollard_page(request):
     crumb_2 = "Bollards"
     crumb_1_link = "/services"
 
-    if request.method == 'POST':
-        print("Form submission received!")  # Debugging statement
-        print(request.FILES)  # This will show if images are being sent
-        form = ServicePageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("Form is valid!")
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-            print(f"Number of images received: {len(images)}")  # Debugging statement
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request) if images else []
-
-            if images and file_paths is None:
-                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
-                return redirect(request.path)  # Stay on the same page
-
-            # Send email with or without images
-            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
-                                      f"We will get back to you shortly about your {form_data['service']} project."
-                            )
-            return HttpResponseRedirect("/bollards/#contactform") # Redirect on success
-
-        else:
-            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
-    else:
-        form = ServicePageContactForm()
+    form = _build_form(ServicePageContactForm, request)
+    response = _process_contact_form_submission(request, form, breadcrumbs_title, "/bollards/#contactform")
+    if response:
+        return response
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="AsphaltRepairs")
@@ -800,31 +696,10 @@ def contact_page(request):
     crumb_1 = "Contact"
 
 
-    if request.method == 'POST':
-        form = ContactPageContactForm(request.POST, request.FILES)
-        if form.is_valid():
-            print("Form is valid!")
-            # Extract the form data
-            form_data = form.cleaned_data
-            images = request.FILES.getlist('images')
-            # save the uploaded image after validating they are images and max of 5
-            file_paths = handle_uploaded_files(images, request) if images else []
-
-            if images and file_paths is None:
-                messages.error(request, "One or more uploaded files are invalid. Please upload only valid images.")
-                return redirect(request.path)  # Stay on the same page
-
-            # Send email with or without images
-            send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-            messages.success(request, f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
-                                      f"We will get back to you shortly about your {form_data['service']} project."
-                            )
-            return HttpResponseRedirect("/contact/#contactform") # Redirect on success
-
-        else:
-            messages.error(request, "There was an error in your form submission. Please check the fields and try again.")
-    else:
-        form = ContactPageContactForm()
+    form = _build_form(ContactPageContactForm, request)
+    response = _process_contact_form_submission(request, form, breadcrumbs_title, "/contact/#contactform")
+    if response:
+        return response
 
     template_name = "contact.html"
     context = {
@@ -901,30 +776,7 @@ def asphalt_page(request):
     date = datetime.datetime.now()
 
     form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
-
-        # send the contact form to mcexcavate email 
-        subject = f"Asphalt Lead | Asphalt Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
-
-        form = ServicePageContactForm()
+    form = _process_plain_lead_form_submission(request, form, "Asphalt Lead | Asphalt Page")
 
     # price = 0
 
@@ -1004,30 +856,7 @@ def asphalt_repairs_page(request):
     date = datetime.datetime.now()
 
     form = ServicePageContactForm(request.POST or None)
-    if form.is_valid():
-        name_ = form.cleaned_data.get('name')
-        email = form.cleaned_data.get('email')
-        phone = form.cleaned_data.get('phone')
-        address = form.cleaned_data.get('address')
-        service = form.cleaned_data.get('service')
-        content = form.cleaned_data.get('content')
-        marketing = form.cleaned_data.get('marketing')
-
-        # send the contact form to mcexcavate email 
-        subject = f"Asphalt Repairs Lead | Asphalt Repairs Page"
-        message =  f"Name: {name_} \
-                     \n\nEmail: {email} \
-                     \n\nPhone: {phone} \
-                     \n\nAddress: {address} \
-                     \n\nService: {service} \
-                     \n\nMarketing: {marketing}\
-                     \n\nMessage: {content}"
-        from_address = settings.EMAIL_HOST_USER
-        to_address = "mcexcavate.ottawa@gmail.com"
-        send_mail(subject, message, from_address, [to_address], fail_silently=False)
-        messages.success(request, f"Thanks for contacting us. We will get back to you soon.")
-
-        form = ServicePageContactForm()
+    form = _process_plain_lead_form_submission(request, form, "Asphalt Repairs Lead | Asphalt Repairs Page")
 
     # Blog Posts section
     blogs = BlogPost.objects.filter(service="AsphaltRepairs")

@@ -1,45 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
 {% include "breadcrumbs.html" %}
-{% load static %} 
+{% load static %}
 <div class='container service_page_wrapper'>
-	<div class='row'>
+    <div class='row'>
 
-		<div class='col-sm-12'>
-			<div class='container'>
+        <div class='col-sm-12'>
+            <div class='container'>
 
-				<div class='row mb-2'>
-					{% for gallery in stamped_gallery %}
-					<div class='col-md-6 mb-3'>
-						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
-				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
-				   			<img src= "{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
-				   		</a>
-						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
-					</div>
-					{% endfor %}
-					{% for gallery in plain_gallery %}
-					<div class='col-md-6 mb-3'>
-						<a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
-				   		<a href="{{ gallery.get_absolute_url }}" style="width: inherit">
-				   			<img src= "{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
-				   		</a>
-						<a href="{{ gallery.get_absolute_url }}">See Photos...</a>
-					</div>
-					{% endfor %}
-				</div>
+                <div class='row mb-2'>
+                    {% for gallery in stamped_gallery %}
+                    <div class='col-md-6 mb-3'>
+                        <a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
+                        <a href="{{ gallery.get_absolute_url }}" style="width: inherit">
+                            <img src="{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
+                        </a>
+                        <a href="{{ gallery.get_absolute_url }}">See Photos...</a>
+                    </div>
+                    {% endfor %}
+                    {% for gallery in plain_gallery %}
+                    <div class='col-md-6 mb-3'>
+                        <a href="{{ gallery.get_absolute_url }}"><h2 style='color:black;'>{{ gallery.title }}</h2></a>
+                        <a href="{{ gallery.get_absolute_url }}" style="width: inherit">
+                            <img src="{{ gallery.image.url }}" alt="{{ gallery.image_alt }}" style="width: inherit">
+                        </a>
+                        <a href="{{ gallery.get_absolute_url }}">See Photos...</a>
+                    </div>
+                    {% endfor %}
+                </div>
 
-			</div>
-		</div>
+            </div>
+        </div>
 
-		{% if user.is_staff %}
-		<div class='col-12 mb-1'>
-			<p style='text-align: center;'><a href='/gallery-new'> + Add New Gallery</a></p>
-		</div>
-		{% endif %}
+        {% if user.is_staff %}
+        <div class='col-12 mb-1'>
+            <p style='text-align: center;'><a href="{% url 'gallery_create' %}"> + Add New Gallery</a></p>
+        </div>
+        {% endif %}
 
-
-	</div>
+    </div>
 </div>
 
 {% endblock %}

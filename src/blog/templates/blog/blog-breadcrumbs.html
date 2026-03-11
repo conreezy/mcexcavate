@@ -1,48 +1,40 @@
 <div class='container-fluid breadcrumbs'>
   <div class='row'>
-  	<div class="col-12 p-0">
+    <div class="col-12 p-0">
+      <div class='container'>
+        <div class='row'>
 
-      	{% if crumb_1 and crumb_2 and crumb_3 %}
-        <div class="breadcrumbs_col">
-          <a href="/">
-          		<p style='display: inline'>Home</p>
-	          </a>
-	          <p style='display: inline'> /</p>
-	          <a href="/services">
-	            <p style='display: inline'>{{crumb_1}}</p>
-	          </a>
-	          <p style='display: inline'> /</p>
-	          <a href={{crumb_2_link}}>
-	            <p style='display: inline'>{{crumb_2}}</p>
-	          </a>
-	          <p style='display: inline'> /</p>
-	          <p style='display: inline'>{{crumb_3}}</p>
-	          <h1>{{breadcrumbs_title}}</h1>
-        </div>
-        {% elif crumb_1 and crumb_2 %}
-        <div class="breadcrumbs_col">
-          <a href="/">
-          		<p style='display: inline'>Home</p>
-	          </a>
-	          <p style='display: inline'> /</p>
-	          <a href={{crumb_1_link}}>
-	            <p style='display: inline'>{{crumb_1}}</p>
-	          </a>
-	          <p style='display: inline'> /</p>
-	          <p style='display: inline'>{{crumb_2}}</p>
-	          <h1>{{breadcrumbs_title}}</h1>
-        </div>
-        {% elif crumb_1 %}
-        <div class="breadcrumbs_col">
-          <a href="/">
-          		<p style='display: inline'>Home</p>
-	          </a>
-	          <p style='display: inline'> /</p>
-	          <p style='display: inline'>{{crumb_1}}</p>
-	          <h1>{{breadcrumbs_title}}</h1>
-        </div>
-      {% endif %}
+          {% if crumb_1 and crumb_2 and crumb_3 %}
+            <div class="breadcrumbs_col">
+              <a href="{% url 'home' %}"><p style='display: inline'>Home</p></a>
+              <p style='display: inline'> /</p>
+              <a href="{% url 'services' %}"><p style='display: inline'>{{crumb_1}}</p></a>
+              <p style='display: inline'> /</p>
+              <a href="{{ crumb_2_link }}"><p style='display: inline'>{{crumb_2}}</p></a>
+              <p style='display: inline'> /</p>
+              <p style='display: inline'>{{crumb_3}}</p>
+              <h1>{{breadcrumbs_title}}</h1>
+            </div>
+          {% elif crumb_1 and crumb_2 %}
+            <div class="breadcrumbs_col">
+              <a href="{% url 'home' %}"><p style='display: inline'>Home</p></a>
+              <p style='display: inline'> /</p>
+              <a href="{{ crumb_1_link }}"><p style='display: inline'>{{crumb_1}}</p></a>
+              <p style='display: inline'> /</p>
+              <p style='display: inline'>{{crumb_2}}</p>
+              <h1>{{breadcrumbs_title}}</h1>
+            </div>
+          {% elif crumb_1 %}
+            <div class="breadcrumbs_col">
+              <a href="{% url 'home' %}"><p style='display: inline'>Home</p></a>
+              <p style='display: inline'> /</p>
+              <p style='display: inline'>{{crumb_1}}</p>
+              <h1>{{breadcrumbs_title}}</h1>
+            </div>
+          {% endif %}
 
-	  </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -99,7 +99,7 @@ def gallery_detail_view(request, slug):
     breadcrumbs_title = "Projects"
     crumb_1 = "Projects"
     crumb_2 = obj.title
-    crumb_1_link = "/gallery"
+    crumb_1_link = "/gallery/"
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -167,7 +167,7 @@ def gallery_edit_view(request, slug):
     return render(request, template_name, context)
 
 @login_required
-def gallery_delete_view(request):
+def gallery_delete_view(request, slug):
     title = "Delete This Gallery"
     meta_robots = "noindex, nofollow"
     date = datetime.datetime.now()

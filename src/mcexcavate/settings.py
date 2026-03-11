@@ -13,7 +13,7 @@ SECRET_KEY = 'dc578pv-t)gq+k)yw+rd^2(pd)pji*x5til*kzdjb1@byr3+)h'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -45,8 +45,16 @@ PHONENUMBER_DEFAULT_REGION = "CA"
 #PHONENUMBER_DEFAULT_FORMAT = 
 
 # Captcha Keys old
-RECAPTCHA_PUBLIC_KEY = '6LfG1aIqAAAAAPMeB-NJ3d3Rvr0ehi9mmb1GaO4m'
-RECAPTCHA_PRIVATE_KEY = '6LfG1aIqAAAAAHcIJyPfaZ4_9L92OuoMEl0G1rEO'
+RECAPTCHA_PUBLIC_KEY = '6LfmRocsAAAAAB7M4bWOj4dT3yZRvsVxpxQMqqBA'
+RECAPTCHA_PRIVATE_KEY = '6LfmRocsAAAAAAUDQ6UexoxtqVXPLtAFKFialJ9Y'
+RECAPTCHA_REQUIRED_SCORE = 0.5
+
+try:
+    import django_recaptcha  # noqa: F401
+except ModuleNotFoundError:
+    RECAPTCHA_APP = 'captcha'
+else:
+    RECAPTCHA_APP = 'django_recaptcha'
 
 # Captcha Keys new
 # RECAPTCHA_PUBLIC_KEY = '6LfBhfYmAAAAAIPs-frb9SeAGW12jXJmu4fIQqvb'
@@ -56,7 +64,7 @@ RECAPTCHA_PRIVATE_KEY = '6LfG1aIqAAAAAHcIJyPfaZ4_9L92OuoMEl0G1rEO'
 
 # Application definition
 INSTALLED_APPS = [
-    'django_recaptcha',
+    RECAPTCHA_APP,
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.sites',
@@ -147,8 +155,6 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -168,3 +174,5 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

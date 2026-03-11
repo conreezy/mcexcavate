@@ -38,6 +38,9 @@
 			<div class='form-group col-12 mb-0'>
 				{{ form.marketing|as_crispy_field }}
 			</div>
+			<div class='form-group col-12 mb-0'>
+				{{ form.captcha|as_crispy_field }}
+			</div>
 
 		</div>
 		<div class='pt-3'>
@@ -55,3 +58,85 @@
     </div>
   </div>
 </div>
+
+<script>
+  (function() {
+    var shouldScrollToContactForm = {% if form.errors or messages %}true{% else %}false{% endif %};
+    var maxUploadImages = 5;
+
+    function ensureUploadFeedbackContainer(input) {
+      var fieldContainer = input.closest('.form-group');
+      if (!fieldContainer) {
+        return null;
+      }
+
+      var feedback = fieldContainer.querySelector('[data-upload-feedback]');
+      if (!feedback) {
+        feedback = document.createElement('div');
+        feedback.setAttribute('data-upload-feedback', 'true');
+        feedback.className = 'invalid-feedback d-block';
+        fieldContainer.appendChild(feedback);
+      }
+
+      return feedback;
+    }
+
+    function showUploadFeedback(input, message) {
+      var feedback = ensureUploadFeedbackContainer(input);
+      if (!feedback) {
+        return;
+      }
+
+      feedback.textContent = message;
+      input.classList.add('is-invalid');
+    }
+
+    function clearUploadFeedback(input) {
+      var fieldContainer = input.closest('.form-group');
+      if (!fieldContainer) {
+        return;
+      }
+
+      var feedback = fieldContainer.querySelector('[data-upload-feedback]');
+      if (feedback) {
+        feedback.remove();
+      }
+      input.classList.remove('is-invalid');
+    }
+
+    function scrollToContactForm() {
+      var contactForm = document.getElementById('contactform');
+      if (!contactForm) {
+        return;
+      }
+
+      contactForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (window.location.hash !== '#contactform') {
+        history.replaceState(null, '', '#contactform');
+      }
+    }
+
+    window.addEventListener('load', function() {
+      var fileInput = document.querySelector('input[name="images"]');
+      if (fileInput) {
+        fileInput.addEventListener('change', function() {
+          if (fileInput.files.length > maxUploadImages) {
+            showUploadFeedback(
+              fileInput,
+              'You can upload up to ' + maxUploadImages + ' images. Please select fewer files.'
+            );
+            fileInput.value = '';
+            scrollToContactForm();
+            return;
+          }
+
+          clearUploadFeedback(fileInput);
+        });
+      }
+
+      if (shouldScrollToContactForm) {
+        scrollToContactForm();
+      }
+    });
+  })();
+</script>

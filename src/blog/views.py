@@ -19,7 +19,7 @@ def blog_post_create_view(request):
 
     breadcrumbs_title = "Create New Blog Post"
     crumb_1 = "Blog"
-    crumb_1_link = "/blog"
+    crumb_1_link = "/blog/"
     crumb_2 = "Create New Blog Post"
 
     form = BlogPostModelForm(request.POST or None, request.FILES or None)
@@ -97,7 +97,7 @@ def blog_post_detail_view(request, slug):
 
     breadcrumbs_title = blog_post.title
     crumb_1 = "Blog"
-    crumb_1_link = "/blog"
+    crumb_1_link = "/blog/"
     crumb_2 = blog_post.title
 
     meta_title = blog_post.title
@@ -134,7 +134,7 @@ def blog_post_update_view(request, slug):
 
     breadcrumbs_title = "Blog Post Edit"
     crumb_1 = "Blog"
-    crumb_1_link = "/blog"
+    crumb_1_link = "/blog/"
     crumb_2 = obj.title
 
     # if request.method == 'POST':
@@ -168,13 +168,13 @@ def blog_post_delete_view(request, slug):
 
     breadcrumbs_title = "Delete Blog Post"
     crumb_1 = "Blog"
-    crumb_1_link = "/blog"
+    crumb_1_link = "/blog/"
     crumb_2 = obj.title
 
     template_name = 'blog/delete.html'
     if request.method == "POST":
         obj.delete()
-        return redirect('/blog')
+        return redirect('blog:list')
     context = {'object':obj,
                "crumb_1":crumb_1,
                "crumb_1_link":crumb_1_link,

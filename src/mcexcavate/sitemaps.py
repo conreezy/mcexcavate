@@ -10,7 +10,7 @@ class GallerySitemap(Sitemap):
  
 class BlogSitemap(Sitemap):
 	def items(self):
-		return BlogPost.objects.all()
+		return BlogPost.objects.all() 
 
 
 class StaticViewSitemap(Sitemap):

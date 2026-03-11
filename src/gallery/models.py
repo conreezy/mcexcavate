@@ -1,95 +1,115 @@
-from django.db import models
-import PIL
-from PIL import Image, ExifTags
-from PIL import ImageFile
-ImageFile.LOAD_TRUNCATED_IMAGES = True
+import os
 from io import BytesIO
+
 from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys
+from django.db import models
+from django.urls import reverse
+from PIL import Image, ImageFile, ImageOps
+
+from .ai_alt_text import generate_alt_text_for_image_file
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+MAX_GALLERY_IMAGE_DIMENSION = 1600
+JPEG_QUALITY = 85
+JPEG_SUBSAMPLING = 1
 
 
-# Create your models here.
+def _should_process_file(instance, field_name, update_fields):
+    if update_fields is not None and field_name not in update_fields:
+        return False
+
+    file_field = getattr(instance, field_name)
+    if not file_field:
+        return False
+
+    if not instance.pk:
+        return True
+
+    try:
+        existing = instance.__class__.objects.only(field_name).get(pk=instance.pk)
+    except instance.__class__.DoesNotExist:
+        return True
+
+    return getattr(existing, field_name).name != file_field.name
+
+
+def _normalize_image_mode(image_obj):
+    if image_obj.mode in ('RGBA', 'LA'):
+        background = Image.new('RGB', image_obj.size, 'WHITE')
+        background.paste(image_obj, mask=image_obj.getchannel('A'))
+        return background
+
+    if image_obj.mode != 'RGB':
+        return image_obj.convert('RGB')
+
+    return image_obj
+
+
+def _optimize_uploaded_image(uploaded_file, *, max_dimension=MAX_GALLERY_IMAGE_DIMENSION, quality=JPEG_QUALITY):
+    uploaded_file.seek(0)
+    with Image.open(uploaded_file) as opened_image:
+        image_obj = ImageOps.exif_transpose(opened_image)
+        image_obj = _normalize_image_mode(image_obj)
+
+        if max(image_obj.size) > max_dimension:
+            image_obj.thumbnail((max_dimension, max_dimension), Image.Resampling.LANCZOS)
+
+        output = BytesIO()
+        image_obj.save(
+            output,
+            format='JPEG',
+            quality=quality,
+            optimize=True,
+            progressive=True,
+            subsampling=JPEG_SUBSAMPLING,
+        )
+
+    output.seek(0)
+    base_name = os.path.splitext(os.path.basename(uploaded_file.name))[0]
+    file_size = output.getbuffer().nbytes
+    return InMemoryUploadedFile(
+        output,
+        'FileField',
+        f'{base_name}.jpg',
+        'image/jpeg',
+        file_size,
+        None,
+    )
+
+
 class Gallery(models.Model):
     id = models.AutoField(primary_key=True)
-    title   = models.CharField(max_length=50, blank=False, null=True)
-    image   = models.FileField(upload_to='image/gallery/', blank=False, null=True)
-    image_alt = models.CharField(max_length = 340, blank=True, null=True)
-    slug    = models.SlugField(unique=True, blank=False, null=True) 
+    title = models.CharField(max_length=50, blank=False, null=True)
+    image = models.FileField(upload_to='image/gallery/', blank=False, null=True)
+    image_alt = models.CharField(max_length=340, blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=False, null=True)
     description = models.TextField(null=True, blank=False)
-    meta_title  = models.CharField(max_length=55, blank=False, null=True)
-    meta_keywords  = models.CharField(max_length=160, blank=False, null=True) 
+    meta_title = models.CharField(max_length=55, blank=False, null=True)
+    meta_keywords = models.CharField(max_length=160, blank=False, null=True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return f"/gallery/{self.slug}"
+        return reverse('gallery:detail', kwargs={'slug': self.slug})
 
     def get_edit_url(self):
-        return f"{self.get_absolute_url()}/edit"
+        return reverse('gallery:add_photo', kwargs={'slug': self.slug})
 
     def get_delete_url(self):
-        return f"{self.get_absolute_url()}/delete"
+        return reverse('gallery:delete', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        if not self.id: 
+        update_fields = kwargs.get('update_fields')
+        image_changed = _should_process_file(self, 'image', update_fields)
 
-            # open image
-            image_ = Image.open(self.image)
+        if image_changed:
+            self.image = _optimize_uploaded_image(self.image)
+            self.image_alt = generate_alt_text_for_image_file(self.image)
 
-            # get & declare width & height
-            (width, height) = image_.size
-            
-            # calculate & declare width to height ratio
-            ratio = width / height
+        super().save(*args, **kwargs)
 
-           # get & declare exif data
-            for orientation in ExifTags.TAGS.keys():
-                if ExifTags.TAGS[orientation]=='Orientation':
-                    break
-            
-            image_exif = image_._getexif()
-
-            try:
-                if image_exif:
-                    if image_exif[orientation] == 3:
-                        image_=image_.rotate(180, expand=True)
-                    elif image_exif[orientation] == 6:
-                        image_=image_.rotate(270, expand=True)
-                        try:
-                            image_=image_.resize(( int(450//ratio), 450), Image.Resampling.LANCZOS)
-                        except:
-                            pass
-                    elif image_exif[orientation] == 8:
-                        image_=image_.rotate(90, expand=True)
-                        try:
-                            image_=image_.resize(( int(450//ratio), 450), Image.Resampling.LANCZOS)
-                        except:
-                            pass
-                    else:
-                        image_=image_.resize((800, ( int(800//ratio))), Image.Resampling.LANCZOS)
-                else:
-                    try:
-                        if width > height:
-                            image_=image_.resize((800, int(800//ratio)), Image.Resampling.LANCZOS)
-                        else:
-                            image_=image_.resize((int(800*ratio), 800), Image.Resampling.LANCZOS)
-                    except:
-                        pass
-            except:
-                pass
-
-            output = BytesIO()
-
-            #after resize, save it to the output
-            image_.save(output, format='JPEG', quality=100)
-            output.seek(0)
-
-            #change the imagefield value to be the newley modifed image value
-            self.image = InMemoryUploadedFile(output,'FileField', "%s.jpg" %self.image.name.split('.')[0], 'image/gallery/', sys.getsizeof(output), None)
-
-
-        super(Gallery, self).save()
 
 class GalleryImages(models.Model):
     id = models.AutoField(primary_key=True)
@@ -98,74 +118,11 @@ class GalleryImages(models.Model):
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        if not self.id:
+        update_fields = kwargs.get('update_fields')
+        image_changed = _should_process_file(self, 'images', update_fields)
 
-            # open image
-            image_ = Image.open(self.images)
+        if image_changed:
+            self.images = _optimize_uploaded_image(self.images)
+            self.alt = generate_alt_text_for_image_file(self.images)
 
-            # get & declare width & height
-            (width, height) = image_.size
-            
-            # calculate & declare width to height ratio
-            ratio = width / height
-
-           # get & declare exif data
-            for orientation in ExifTags.TAGS.keys():
-                if ExifTags.TAGS[orientation]=='Orientation':
-                    break
-            
-            image_exif = image_._getexif()
-
-            try:
-                if image_exif:
-                    if image_exif[orientation] == 3:
-                        image_=image_.rotate(180, expand=True)
-                    elif image_exif[orientation] == 6:
-                        image_=image_.rotate(270, expand=True)
-                        try:
-                            image_=image_.resize(( int(450//ratio), 450), Image.Resampling.LANCZOS)
-                        except:
-                            pass
-                    elif image_exif[orientation] == 8:
-                        image_=image_.rotate(90, expand=True)
-                        try:
-                            image_=image_.resize(( int(450//ratio), 450), Image.Resampling.LANCZOS)
-                        except:
-                            pass
-                    else:
-                        image_=image_.resize((800, ( int(800//ratio))), Image.Resampling.LANCZOS)
-                else:
-                    try:
-                        if width > height:
-                            image_=image_.resize((800, int(800//ratio)), Image.Resampling.LANCZOS)
-                        else:
-                            image_=image_.resize((int(800*ratio), 800), Image.Resampling.LANCZOS)
-                    except:
-                        pass
-            except:
-                pass
-
-            output = BytesIO()
-
-            #after resize, save it to the output
-            image_.save(output, format='JPEG', quality=100)
-            output.seek(0)
-
-            #change the imagefield value to be the newley modifed image value
-            self.images = InMemoryUploadedFile(output,'FileField', "%s.jpg" %self.images.name.split('.')[0], 'image/gallery/', sys.getsizeof(output), None)
-
-            # make alt text the image file name
-            alt_text = self.images.url
-            alt_text = alt_text.replace('/', '')
-            alt_text = alt_text.replace('media', '')
-            alt_text = alt_text.replace('image', '')
-            alt_text = alt_text.replace('gallery', '')
-            alt_text = alt_text.replace('.jpg', '')
-            alt_text = alt_text.replace('.JPG', '')
-            alt_text = alt_text.replace('.jpeg', '')
-            alt_text = alt_text.replace('.JPEG', '')
-            alt_text = alt_text.replace('.png', '')
-            alt_text = alt_text.replace('.PNG', '')
-            self.alt = alt_text
-
-        super(GalleryImages, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)

@@ -1,113 +1,111 @@
+{% load static %}
 <div class="container-fluid logo_container">
-	<div class="container">
-		{% load static %}
-		<div class='row logo_phone_top'>
-			<div class='nav_logo'>
-				<a href="/"><img src="{% static 'image/logos/crusader_text_logo_black.png' %}" alt="crusader concrete logo black" style='height:40px;'></a>
-			</div>
-			<div class='nav_number'>
-				<a class='phone_number' href='tel:16136087722'><p>613-608-7722</p></a>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class='row logo_phone_top'>
+            <div class='nav_logo'>
+                <a href="{% url 'home' %}"><img src="{% static 'image/logos/crusader_text_logo_black.png' %}" alt="crusader concrete logo black" style='height:40px;'></a>
+            </div>
+            <div class='nav_number'>
+                <a class='phone_number' href='tel:16136087722'><p>613-608-7722</p></a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container-fluid p-0 top_nav_bg">
-	<div class="container top_nav" id='top_nav'>
-		<div class='row'>
-		    <div class="nav_item nav_service" id="nav_service"><a href="/services/"><p>Services</p></a>
-				<div class="service_dropdown" id="service_dropdown">
-					<div class="service_dropdown_content" id="service_dropdown_content">
-					  <ul>
-						  <!-- Concrete (has submenu) -->
-						  <li class="has_submenu">
-						    <a href="/concrete-services/" class="submenu_trigger">
-						      Concrete <span class="submenu_caret">›</span>
-						    </a>
+    <div class="container top_nav" id='top_nav'>
+        <div class='row'>
+            <div class="nav_item nav_service" id="nav_service"><a href="{% url 'services' %}"><p>Services</p></a>
+                <div class="service_dropdown" id="service_dropdown">
+                    <div class="service_dropdown_content" id="service_dropdown_content">
+                      <ul>
+                          <li class="has_submenu">
+                            <a href="{% url 'concrete_services_page' %}" class="submenu_trigger">
+                              Concrete <span class="submenu_caret">&rsaquo;</span>
+                            </a>
 
-						    <div class="service_sub_dropdown">
-						      <ul>
-						        <li><a href="/concrete/">Stamped Concrete</a></li>
-						        <li><a href="/concrete-slabs/">Concrete Slabs</a></li>
-						        <li><a href="/concrete-steps/">Concrete Steps</a></li>
-						        <li><a href="/concrete-repair/">Concrete Repair</a></li>
-						        <li><a href="/concrete-resurfacing/">Concrete Resurfacing</a></li>
-						      </ul>
-						    </div>
-						  </li>
+                            <div class="service_sub_dropdown">
+                              <ul>
+                                <li><a href="{% url 'concrete' %}">Stamped Concrete</a></li>
+                                <li><a href="{% url 'concrete_slabs_page' %}">Concrete Slabs</a></li>
+                                <li><a href="{% url 'concrete_steps_page' %}">Concrete Steps</a></li>
+                                <li><a href="{% url 'concrete_repairs_page' %}">Concrete Repair</a></li>
+                                <li><a href="{% url 'concrete_resurfacing_page' %}">Concrete Resurfacing</a></li>
+                              </ul>
+                            </div>
+                          </li>
 
-						  <!-- These stay in Services dropdown -->
-						  <li><a href="/excavation/">Excavation</a></li>
-						  <li><a href="/bollards/">Bollards</a></li>
-					  </ul>
-			        </div>
-			    </div>
-		    </div>
-		    <div class="nav_item nav_service" id="nav_service"><a href="/gallery/"><p>Projects</p></a>
-				<div class="service_dropdown" id="service_dropdown">
-					<div class="service_dropdown_content" id="service_dropdown_content">
-					  <ul>
-					  	  <li><a href="/gallery/stamped-concrete">Stamped Concrete</a></li>
-					  	  <li><a href="/gallery/concrete">Concrete Slabs</a></li>
-			      	  </ul>
-			        </div>
-			    </div>
-		    </div>
-		    <div class="nav_item nav_service" id="nav_service"><a href="/about/"><p>About</p></a>
-				<div class="service_dropdown" id="service_dropdown">
-					<div class="service_dropdown_content" id="service_dropdown_content">
-					  <ul>
-					  	  <li><a href="/about/">About Us</a></li>
-					  	  <li><a href="/careers/">Careers</a></li>
-					      <li><a href="/blog/">Blog</a></li>
-			      	  </ul>
-			        </div>
-			    </div>
-		    </div>
-		    <div class="nav_item"><a href="/contact/"><p>Contact</p></a></div>
-		</div>
-	</div>
-	<div class="container mobile_nav" id='mobile_nav'>
-		<div class='row mobile_row'>
-			<svg id='mobile_burger' fill='white' class='burger_menu' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
-		</div>
-	</div>
-	<div class="top_nav_mobile" id='top_nav_mobile'>
+                          <li><a href="{% url 'excavation' %}">Excavation</a></li>
+                          <li><a href="{% url 'bollards' %}">Bollards</a></li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="nav_item nav_service" id="nav_service"><a href="{% url 'gallery:list' %}"><p>Projects</p></a>
+                <div class="service_dropdown" id="service_dropdown">
+                    <div class="service_dropdown_content" id="service_dropdown_content">
+                      <ul>
+                          <li><a href="{% url 'gallery:detail' slug='stamped-concrete' %}">Stamped Concrete</a></li>
+                          <li><a href="{% url 'gallery:detail' slug='concrete' %}">Plain Concrete</a></li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="nav_item nav_service" id="nav_service"><a href="{% url 'about' %}"><p>About</p></a>
+                <div class="service_dropdown" id="service_dropdown">
+                    <div class="service_dropdown_content" id="service_dropdown_content">
+                      <ul>
+                          <li><a href="{% url 'about' %}">About Us</a></li>
+                          <li><a href="{% url 'careers' %}">Careers</a></li>
+                          <li><a href="{% url 'blog:list' %}">Blog</a></li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="nav_item"><a href="{% url 'contact' %}"><p>Contact</p></a></div>
+        </div>
+    </div>
+    <div class="container mobile_nav" id='mobile_nav'>
+        <div class='row mobile_row'>
+            <svg id='mobile_burger' fill='white' class='burger_menu' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+        </div>
+    </div>
+    <div class="top_nav_mobile" id='top_nav_mobile'>
 
-		<div class="mobile_nav_item" id="nav_service_mobile"><a href="#">Services<i class="fa fa-caret-down"></i></a></div>
-		<div class="service_dropdown_mobile" id="service_dropdown_mobile">
-		  <ul class="m-0">
-		    <li class="mobile_has_submenu">
-		      <a href="/concrete-services/" class="mobile_submenu_trigger" id="mobile_concrete_trigger">
-		        Concrete <i class="fa fa-caret-down"></i>
-		      </a>
+        <div class="mobile_nav_item" id="nav_service_mobile"><a href="#">Services<i class="fa fa-caret-down"></i></a></div>
+        <div class="service_dropdown_mobile" id="service_dropdown_mobile">
+          <ul class="m-0">
+            <li class="mobile_has_submenu">
+              <a href="{% url 'concrete_services_page' %}" class="mobile_submenu_trigger" id="mobile_concrete_trigger">
+                Concrete <i class="fa fa-caret-down"></i>
+              </a>
 
-		      <ul class="concrete_dropdown_mobile" id="concrete_dropdown_mobile">
-		        <li><a href="/concrete/">Stamped Concrete</a></li>
-		        <li><a href="/concrete-slabs/">Concrete Slabs</a></li>
-		        <li><a href="/concrete-steps/">Concrete Steps</a></li>
-		        <li><a href="/concrete-repair/">Concrete Repair</a></li>
-		        <li><a href="/concrete-resurfacing/">Concrete Resurfacing</a></li>
-		      </ul>
-		    </li>
+              <ul class="concrete_dropdown_mobile" id="concrete_dropdown_mobile">
+                <li><a href="{% url 'concrete' %}">Stamped Concrete</a></li>
+                <li><a href="{% url 'concrete_slabs_page' %}">Concrete Slabs</a></li>
+                <li><a href="{% url 'concrete_steps_page' %}">Concrete Steps</a></li>
+                <li><a href="{% url 'concrete_repairs_page' %}">Concrete Repair</a></li>
+                <li><a href="{% url 'concrete_resurfacing_page' %}">Concrete Resurfacing</a></li>
+              </ul>
+            </li>
 
-		    <li><a href="/excavation/">Excavation</a></li>
-		    <li><a href="/bollards/">Bollards</a></li>
-		  </ul>
-		</div>
+            <li><a href="{% url 'excavation' %}">Excavation</a></li>
+            <li><a href="{% url 'bollards' %}">Bollards</a></li>
+          </ul>
+        </div>
 
-	    <div class="mobile_nav_item" id="nav_project_mobile"><a href="#">Projects<i class="fa fa-caret-down"></i></a></div>
-	    <div class="service_dropdown_mobile" id="project_dropdown_mobile">
-		  <ul class=m-0>
-			  <li><a href="/gallery/stamped-concrete">Stamped Concrete</a></li>
-		      <li><a href="/gallery/concrete">Plain Concrete</a></li>
-      	  </ul>
-	    </div>
+        <div class="mobile_nav_item" id="nav_project_mobile"><a href="#">Projects<i class="fa fa-caret-down"></i></a></div>
+        <div class="service_dropdown_mobile" id="project_dropdown_mobile">
+          <ul class=m-0>
+              <li><a href="{% url 'gallery:detail' slug='stamped-concrete' %}">Stamped Concrete</a></li>
+              <li><a href="{% url 'gallery:detail' slug='concrete' %}">Plain Concrete</a></li>
+          </ul>
+        </div>
 
-	    <div class="mobile_nav_item" id=""><a href="/about/">About</a></div>
-	    <div class="mobile_nav_item" id=""><a href="/careers/">Careers</a></div>
-	    <div class="mobile_nav_item" id=""><a href="/blog/">Blog</a></div>
-	    <div class="mobile_nav_item" id=""><a href="/contact/">Contact</a></div>
+        <div class="mobile_nav_item" id=""><a href="{% url 'about' %}">About</a></div>
+        <div class="mobile_nav_item" id=""><a href="{% url 'careers' %}">Careers</a></div>
+        <div class="mobile_nav_item" id=""><a href="{% url 'blog:list' %}">Blog</a></div>
+        <div class="mobile_nav_item" id=""><a href="{% url 'contact' %}">Contact</a></div>
 
-	</div>
+    </div>
 </div>

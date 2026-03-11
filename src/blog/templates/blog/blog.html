@@ -64,7 +64,7 @@
 
 		{% if user.is_staff %}
 		<div class='col-12 mt-2 mb-4'>
-			<p style='text-align: center;'><a href='/blog-new'> + Create Blog</a></p>
+			<p style='text-align: center;'><a href="{% url 'blog_create' %}"> + Create Blog</a></p>
 		</div>
 		{% endif %}
 
