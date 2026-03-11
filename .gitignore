@@ -1,0 +1,5 @@
+.env
+.codex-ssh/
+.codex-venv/
+__pycache__/
+*.py[cod]

@@ -1,36 +1,61 @@
 import os
-import json
 
-# with open('/etc/config.json') as config_file:
-#     config = json.load(config_file)
+from django.core.exceptions import ImproperlyConfigured
+
+
+def _load_env_file(env_path):
+    if not os.path.exists(env_path):
+        return
+
+    with open(env_path, encoding='utf-8') as env_file:
+        for raw_line in env_file:
+            line = raw_line.strip()
+            if not line or line.startswith('#') or '=' not in line:
+                continue
+
+            key, value = line.split('=', 1)
+            key = key.strip()
+            value = value.strip()
+
+            if value and value[0] == value[-1] and value[0] in {'"', "'"}:
+                value = value[1:-1]
+
+            os.environ.setdefault(key, value)
+
+
+def _get_env(name, default=None, required=False):
+    value = os.getenv(name, default)
+    if required and (value is None or value == ''):
+        raise ImproperlyConfigured(f"Set the {name} environment variable.")
+    return value
+
+
+def _get_bool_env(name, default=False):
+    value = _get_env(name, default=str(default))
+    return str(value).strip().lower() in {'1', 'true', 'yes', 'on'}
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
+_load_env_file(os.path.join(PROJECT_ROOT, '.env'))
 
-#SECRET_KEY = config["SECRET_KEY"]
-SECRET_KEY = 'dc578pv-t)gq+k)yw+rd^2(pd)pji*x5til*kzdjb1@byr3+)h'
+
+SECRET_KEY = _get_env('DJANGO_SECRET_KEY', required=True)
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = _get_bool_env('DJANGO_DEBUG', default=False)
+
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-#EMAIL_HOST = 'mail.privateemail.com'
 EMAIL_HOST = 'smtp.gmail.com'
-
-#EMAIL_HOST_USER = 'info@mcexcavate.com'
-#EMAIL_HOST_PASSWORD = 'Duke3818#'
-
-EMAIL_HOST_USER = 'mcexcavate.ottawa@gmail.com'
-EMAIL_HOST_PASSWORD = 'vfmr olja dsgd dbca'
-
+EMAIL_HOST_USER = _get_env('DJANGO_EMAIL_HOST_USER', required=True)
+EMAIL_HOST_PASSWORD = _get_env('DJANGO_EMAIL_HOST_PASSWORD', required=True)
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587 
-#EMAIL_HOST_USER = config["EMAIL_HOST_USER"]
-#EMAIL_HOST_PASSWORD = config["EMAIL_HOST_PASSWORD"] 
+EMAIL_PORT = 587
+
 
 # Max uploaded file size
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
@@ -39,14 +64,13 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10 MB
 
 ALLOWED_HOSTS = ['172.105.25.80', '127.0.0.1', 'mcexcavate.com', 'www.mcexcavate.com']
 
-# PhoneNumberField Settings
-#PHONENUMBER_DB_FORMAT = 
-PHONENUMBER_DEFAULT_REGION = "CA"
-#PHONENUMBER_DEFAULT_FORMAT = 
 
-# Captcha Keys old
-RECAPTCHA_PUBLIC_KEY = '6LfmRocsAAAAAB7M4bWOj4dT3yZRvsVxpxQMqqBA'
-RECAPTCHA_PRIVATE_KEY = '6LfmRocsAAAAAAUDQ6UexoxtqVXPLtAFKFialJ9Y'
+# PhoneNumberField Settings
+PHONENUMBER_DEFAULT_REGION = "CA"
+
+
+RECAPTCHA_PUBLIC_KEY = _get_env('DJANGO_RECAPTCHA_PUBLIC_KEY', required=True)
+RECAPTCHA_PRIVATE_KEY = _get_env('DJANGO_RECAPTCHA_PRIVATE_KEY', required=True)
 RECAPTCHA_REQUIRED_SCORE = 0.5
 
 try:
@@ -55,11 +79,6 @@ except ModuleNotFoundError:
     RECAPTCHA_APP = 'captcha'
 else:
     RECAPTCHA_APP = 'django_recaptcha'
-
-# Captcha Keys new
-# RECAPTCHA_PUBLIC_KEY = '6LfBhfYmAAAAAIPs-frb9SeAGW12jXJmu4fIQqvb'
-# RECAPTCHA_PRIVATE_KEY = '6LfBhfYmAAAAALm8H0PZF4YBB8hzpkGtWW3vg4ZB'
-
 
 
 # Application definition
@@ -77,11 +96,9 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'ckeditor',
     'ckeditor_uploader',
-
-    # my app
     'gallery',
     'project',
-    'blog'
+    'blog',
 ]
 
 SITE_ID = 1
@@ -117,9 +134,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mcexcavate.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -127,9 +141,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -146,8 +157,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -157,14 +166,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 CKEDITOR_UPLOAD_PATH = "blog-uploads/"
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    ]
+]
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 STATIC_URL = '/static/'
