@@ -11,7 +11,9 @@ from .ai_alt_text import generate_alt_text_for_image_file
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 MAX_GALLERY_IMAGE_DIMENSION = 1600
+GALLERY_THUMBNAIL_MAX_SIZE = (240, 180)
 JPEG_QUALITY = 85
+THUMBNAIL_JPEG_QUALITY = 78
 JPEG_SUBSAMPLING = 1
 
 
@@ -46,14 +48,13 @@ def _normalize_image_mode(image_obj):
     return image_obj
 
 
-def _optimize_uploaded_image(uploaded_file, *, max_dimension=MAX_GALLERY_IMAGE_DIMENSION, quality=JPEG_QUALITY):
+def _build_processed_upload(uploaded_file, *, max_size, quality, suffix=''):
     uploaded_file.seek(0)
     with Image.open(uploaded_file) as opened_image:
         image_obj = ImageOps.exif_transpose(opened_image)
         image_obj = _normalize_image_mode(image_obj)
 
-        if max(image_obj.size) > max_dimension:
-            image_obj.thumbnail((max_dimension, max_dimension), Image.Resampling.LANCZOS)
+        image_obj.thumbnail(max_size, Image.Resampling.LANCZOS)
 
         output = BytesIO()
         image_obj.save(
@@ -71,10 +72,27 @@ def _optimize_uploaded_image(uploaded_file, *, max_dimension=MAX_GALLERY_IMAGE_D
     return InMemoryUploadedFile(
         output,
         'FileField',
-        f'{base_name}.jpg',
+        f'{base_name}{suffix}.jpg',
         'image/jpeg',
         file_size,
         None,
+    )
+
+
+def _optimize_uploaded_image(uploaded_file, *, max_dimension=MAX_GALLERY_IMAGE_DIMENSION, quality=JPEG_QUALITY):
+    return _build_processed_upload(
+        uploaded_file,
+        max_size=(max_dimension, max_dimension),
+        quality=quality,
+    )
+
+
+def _build_gallery_thumbnail(uploaded_file, *, max_size=GALLERY_THUMBNAIL_MAX_SIZE, quality=THUMBNAIL_JPEG_QUALITY):
+    return _build_processed_upload(
+        uploaded_file,
+        max_size=max_size,
+        quality=quality,
+        suffix='_thumb',
     )
 
 
@@ -114,6 +132,7 @@ class Gallery(models.Model):
 class GalleryImages(models.Model):
     id = models.AutoField(primary_key=True)
     images = models.FileField(upload_to='image/gallery/', blank=True, null=True)
+    thumbnail = models.FileField(upload_to='image/gallery/thumbnails/', blank=True, null=True)
     alt = models.CharField(max_length=250, blank=True, null=True)
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
 
@@ -123,6 +142,9 @@ class GalleryImages(models.Model):
 
         if image_changed:
             self.images = _optimize_uploaded_image(self.images)
+            self.thumbnail = _build_gallery_thumbnail(self.images)
             self.alt = generate_alt_text_for_image_file(self.images)
+        elif self.images and not self.thumbnail:
+            self.thumbnail = _build_gallery_thumbnail(self.images)
 
         super().save(*args, **kwargs)

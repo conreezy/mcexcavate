@@ -1,61 +1,71 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
 {% include "breadcrumbs.html" %}
-{% load crispy_forms_tags %}
-{% load static %} 
 
-<div class='container-fluid gallery_detail_wrapper'>
-	<div class='row'>
+<section class="gallery-detail-section">
+    <div class="container">
+        {% if initial_gallery_image %}
+        <div class="gallery-detail-viewer" data-gallery-viewer>
+            <div class="gallery-detail-stage">
+                <img
+                    src="{{ initial_gallery_image.image_url }}"
+                    alt="{{ initial_gallery_image.alt }}"
+                    class="gallery-detail-stage-image"
+                    data-gallery-main-image
+                >
+            </div>
 
-		<div class="pagination">
-		    <span class="step-links">
-		        {% if page_obj.has_previous %}
-		            <a href="?page=1"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-left" class="svg-inline--fa fa-angle-double-left fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"></path></svg></a>
-		            <a href="?page={{ page_obj.previous_page_number }}"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left" class="svg-inline--fa fa-angle-left fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg></a>
-		        {% endif %}
+            <div class="gallery-detail-nav">
+                <button type="button" class="gallery-detail-nav-button" data-gallery-prev aria-label="Previous photo">
+                    <i class="fa-sharp fa-regular fa-arrow-left" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="gallery-detail-nav-button gallery-detail-nav-button-next" data-gallery-next aria-label="Next photo">
+                    <i class="fa-sharp fa-regular fa-arrow-left" aria-hidden="true"></i>
+                </button>
+            </div>
 
-		        <span class="current">
-		           {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-		        </span>
+            <div class="gallery-detail-thumbnails-window">
+                <div class="gallery-detail-thumbnails-track" data-gallery-track>
+                    {% for item in gallery_items %}
+                    <button
+                        type="button"
+                        class="gallery-detail-thumbnail{% if forloop.first %} is-active{% endif %}"
+                        data-gallery-thumbnail
+                        data-index="{{ forloop.counter0 }}"
+                        data-image-url="{{ item.image_url }}"
+                        data-image-alt="{{ item.alt }}"
+                        aria-label="Show photo {{ forloop.counter }} of {{ gallery_items|length }}"
+                        aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                    >
+                        <img src="{{ item.thumbnail_url }}" alt="{{ item.alt }}" class="gallery-detail-thumbnail-image">
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% elif obj.image %}
+        <div class="gallery-detail-viewer">
+            <div class="gallery-detail-stage">
+                <img src="{{ obj.image.url }}" alt="{{ obj.image_alt|default:obj.title }}" class="gallery-detail-stage-image">
+            </div>
+        </div>
+        {% else %}
+        <div class="gallery-detail-empty">
+            <p>No gallery photos are available yet.</p>
+        </div>
+        {% endif %}
 
-		        {% if page_obj.has_next %}
-		            <a href="?page={{ page_obj.next_page_number }}"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg></a>
-		            <a href="?page={{ page_obj.paginator.num_pages }}"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-right" class="svg-inline--fa fa-angle-double-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"></path></svg></a>
-		        {% endif %}
-		    </span>
-		</div>
-
-		{% for image in page_obj %}
-		<div class='gal_img_col'>
-			<img src="{{ image.images.url }}" class="gal_image" alt="{{ image.alt }}">
-		</div>
-		{% endfor %}
-
-		<div class="pagination">
-		    <span class="step-links">
-		        {% if page_obj.has_previous %}
-		            <a href="?page=1"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-left" class="svg-inline--fa fa-angle-double-left fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M223.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L319.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L393.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34zm-192 34l136 136c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L127.9 256l96.4-96.4c9.4-9.4 9.4-24.6 0-33.9L201.7 103c-9.4-9.4-24.6-9.4-33.9 0l-136 136c-9.5 9.4-9.5 24.6-.1 34z"></path></svg></a>
-		            <a href="?page={{ page_obj.previous_page_number }}"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left" class="svg-inline--fa fa-angle-left fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg></a>
-		        {% endif %}
-
-		        <span class="current">
-		           {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-		        </span>
-
-		        {% if page_obj.has_next %}
-		            <a href="?page={{ page_obj.next_page_number }}"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg></a>
-		            <a href="?page={{ page_obj.paginator.num_pages }}"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-right" class="svg-inline--fa fa-angle-double-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34zm192-34l-136-136c-9.4-9.4-24.6-9.4-33.9 0l-22.6 22.6c-9.4 9.4-9.4 24.6 0 33.9l96.4 96.4-96.4 96.4c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l136-136c9.4-9.2 9.4-24.4 0-33.8z"></path></svg></a>
-		        {% endif %}
-		    </span>
-		</div>
-
-		{% if user.is_staff %}
-		<div class='col-12'>
-			<p style='text-align:center;'><a href="{% url 'gallery:add_photo' slug=slug %}"> + Add Photo</a></p>
-		</div>
-		{% endif %}
-
-	</div>
-</div>
-
+        {% if user.is_staff %}
+        <p class="gallery-detail-admin-link">
+            <a href="{% url 'gallery:add_photo' slug=slug %}">+ Add Photo</a>
+        </p>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/gallery.js' %}"></script>
+{% endblock javascript %}

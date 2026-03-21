@@ -3,7 +3,6 @@ from .models import Gallery, GalleryImages
 from .forms import GalleryForm, GalleryImagesForm, GalleryEditForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
 from django.contrib import messages
 import datetime
 
@@ -86,8 +85,7 @@ def gallery_list_view(request):
 
 def gallery_detail_view(request, slug):
     obj = get_object_or_404(Gallery, slug=slug)
-    gallery = list(GalleryImages.objects.filter(gallery=obj).order_by("-id"))
-    paginator = Paginator(gallery, 8)
+    gallery_images = list(GalleryImages.objects.filter(gallery=obj).order_by("-id"))
 
     title = (obj.title) + " Projects"
     meta_title = obj.meta_title
@@ -101,11 +99,19 @@ def gallery_detail_view(request, slug):
     crumb_2 = obj.title
     crumb_1_link = "/gallery/"
 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
     og_image = obj.image.url
     og_type = "website"
+
+    gallery_items = [
+        {
+            "id": image.id,
+            "image_url": image.images.url,
+            "thumbnail_url": image.thumbnail.url if image.thumbnail else image.images.url,
+            "alt": image.alt or obj.title,
+        }
+        for image in gallery_images
+        if image.images
+    ]
     
     template_name = "gallery/detail.html"
     context = {"title": title,
@@ -113,13 +119,14 @@ def gallery_detail_view(request, slug):
                "crumb_1_link":crumb_1_link,
                "crumb_1":crumb_1,
                "crumb_2":crumb_2,
-               "gallery":gallery,
+               "gallery_images":gallery_images,
+               "gallery_items":gallery_items,
+               "initial_gallery_image":gallery_items[0] if gallery_items else None,
                "obj":obj,
                "meta_description":meta_description,
                "meta_robots":meta_robots,
                "meta_keywords":meta_keywords,
                "meta_title":meta_title,
-               "page_obj":page_obj,
                "slug":slug,
                'og_image' : og_image,
                'og_type' : og_type,
