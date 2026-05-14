@@ -12,12 +12,20 @@ except ModuleNotFoundError:
 
 Default = "---"
 Excavation = "Excavation"
-Concrete =  "Concrete"
+StampedConcrete = "Stamped Concrete"
+ConcreteSlabs = "Concrete Slabs"
+ConcreteSteps = "Concrete Steps"
+ConcreteRepairs = "Concrete Repairs"
+ConcreteResurfacing = "Concrete Resurfacing"
 Bollards = "Bollards"
 
 SERVICE_CHOICES = (
   (Default, '---'),
-  (Concrete, 'Concrete'),
+  (StampedConcrete, 'Stamped Concrete'),
+  (ConcreteSlabs, 'Concrete Slabs'),
+  (ConcreteSteps, 'Concrete Steps'),
+  (ConcreteRepairs, 'Concrete Repairs'),
+  (ConcreteResurfacing, 'Concrete Resurfacing'),
   (Excavation, 'Excavation'),
   (Bollards, 'Bollards'),
   )

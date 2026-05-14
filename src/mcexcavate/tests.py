@@ -3,12 +3,15 @@ from unittest.mock import patch
 from io import BytesIO
 
 from captcha.client import RecaptchaResponse
+from django.core import mail
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import override_settings
 from django.test import TestCase
 from django.urls import reverse
 from PIL import Image
 
 from mcexcavate.forms import ContactPageContactForm, ServicePageContactForm
+from mcexcavate.views import LEAD_EMAIL_RECIPIENTS, send_email_with_attachments
 
 
 class CorePageTests(TestCase):
@@ -18,7 +21,7 @@ class CorePageTests(TestCase):
             'email': 'lead@example.com',
             'phone': '+16136087722',
             'address': '123 Test Street',
-            'service': 'Concrete',
+            'service': 'Stamped Concrete',
             'content': 'Need a quote for a walkway.',
             'marketing': 'Google Search',
             'captcha': 'test-token',
@@ -68,14 +71,29 @@ class CorePageTests(TestCase):
 
     @patch('mcexcavate.views.send_email_with_attachments')
     @patch('captcha.fields.client.submit')
-    def test_service_page_form_submission_redirects_and_sends_email(self, mock_submit, mock_send_email):
+    def test_service_page_form_submissions_redirect_and_send_email(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
+        service_pages = [
+            ('concrete', 'Stamped Concrete', '/concrete/#contactform'),
+            ('concrete_slabs_page', 'Concrete Slabs', '/concrete-slabs/#contactform'),
+            ('concrete_steps_page', 'Concrete Steps', '/concrete-steps/#contactform'),
+            ('concrete_repairs_page', 'Concrete Repairs', '/concrete-repair/#contactform'),
+            ('concrete_resurfacing_page', 'Concrete Resurfacing', '/concrete-resurfacing/#contactform'),
+            ('excavation', 'Excavation', '/excavation/#contactform'),
+            ('bollards', 'Bollards', '/bollards/#contactform'),
+        ]
 
-        response = self.client.post(reverse('concrete'), data=self._valid_contact_data())
+        for url_name, service, redirect_url in service_pages:
+            with self.subTest(url_name=url_name, service=service):
+                mock_send_email.reset_mock()
+                response = self.client.post(
+                    reverse(url_name),
+                    data={**self._valid_contact_data(), 'service': service},
+                )
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['Location'], '/concrete/#contactform')
-        mock_send_email.assert_called_once()
+                self.assertEqual(response.status_code, 302)
+                self.assertEqual(response['Location'], redirect_url)
+                mock_send_email.assert_called_once()
 
 
     @patch('mcexcavate.views.send_email_with_attachments')
@@ -124,3 +142,10 @@ class CorePageTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'You can upload up to 5 images, but you selected 6.')
         mock_send_email.assert_not_called()
+
+    @override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
+    def test_lead_email_is_addressed_to_all_recipients(self):
+        send_email_with_attachments(self._valid_contact_data(), [], 'Excavation')
+
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, LEAD_EMAIL_RECIPIENTS)

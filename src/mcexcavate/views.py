@@ -20,6 +20,10 @@ from django.core.exceptions import ValidationError
 from typing import Optional
 
 MAX_UPLOAD_IMAGES = 5  # Limit to 5 images
+LEAD_EMAIL_RECIPIENTS = [
+    'info@crusaderconcrete.ca',
+    'estimating@crusaderconcrete.ca',
+]
 
 def validate_uploaded_image(image):
     try:
@@ -118,7 +122,7 @@ Message: {form_data.get('content', '')}
         subject=f"{service} Lead | {breadcrumbs_title}",
         body=email_body,
         from_email=settings.EMAIL_HOST_USER,
-        to=['mcexcavate.ottawa@gmail.com'],
+        to=LEAD_EMAIL_RECIPIENTS,
         reply_to=[reply_to_email] if reply_to_email else None,
     )
 
@@ -185,7 +189,7 @@ def _send_plain_lead_email(form_data, subject):
         f"\n\nMarketing: {form_data.get('marketing')}"
         f"\n\nMessage: {form_data.get('content')}"
     )
-    send_mail(subject, message, settings.EMAIL_HOST_USER, ['mcexcavate.ottawa@gmail.com'], fail_silently=False)
+    send_mail(subject, message, settings.EMAIL_HOST_USER, LEAD_EMAIL_RECIPIENTS, fail_silently=False)
 
 
 def _process_plain_lead_form_submission(request, form, subject):

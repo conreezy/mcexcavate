@@ -58,10 +58,14 @@
 // Form Upload Spinner and Set Hidden Service
 const form = document.getElementById("service_contact_form");
   const overlay = document.getElementById("uploadOverlay");
+  const serviceField = document.getElementById("form_service");
+
+  if (serviceField) {
+    serviceField.value = "Concrete Slabs";
+  }
 
   if (form) {
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+    form.addEventListener("submit", function () {
 
       // show overlay immediately
       if (overlay) {
@@ -74,8 +78,7 @@ const form = document.getElementById("service_contact_form");
       if (submitBtn) submitBtn.disabled = true;
 
       // your existing behavior: set hidden service then submit
-      document.getElementById("form_service").value = "Concrete";
-      form.submit(); // programmatic submit (won’t re-trigger this listener)
+      if (serviceField) serviceField.value = "Concrete Slabs";
     });
   }
 
