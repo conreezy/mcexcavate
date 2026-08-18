@@ -5,6 +5,7 @@ from django.template.loader import get_template
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail, EmailMessage, BadHeaderError
+import logging
 import requests
 from requests import Request, Session
 import json
@@ -17,9 +18,11 @@ from .settings import MEDIA_ROOT
 import datetime
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from smtplib import SMTPException
 from typing import Optional
 
 MAX_UPLOAD_IMAGES = 5  # Limit to 5 images
+logger = logging.getLogger(__name__)
 LEAD_EMAIL_RECIPIENTS = [
     'info@crusaderconcrete.ca',
     'estimating@crusaderconcrete.ca',
@@ -170,7 +173,16 @@ def _process_contact_form_submission(request, form, breadcrumbs_title, redirect_
         messages.error(request, "Please correct the image upload errors below and try again.")
         return None
 
-    send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+    try:
+        send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
+    except (SMTPException, OSError):
+        logger.exception("Lead email delivery failed for %s form.", breadcrumbs_title)
+        messages.error(
+            request,
+            "There was a problem sending your message. Please call us directly or try again later.",
+        )
+        return None
+
     messages.success(
         request,
         f"Thank you for contacting us {form_data['name']}. Your information has been submitted.<br><br>"
@@ -196,7 +208,12 @@ def _process_plain_lead_form_submission(request, form, subject):
     if not form.is_valid():
         return form
 
-    _send_plain_lead_email(form.cleaned_data, subject)
+    try:
+        _send_plain_lead_email(form.cleaned_data, subject)
+    except (SMTPException, OSError):
+        logger.exception("Lead email delivery failed for %s.", subject)
+        return form
+
     messages.success(request, "Thanks for contacting us. We will get back to you soon.")
     return ServicePageContactForm()
 

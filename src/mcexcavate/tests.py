@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 from io import BytesIO
+from smtplib import SMTPAuthenticationError
 
 from captcha.client import RecaptchaResponse
 from django.core import mail
@@ -68,6 +69,17 @@ class CorePageTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['Location'], '/contact/#contactform')
         mock_send_email.assert_called_once()
+
+    @patch('mcexcavate.views.send_email_with_attachments')
+    @patch('captcha.fields.client.submit')
+    def test_contact_form_handles_email_delivery_failure_without_server_error(self, mock_submit, mock_send_email):
+        mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
+        mock_send_email.side_effect = SMTPAuthenticationError(535, b'Authentication failed')
+
+        response = self.client.post(reverse('contact'), data=self._valid_contact_data())
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'There was a problem sending your message.')
 
     @patch('mcexcavate.views.send_email_with_attachments')
     @patch('captcha.fields.client.submit')
