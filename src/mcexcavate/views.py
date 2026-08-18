@@ -9,15 +9,16 @@ import logging
 import requests
 from requests import Request, Session
 import json
-from project.models import SodEstimate, PavingEstimate
+from project.models import LeadSubmission, LeadSubmissionImage, SodEstimate, PavingEstimate
 from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm, PavingPriceForm
 from blog.models import BlogPost
 import os
+import uuid
 from PIL import Image, UnidentifiedImageError
-from .settings import MEDIA_ROOT
 import datetime
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.utils.text import get_valid_filename
 from smtplib import SMTPException
 from typing import Optional
 
@@ -55,12 +56,13 @@ def handle_uploaded_files(images):
     if upload_errors:
         return None, upload_errors
 
-    upload_dir = os.path.join(MEDIA_ROOT, 'form_uploads')
+    upload_dir = os.path.join(settings.MEDIA_ROOT, 'form_uploads')
     os.makedirs(upload_dir, exist_ok=True)
 
     file_paths = []
     for image in images:
-        file_path = os.path.join(upload_dir, image.name)
+        safe_name = get_valid_filename(os.path.basename(image.name))
+        file_path = os.path.join(upload_dir, f"{uuid.uuid4().hex}_{safe_name}")
         try:
             image.seek(0)
             with open(file_path, 'wb+') as destination:
@@ -76,6 +78,35 @@ def handle_uploaded_files(images):
             return None, [f"{image.name}: The file could not be uploaded. Please try again."]
 
     return file_paths, []
+
+
+def _media_relative_path(file_path):
+    return os.path.relpath(file_path, settings.MEDIA_ROOT).replace(os.sep, '/')
+
+
+def save_lead_submission(form_data, file_paths, uploaded_images, source_page):
+    lead = LeadSubmission.objects.create(
+        source_page=source_page,
+        name=form_data.get('name') or '',
+        email=form_data.get('email') or '',
+        phone=str(form_data.get('phone') or ''),
+        address=form_data.get('address') or '',
+        service=form_data.get('service') or '',
+        marketing=form_data.get('marketing') or '',
+        message=form_data.get('content') or '',
+        recipient_emails=', '.join(LEAD_EMAIL_RECIPIENTS),
+    )
+
+    for file_path, uploaded_image in zip(file_paths, uploaded_images):
+        LeadSubmissionImage.objects.create(
+            lead=lead,
+            file=_media_relative_path(file_path),
+            original_name=getattr(uploaded_image, 'name', os.path.basename(file_path)),
+            file_size=getattr(uploaded_image, 'size', 0) or 0,
+            content_type=getattr(uploaded_image, 'content_type', '') or '',
+        )
+
+    return lead
 
 def _reject_header_injection(value: str, field_name: str = "value") -> str:
     """
@@ -173,15 +204,21 @@ def _process_contact_form_submission(request, form, breadcrumbs_title, redirect_
         messages.error(request, "Please correct the image upload errors below and try again.")
         return None
 
+    lead_submission = save_lead_submission(form_data, file_paths, images, breadcrumbs_title)
+
     try:
         send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-    except (SMTPException, OSError):
+    except (SMTPException, OSError) as exc:
+        lead_submission.mark_email_failed(exc)
         logger.exception("Lead email delivery failed for %s form.", breadcrumbs_title)
-        messages.error(
+        messages.warning(
             request,
-            "There was a problem sending your message. Please call us directly or try again later.",
+            "Your information was received, but there was a problem sending the email notification. "
+            "Please call us directly if your request is urgent.",
         )
-        return None
+        return HttpResponseRedirect(redirect_url)
+
+    lead_submission.mark_email_sent()
 
     messages.success(
         request,
@@ -208,12 +245,16 @@ def _process_plain_lead_form_submission(request, form, subject):
     if not form.is_valid():
         return form
 
+    lead_submission = save_lead_submission(form.cleaned_data, [], [], subject)
+
     try:
         _send_plain_lead_email(form.cleaned_data, subject)
-    except (SMTPException, OSError):
+    except (SMTPException, OSError) as exc:
+        lead_submission.mark_email_failed(exc)
         logger.exception("Lead email delivery failed for %s.", subject)
         return form
 
+    lead_submission.mark_email_sent()
     messages.success(request, "Thanks for contacting us. We will get back to you soon.")
     return ServicePageContactForm()
 

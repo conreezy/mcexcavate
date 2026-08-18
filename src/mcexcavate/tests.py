@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 from io import BytesIO
 from smtplib import SMTPAuthenticationError
+from tempfile import TemporaryDirectory
 
 from captcha.client import RecaptchaResponse
 from django.core import mail
@@ -13,6 +14,7 @@ from PIL import Image
 
 from mcexcavate.forms import ContactPageContactForm, ServicePageContactForm
 from mcexcavate.views import LEAD_EMAIL_RECIPIENTS, send_email_with_attachments
+from project.models import LeadSubmission, LeadSubmissionImage
 
 
 class CorePageTests(TestCase):
@@ -69,6 +71,8 @@ class CorePageTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['Location'], '/contact/#contactform')
         mock_send_email.assert_called_once()
+        self.assertEqual(LeadSubmission.objects.count(), 1)
+        self.assertEqual(LeadSubmission.objects.get().email_status, LeadSubmission.STATUS_SENT)
 
     @patch('mcexcavate.views.send_email_with_attachments')
     @patch('captcha.fields.client.submit')
@@ -76,10 +80,12 @@ class CorePageTests(TestCase):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         mock_send_email.side_effect = SMTPAuthenticationError(535, b'Authentication failed')
 
-        response = self.client.post(reverse('contact'), data=self._valid_contact_data())
+        response = self.client.post(reverse('contact'), data=self._valid_contact_data(), follow=True)
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'There was a problem sending your message.')
+        self.assertContains(response, 'Your information was received')
+        self.assertEqual(LeadSubmission.objects.count(), 1)
+        self.assertEqual(LeadSubmission.objects.get().email_status, LeadSubmission.STATUS_FAILED)
 
     @patch('mcexcavate.views.send_email_with_attachments')
     @patch('captcha.fields.client.submit')
@@ -114,10 +120,16 @@ class CorePageTests(TestCase):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         upload_files = [self._make_uploaded_image(name=f'project-{index}.jpg') for index in range(5)]
 
-        response = self.client.post(
-            reverse('contact'),
-            data={**self._valid_contact_data(), 'images': upload_files},
-        )
+        with TemporaryDirectory() as temp_media:
+            with self.settings(MEDIA_ROOT=temp_media):
+                response = self.client.post(
+                    reverse('contact'),
+                    data={**self._valid_contact_data(), 'images': upload_files},
+                )
+
+                self.assertEqual(LeadSubmissionImage.objects.count(), 5)
+                for lead_image in LeadSubmissionImage.objects.all():
+                    self.assertTrue(lead_image.file.storage.exists(lead_image.file.name))
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['Location'], '/contact/#contactform')
