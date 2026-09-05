@@ -5,7 +5,12 @@ from smtplib import SMTPAuthenticationError
 from tempfile import TemporaryDirectory
 from pathlib import Path
 
-from captcha.client import RecaptchaResponse
+try:
+    from django_recaptcha import client as recaptcha_client
+except ModuleNotFoundError:
+    from captcha import client as recaptcha_client
+
+RecaptchaResponse = recaptcha_client.RecaptchaResponse
 from django.core import mail
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings
@@ -65,7 +70,7 @@ class CorePageTests(TestCase):
                 self.assertIn('multiple', rendered)
 
     @patch('mcexcavate.views.send_email_with_attachments')
-    @patch('captcha.fields.client.submit')
+    @patch.object(recaptcha_client, 'submit')
     def test_contact_form_submission_redirects_and_queues_email(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
 
@@ -79,7 +84,7 @@ class CorePageTests(TestCase):
         self.assertIsNotNone(LeadSubmission.objects.get().email_next_attempt_at)
 
     @patch('mcexcavate.views.send_email_with_attachments')
-    @patch('captcha.fields.client.submit')
+    @patch.object(recaptcha_client, 'submit')
     def test_contact_form_does_not_wait_for_or_attempt_email(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         mock_send_email.side_effect = SMTPAuthenticationError(535, b'Authentication failed')
@@ -93,7 +98,7 @@ class CorePageTests(TestCase):
         self.assertEqual(LeadSubmission.objects.get().email_status, LeadSubmission.STATUS_PENDING)
 
     @patch('mcexcavate.views.send_email_with_attachments')
-    @patch('captcha.fields.client.submit')
+    @patch.object(recaptcha_client, 'submit')
     def test_service_page_form_submissions_redirect_and_queue_email(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         service_pages = [
@@ -124,7 +129,7 @@ class CorePageTests(TestCase):
 
 
     @patch('mcexcavate.views.send_email_with_attachments')
-    @patch('captcha.fields.client.submit')
+    @patch.object(recaptcha_client, 'submit')
     def test_contact_form_accepts_five_valid_uploaded_images(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         upload_files = [self._make_uploaded_image(name=f'project-{index}.jpg') for index in range(5)]
@@ -144,7 +149,7 @@ class CorePageTests(TestCase):
         self.assertEqual(response['Location'], '/contact/#contactform')
         mock_send_email.assert_not_called()
 
-    @patch('captcha.fields.client.submit')
+    @patch.object(recaptcha_client, 'submit')
     def test_worker_emails_the_exact_saved_compressed_photo(self, mock_submit):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         upload = self._make_uploaded_image(size=(4000, 3000))
@@ -165,7 +170,7 @@ class CorePageTests(TestCase):
             self.assertEqual(len(list(Path(temp_media).rglob('*.jpg'))), 1)
 
     @patch('project.models.LeadSubmissionImage.objects.create', side_effect=RuntimeError('Database write failed'))
-    @patch('captcha.fields.client.submit')
+    @patch.object(recaptcha_client, 'submit')
     def test_failed_image_record_save_rolls_back_lead_and_removes_files(self, mock_submit, mock_create):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         with TemporaryDirectory() as temp_media, self.settings(MEDIA_ROOT=temp_media):
@@ -178,7 +183,7 @@ class CorePageTests(TestCase):
             self.assertEqual(list(Path(temp_media).rglob('*.jpg')), [])
 
     @patch('mcexcavate.views.send_email_with_attachments')
-    @patch('captcha.fields.client.submit')
+    @patch.object(recaptcha_client, 'submit')
     def test_contact_form_rejects_invalid_uploaded_image_with_specific_error(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         invalid_file = SimpleUploadedFile('not-an-image.txt', b'not really an image', content_type='text/plain')
@@ -195,7 +200,7 @@ class CorePageTests(TestCase):
         mock_send_email.assert_not_called()
 
     @patch('mcexcavate.views.send_email_with_attachments')
-    @patch('captcha.fields.client.submit')
+    @patch.object(recaptcha_client, 'submit')
     def test_contact_form_rejects_more_than_maximum_images(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         upload_files = [self._make_uploaded_image(name=f'project-{index}.jpg') for index in range(6)]
