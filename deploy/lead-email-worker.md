@@ -97,6 +97,13 @@ job and does not send mail from the admin request.
 ## Rollback
 
 Stop/disable the worker before reverting to synchronous application code. Review any
-pending/sending leads first: older code cannot deliver those queued notifications. Leave
-the additive database migration in place during an application rollback; don't discard
-queue records or restore an old database over newly received leads.
+pending/sending leads first: older code cannot deliver those queued notifications.
+Do not leave migration 0004 in place with the older form code: its inserts omit the
+new non-null attempt counter and would fail.
+
+Before the new application has accepted any submissions, an activation rollback can
+keep Apache stopped, reverse the project migration to 0003, restore the previous code
+and SMTP settings, and restart Apache. After the new application has accepted submissions,
+prefer a forward fix or a release that preserves the queue schema and processing. Do
+not reverse the queue migration without preserving/reconciling queued jobs, and never
+restore an old database over newly received leads.
