@@ -1,14 +1,16 @@
 from unittest.mock import patch
 
-from io import BytesIO
+from io import BytesIO, StringIO
 from smtplib import SMTPAuthenticationError
 from tempfile import TemporaryDirectory
+from pathlib import Path
 
 from captcha.client import RecaptchaResponse
 from django.core import mail
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings
 from django.test import TestCase
+from django.core.management import call_command
 from django.urls import reverse
 from PIL import Image
 
@@ -17,6 +19,7 @@ from mcexcavate.views import LEAD_EMAIL_RECIPIENTS, send_email_with_attachments
 from project.models import LeadSubmission, LeadSubmissionImage
 
 
+@override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
 class CorePageTests(TestCase):
     def _valid_contact_data(self):
         return {
@@ -63,33 +66,35 @@ class CorePageTests(TestCase):
 
     @patch('mcexcavate.views.send_email_with_attachments')
     @patch('captcha.fields.client.submit')
-    def test_contact_form_submission_redirects_and_sends_email(self, mock_submit, mock_send_email):
+    def test_contact_form_submission_redirects_and_queues_email(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
 
         response = self.client.post(reverse('contact'), data=self._valid_contact_data())
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['Location'], '/contact/#contactform')
-        mock_send_email.assert_called_once()
+        mock_send_email.assert_not_called()
         self.assertEqual(LeadSubmission.objects.count(), 1)
-        self.assertEqual(LeadSubmission.objects.get().email_status, LeadSubmission.STATUS_SENT)
+        self.assertEqual(LeadSubmission.objects.get().email_status, LeadSubmission.STATUS_PENDING)
+        self.assertIsNotNone(LeadSubmission.objects.get().email_next_attempt_at)
 
     @patch('mcexcavate.views.send_email_with_attachments')
     @patch('captcha.fields.client.submit')
-    def test_contact_form_handles_email_delivery_failure_without_server_error(self, mock_submit, mock_send_email):
+    def test_contact_form_does_not_wait_for_or_attempt_email(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         mock_send_email.side_effect = SMTPAuthenticationError(535, b'Authentication failed')
 
         response = self.client.post(reverse('contact'), data=self._valid_contact_data(), follow=True)
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Your information was received')
+        self.assertContains(response, 'Your information has been submitted')
+        mock_send_email.assert_not_called()
         self.assertEqual(LeadSubmission.objects.count(), 1)
-        self.assertEqual(LeadSubmission.objects.get().email_status, LeadSubmission.STATUS_FAILED)
+        self.assertEqual(LeadSubmission.objects.get().email_status, LeadSubmission.STATUS_PENDING)
 
     @patch('mcexcavate.views.send_email_with_attachments')
     @patch('captcha.fields.client.submit')
-    def test_service_page_form_submissions_redirect_and_send_email(self, mock_submit, mock_send_email):
+    def test_service_page_form_submissions_redirect_and_queue_email(self, mock_submit, mock_send_email):
         mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
         service_pages = [
             ('concrete', 'Stamped Concrete', '/concrete/#contactform'),
@@ -111,7 +116,11 @@ class CorePageTests(TestCase):
 
                 self.assertEqual(response.status_code, 302)
                 self.assertEqual(response['Location'], redirect_url)
-                mock_send_email.assert_called_once()
+                mock_send_email.assert_not_called()
+                lead = LeadSubmission.objects.first()
+                self.assertEqual(lead.service, service)
+                self.assertEqual(lead.email_status, LeadSubmission.STATUS_PENDING)
+                self.assertIsNotNone(lead.email_next_attempt_at)
 
 
     @patch('mcexcavate.views.send_email_with_attachments')
@@ -133,7 +142,40 @@ class CorePageTests(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['Location'], '/contact/#contactform')
-        mock_send_email.assert_called_once()
+        mock_send_email.assert_not_called()
+
+    @patch('captcha.fields.client.submit')
+    def test_worker_emails_the_exact_saved_compressed_photo(self, mock_submit):
+        mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
+        upload = self._make_uploaded_image(size=(4000, 3000))
+        with TemporaryDirectory() as temp_media, self.settings(MEDIA_ROOT=temp_media):
+            response = self.client.post(reverse('contact'), data={**self._valid_contact_data(), 'images': upload})
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(len(mail.outbox), 0)
+            photo = LeadSubmissionImage.objects.get()
+            with Image.open(photo.absolute_path) as saved:
+                self.assertEqual(saved.size, (1600, 1200))
+                self.assertEqual(saved.format, 'JPEG')
+            saved_bytes = Path(photo.absolute_path).read_bytes()
+            self.assertEqual(photo.file_size, len(saved_bytes))
+            self.assertEqual(photo.content_type, 'image/jpeg')
+            call_command('send_lead_emails', once=True, stdout=StringIO())
+            self.assertEqual(mail.outbox[0].attachments[0][1], saved_bytes)
+            self.assertEqual(LeadSubmission.objects.get().email_status, LeadSubmission.STATUS_SENT)
+            self.assertEqual(len(list(Path(temp_media).rglob('*.jpg'))), 1)
+
+    @patch('project.models.LeadSubmissionImage.objects.create', side_effect=RuntimeError('Database write failed'))
+    @patch('captcha.fields.client.submit')
+    def test_failed_image_record_save_rolls_back_lead_and_removes_files(self, mock_submit, mock_create):
+        mock_submit.return_value = RecaptchaResponse(True, extra_data={'score': 0.9})
+        with TemporaryDirectory() as temp_media, self.settings(MEDIA_ROOT=temp_media):
+            with self.assertLogs('mcexcavate.views', level='ERROR'):
+                response = self.client.post(reverse('contact'), data={
+                    **self._valid_contact_data(), 'images': self._make_uploaded_image(),
+                })
+            self.assertContains(response, 'Your information could not be saved')
+            self.assertEqual(LeadSubmission.objects.count(), 0)
+            self.assertEqual(list(Path(temp_media).rglob('*.jpg')), [])
 
     @patch('mcexcavate.views.send_email_with_attachments')
     @patch('captcha.fields.client.submit')

@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRe
 from django.template.loader import get_template
 from django.contrib import messages
 from django.conf import settings
-from django.core.mail import send_mail, EmailMessage, BadHeaderError
+from django.core.mail import EmailMessage
 import logging
 import requests
 from requests import Request, Session
@@ -13,14 +13,16 @@ from project.models import LeadSubmission, LeadSubmissionImage, SodEstimate, Pav
 from .forms import ServicePageContactForm, ContactPageContactForm, SodPriceForm, PavingPriceForm
 from blog.models import BlogPost
 import os
-import uuid
+import mimetypes
 from PIL import Image, UnidentifiedImageError
 import datetime
+from django.db import transaction
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.utils.text import get_valid_filename
+from django.utils import timezone
 from smtplib import SMTPException
 from typing import Optional
+from .lead_images import save_contact_photo, remove_uploaded_files
 
 MAX_UPLOAD_IMAGES = 5  # Limit to 5 images
 logger = logging.getLogger(__name__)
@@ -28,18 +30,12 @@ LEAD_EMAIL_RECIPIENTS = [
     'info@crusaderconcrete.ca',
     'estimating@crusaderconcrete.ca',
 ]
+LEAD_EMAIL_MAX_ATTACHMENT_BYTES = 12 * 1024 * 1024
+LEAD_EMAIL_MAX_MESSAGE_BYTES = 20 * 1024 * 1024
 
-def validate_uploaded_image(image):
-    try:
-        image.seek(0)
-        with Image.open(image) as img:
-            img.verify()
-        image.seek(0)
-        return None
-    except (UnidentifiedImageError, OSError, SyntaxError, ValueError):
-        image.seek(0)
-        return f"{image.name}: The file is not a valid image."
 
+class LeadEmailTooLarge(ValueError):
+    """Raised before SMTP when smaller attachments may let this email fit."""
 
 def handle_uploaded_files(images):
     if len(images) > MAX_UPLOAD_IMAGES:
@@ -47,35 +43,14 @@ def handle_uploaded_files(images):
             f"You can upload up to {MAX_UPLOAD_IMAGES} images, but you selected {len(images)}."
         ]
 
-    upload_errors = []
-    for image in images:
-        validation_error = validate_uploaded_image(image)
-        if validation_error:
-            upload_errors.append(validation_error)
-
-    if upload_errors:
-        return None, upload_errors
-
-    upload_dir = os.path.join(settings.MEDIA_ROOT, 'form_uploads')
-    os.makedirs(upload_dir, exist_ok=True)
-
     file_paths = []
     for image in images:
-        safe_name = get_valid_filename(os.path.basename(image.name))
-        file_path = os.path.join(upload_dir, f"{uuid.uuid4().hex}_{safe_name}")
         try:
-            image.seek(0)
-            with open(file_path, 'wb+') as destination:
-                for chunk in image.chunks():
-                    destination.write(chunk)
-            file_paths.append(file_path)
-        except OSError as exc:
-            for saved_path in file_paths:
-                try:
-                    os.remove(saved_path)
-                except OSError:
-                    pass
-            return None, [f"{image.name}: The file could not be uploaded. Please try again."]
+            file_paths.append(save_contact_photo(image))
+        except (UnidentifiedImageError, OSError, SyntaxError, ValueError, Image.DecompressionBombError):
+            logger.exception('Contact photo processing failed.')
+            remove_uploaded_files(file_paths)
+            return None, [f"{image.name}: The image could not be processed. Please try another photo."]
 
     return file_paths, []
 
@@ -84,6 +59,7 @@ def _media_relative_path(file_path):
     return os.path.relpath(file_path, settings.MEDIA_ROOT).replace(os.sep, '/')
 
 
+@transaction.atomic
 def save_lead_submission(form_data, file_paths, uploaded_images, source_page):
     lead = LeadSubmission.objects.create(
         source_page=source_page,
@@ -95,6 +71,7 @@ def save_lead_submission(form_data, file_paths, uploaded_images, source_page):
         marketing=form_data.get('marketing') or '',
         message=form_data.get('content') or '',
         recipient_emails=', '.join(LEAD_EMAIL_RECIPIENTS),
+        email_next_attempt_at=timezone.now(),
     )
 
     for file_path, uploaded_image in zip(file_paths, uploaded_images):
@@ -102,8 +79,8 @@ def save_lead_submission(form_data, file_paths, uploaded_images, source_page):
             lead=lead,
             file=_media_relative_path(file_path),
             original_name=getattr(uploaded_image, 'name', os.path.basename(file_path)),
-            file_size=getattr(uploaded_image, 'size', 0) or 0,
-            content_type=getattr(uploaded_image, 'content_type', '') or '',
+            file_size=os.path.getsize(file_path),
+            content_type='image/jpeg',
         )
 
     return lead
@@ -134,7 +111,7 @@ def _clean_reply_to_email(raw_email: str) -> Optional[str]:
     except ValidationError:
         return None
 
-def send_email_with_attachments(form_data, file_paths, breadcrumbs_title):
+def send_email_with_attachments(form_data, file_paths, breadcrumbs_title, recipients=None):
     # Build body (body isn't a header, so newline checks aren't required here)
     email_body = f"""
 Name: {form_data.get('name', '')}
@@ -156,28 +133,22 @@ Message: {form_data.get('content', '')}
         subject=f"{service} Lead | {breadcrumbs_title}",
         body=email_body,
         from_email=settings.EMAIL_HOST_USER,
-        to=LEAD_EMAIL_RECIPIENTS,
+        to=LEAD_EMAIL_RECIPIENTS if recipients is None else recipients,
         reply_to=[reply_to_email] if reply_to_email else None,
     )
 
-    # Your existing attachment logic
-    if file_paths:
-        for file_path in file_paths:
-            try:
-                with open(file_path, 'rb') as attachment:
-                    email.attach(
-                        os.path.basename(file_path),
-                        attachment.read(),
-                        'application/octet-stream'
-                    )
-            except Exception as e:
-                print(f"Error attaching file {file_path}: {e}")
-
-    try:
-        email.send(fail_silently=False)
-    except BadHeaderError:
-        # Django detected a bad header (often CRLF injection). Log + handle appropriately.
-        raise
+    # Oversized message text cannot be fixed by reducing the photos.
+    if len(email.message().as_bytes(linesep='\r\n')) > LEAD_EMAIL_MAX_MESSAGE_BYTES:
+        raise ValueError('Lead email text exceeds the message budget; photo compression cannot fix it.')
+    # Budget for base64 and MIME overhead before reading attachments into memory.
+    if sum(os.path.getsize(path) for path in file_paths) > LEAD_EMAIL_MAX_ATTACHMENT_BYTES:
+        raise LeadEmailTooLarge('Saved photos exceed the email attachment budget.')
+    for file_path in file_paths:
+        email.attach_file(file_path, mimetypes.guess_type(file_path)[0] or 'application/octet-stream')
+    if len(email.message().as_bytes(linesep='\r\n')) > LEAD_EMAIL_MAX_MESSAGE_BYTES:
+        raise LeadEmailTooLarge('Encoded lead email exceeds the message budget.')
+    if email.send(fail_silently=False) != 1:
+        raise SMTPException('The email backend did not accept the lead notification.')
 
 
 def _build_form(form_class, request):
@@ -204,21 +175,13 @@ def _process_contact_form_submission(request, form, breadcrumbs_title, redirect_
         messages.error(request, "Please correct the image upload errors below and try again.")
         return None
 
-    lead_submission = save_lead_submission(form_data, file_paths, images, breadcrumbs_title)
-
     try:
-        send_email_with_attachments(form_data, file_paths, breadcrumbs_title)
-    except (SMTPException, OSError) as exc:
-        lead_submission.mark_email_failed(exc)
-        logger.exception("Lead email delivery failed for %s form.", breadcrumbs_title)
-        messages.warning(
-            request,
-            "Your information was received, but there was a problem sending the email notification. "
-            "Please call us directly if your request is urgent.",
-        )
-        return HttpResponseRedirect(redirect_url)
-
-    lead_submission.mark_email_sent()
+        save_lead_submission(form_data, file_paths, images, breadcrumbs_title)
+    except Exception:
+        remove_uploaded_files(file_paths)
+        logger.exception('Lead submission could not be saved.')
+        messages.error(request, 'Your information could not be saved. Please try again or call us directly.')
+        return None
 
     messages.success(
         request,
@@ -228,33 +191,16 @@ def _process_contact_form_submission(request, form, breadcrumbs_title, redirect_
     return HttpResponseRedirect(redirect_url)
 
 
-def _send_plain_lead_email(form_data, subject):
-    message = (
-        f"Name: {form_data.get('name')} "
-        f"\n\nEmail: {form_data.get('email')} "
-        f"\n\nPhone: {form_data.get('phone')} "
-        f"\n\nAddress: {form_data.get('address')} "
-        f"\n\nService: {form_data.get('service')} "
-        f"\n\nMarketing: {form_data.get('marketing')}"
-        f"\n\nMessage: {form_data.get('content')}"
-    )
-    send_mail(subject, message, settings.EMAIL_HOST_USER, LEAD_EMAIL_RECIPIENTS, fail_silently=False)
-
-
 def _process_plain_lead_form_submission(request, form, subject):
     if not form.is_valid():
         return form
 
-    lead_submission = save_lead_submission(form.cleaned_data, [], [], subject)
-
     try:
-        _send_plain_lead_email(form.cleaned_data, subject)
-    except (SMTPException, OSError) as exc:
-        lead_submission.mark_email_failed(exc)
-        logger.exception("Lead email delivery failed for %s.", subject)
+        save_lead_submission(form.cleaned_data, [], [], subject)
+    except Exception:
+        logger.exception('Lead submission could not be saved.')
+        messages.error(request, 'Your information could not be saved. Please try again or call us directly.')
         return form
-
-    lead_submission.mark_email_sent()
     messages.success(request, "Thanks for contacting us. We will get back to you soon.")
     return ServicePageContactForm()
 

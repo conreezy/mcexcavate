@@ -92,7 +92,7 @@ def validate_contact_images(uploaded_images):
             with Image.open(uploaded_image) as img:
                 img.verify()
             uploaded_image.seek(0)
-        except (UnidentifiedImageError, OSError, SyntaxError, ValueError):
+        except (UnidentifiedImageError, OSError, SyntaxError, ValueError, Image.DecompressionBombError):
             uploaded_image.seek(0)
             errors.append(f"{uploaded_image.name}: The file is not a valid image.")
 
@@ -135,7 +135,7 @@ class ServicePageContactForm(BaseContactForm):
                               }),
                               required=False,
                               help_text=mark_safe("Send us some photos to give a better idea about your project. <br> \
-                                         Upload up to 5 images (max size: 10MB each).") 
+                                         Upload up to 5 images.")
                              )
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
     captcha = ReCaptchaField(label='', widget=CustomReCaptchaV3())
@@ -166,7 +166,7 @@ class ContactPageContactForm(BaseContactForm):
                               }),
                               required=False,
                               help_text=mark_safe("Send us some photos to give a better idea about your project. <br> \
-                                         Upload up to 5 images (max size: 10MB each).") 
+                                         Upload up to 5 images.")
                              )
     marketing = forms.ChoiceField(label='How did you hear about us?', choices=MARKETING_CHOICES)
     captcha = ReCaptchaField(label='', widget=CustomReCaptchaV3())

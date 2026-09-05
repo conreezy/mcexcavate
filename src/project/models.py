@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
 
 
 User = settings.AUTH_USER_MODEL
@@ -74,11 +73,13 @@ class SodEstimate(models.Model):
 
 class LeadSubmission(models.Model):
     STATUS_PENDING = 'pending'
+    STATUS_SENDING = 'sending'
     STATUS_SENT = 'sent'
     STATUS_FAILED = 'failed'
 
     EMAIL_STATUS_CHOICES = (
         (STATUS_PENDING, 'Pending'),
+        (STATUS_SENDING, 'Sending'),
         (STATUS_SENT, 'Sent'),
         (STATUS_FAILED, 'Failed'),
     )
@@ -95,6 +96,11 @@ class LeadSubmission(models.Model):
     email_status = models.CharField(max_length=20, choices=EMAIL_STATUS_CHOICES, default=STATUS_PENDING)
     email_error = models.TextField(blank=True)
     emailed_at = models.DateTimeField(blank=True, null=True)
+    # Null means not queued, including every pre-worker submission.
+    email_next_attempt_at = models.DateTimeField(blank=True, null=True, db_index=True)
+    email_attempts = models.PositiveIntegerField(default=0)
+    email_claimed_at = models.DateTimeField(blank=True, null=True)
+    email_claim_token = models.UUIDField(blank=True, null=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -114,18 +120,6 @@ class LeadSubmission(models.Model):
             'service': self.service,
             'content': self.message,
         }
-
-    def mark_email_sent(self):
-        self.email_status = self.STATUS_SENT
-        self.email_error = ''
-        self.emailed_at = timezone.now()
-        self.save(update_fields=['email_status', 'email_error', 'emailed_at', 'updated_at'])
-
-    def mark_email_failed(self, error):
-        self.email_status = self.STATUS_FAILED
-        self.email_error = str(error)
-        self.save(update_fields=['email_status', 'email_error', 'updated_at'])
-
 
 class LeadSubmissionImage(models.Model):
     lead = models.ForeignKey(LeadSubmission, related_name='images', on_delete=models.CASCADE)

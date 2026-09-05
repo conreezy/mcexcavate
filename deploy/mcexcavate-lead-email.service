@@ -1,0 +1,21 @@
+[Unit]
+Description=MCExcavate lead email worker
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=conormc
+Group=www-data
+UMask=0002
+WorkingDirectory=/home/conormc/mcexcavate
+ExecStart=/home/conormc/mcexcavate/venv/bin/python /home/conormc/mcexcavate/src/manage.py send_lead_emails
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Restart=always
+RestartSec=5
+TimeoutStopSec=120
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target
